@@ -1,5 +1,5 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
-import { fakeCategories } from "../../helper/dummyData";
+import { fakeArticles, fakeCategories } from "../../helper/dummyData";
 import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
@@ -23,6 +23,7 @@ export default class CategoriesStore {
       //Methods: action
       setSelectedCategory: action,
       getArticles: action,
+      latestArticles: action,
       //dataQueries
       getCategories: action,
 
@@ -33,7 +34,10 @@ export default class CategoriesStore {
   getCategories = () => {
     this.categories = fakeCategories;
   };
-  getArticles = () => {
+  latestArticles = () => {
+    this.articleList = fakeArticles;
+  };
+  getArticles = (Category: Category) => {
     this.articleList = fakeArticles;
   };
   setSelectedCategory = (x: Category | undefined) => {

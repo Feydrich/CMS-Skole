@@ -1,16 +1,22 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
+import { Article } from "../models/Article";
 import { User } from "../models/User";
 
 interface IArticleCardProps {
-  name: string;
-  creationDate: Date;
-  content: string;
-  author: User;
+  article: Article;
 }
 
-function ArticleCard(props: IArticleCardProps) {
-  return <div className="articleCard"></div>;
+function ArticleCard({ article }: IArticleCardProps) {
+  return (
+    <div className="articleCard">
+      <img src={article.image} />
+      <h2>{article.name}</h2>
+      <h3>{article.author.name}</h3>
+      <hr />
+      <p>{article.description}</p>
+    </div>
+  );
 }
 
 export default observer(ArticleCard);

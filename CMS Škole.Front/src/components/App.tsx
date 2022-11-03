@@ -12,8 +12,6 @@ import Home from "./Home";
 function App() {
   const appPreFlight = useRef(true);
 
-  const { sharedStore } = useStore();
-
   useEffect(() => {
     if (appPreFlight.current) {
       appPreFlight.current = false;
@@ -30,7 +28,6 @@ function App() {
             <Route path="/" element={<Navigate to="/Home" replace />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Category" element={<CategoryCatalogue />} />
-            <Route path="/Card" element={<ArticleCard />} />
           </Routes>
         </div>
       </BrowserRouter>

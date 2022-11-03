@@ -1,7 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { Category } from "../models/Category";
 import { useStore } from "../stores/StoreManager";
+import ArticleCard from "./Articles/ArticleCard";
 
 function CategoryCatalogue() {
   const categoryCataloguePreflight = useRef(true);
@@ -11,6 +13,7 @@ function CategoryCatalogue() {
   useEffect(() => {
     if (categoryCataloguePreflight.current) {
       categoryCataloguePreflight.current = false;
+      categoriesStore.getArticles({} as Category);
     }
   }, []);
 
@@ -47,6 +50,10 @@ function CategoryCatalogue() {
         </section>
       )}
       <hr />
+
+      {categoriesStore.articleList?.map((x, index) => (
+        <ArticleCard key={"articleCard" + index} article={x} />
+      ))}
     </main>
   );
 }

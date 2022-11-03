@@ -38,7 +38,22 @@ export default class CategoriesStore {
     this.articleList = fakeArticles;
   };
   getArticles = (Category: Category) => {
-    this.articleList = fakeArticles;
+    const randomCase = Math.floor(Math.random() * 2);
+    let local: Article[] = [];
+    switch (randomCase) {
+      case 0:
+        fakeArticles.forEach((x, index) => {
+          if ((index + 1) % 2 == 0) local.push(x);
+        });
+
+        break;
+      case 1:
+        fakeArticles.forEach((x, index) => {
+          if ((index + 1) % 2 == 1) local.push(x);
+        });
+        break;
+    }
+    this.articleList = local;
   };
   setSelectedCategory = (x: Category | undefined) => {
     this.selectedCategory = x;

@@ -13,7 +13,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 12px !important;
+  width: 6px !important;
 }
 
 /* Track */
@@ -25,7 +25,6 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background-color: lightgrey;
-  border-radius: 6px;
 }
 
 /* Handle on hover */
@@ -48,7 +47,8 @@ body {
 .navBarWrapper {
   width: 100%;
   position: sticky;
-  top: 20px;
+  background-color: lightgray;
+  top: 40px;
 }
 
 .navBarWrapper span {
@@ -89,6 +89,8 @@ body {
 .legend {
   width: 100%;
   height: 40px;
+  position: sticky;
+  top: 0px;
   background-color: white;
   display: flex;
   align-items: center;
@@ -123,15 +125,27 @@ body {
   overflow: hidden;
   animation-name: fadeIn;
   animation-duration: 1.5s;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.articleCard:hover {
+  background-color: gray;
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+  max-height: 400px;
 }
 
 .articleCard img {
-  width: 100%;
   height: 150px;
-  object-fit: cover;
 }
 
 main {
   margin-top: 20px;
   background-color: white;
+  animation-name: fadeIn;
+  animation-duration: 1.5s;
 }

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { useStore } from "../stores/StoreManager";
-import ArticleCard from "./ArticleCard";
+import ArticleCard from "./Articles/ArticleCard";
 
 function Home() {
   const homePreflight = useRef(true);
@@ -17,6 +17,9 @@ function Home() {
 
   return (
     <main>
+      {categoriesStore.articleList?.map((x, index) => (
+        <ArticleCard key={"articleCard" + index} article={x} />
+      ))}
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}

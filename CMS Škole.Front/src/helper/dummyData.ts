@@ -33,7 +33,7 @@ export const fakeCategories: Category[] = [
 
 export const fakeArticles: Article[] = [
   {
-    id: "",
+    id: "1",
     name: "Placeholder",
     creationDate: new Date(),
     description:
@@ -44,7 +44,7 @@ export const fakeArticles: Article[] = [
     image: "https://wallpaperaccess.com/full/32048.jpg",
   },
   {
-    id: "",
+    id: "2",
     name: "Placeholder",
     creationDate: new Date(),
     description:
@@ -56,7 +56,7 @@ export const fakeArticles: Article[] = [
       "https://static.scientificamerican.com/sciam/cache/file/92E141F8-36E4-4331-BB2EE42AC8674DD3_source.jpg?w=590&h=800&1966AE6B-E8E5-4D4A-AACA385519F64D03",
   },
   {
-    id: "",
+    id: "3",
     name: "Placeholder",
     creationDate: new Date(),
     description:
@@ -67,7 +67,7 @@ export const fakeArticles: Article[] = [
     image: "https://wallpapers.com/images/featured/g9rdx9uk2425fip2.jpg",
   },
   {
-    id: "",
+    id: "4",
     name: "Placeholder",
     creationDate: new Date(),
     description:
@@ -78,7 +78,7 @@ export const fakeArticles: Article[] = [
     image: "https://images2.alphacoders.com/121/1213770.jpg",
   },
   {
-    id: "",
+    id: "5",
     name: "Placeholder",
     creationDate: new Date(),
     description:
@@ -89,7 +89,7 @@ export const fakeArticles: Article[] = [
     image: "https://www.enjpg.com/img/2020/cute-cat-2.jpg",
   },
   {
-    id: "",
+    id: "6",
     name: "Placeholder",
     creationDate: new Date(),
     description:

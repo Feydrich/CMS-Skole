@@ -2,7 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useRef } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useStore } from "../stores/StoreManager";
-import ArticleCard from "./ArticleCard";
+import ArticlePage from "./Articles/Article";
+import ArticleCard from "./Articles/ArticleCard";
 import CategoryCatalogue from "./CategoryCatalogue";
 import LegendComponent from "./global/LegendComponent";
 import Login from "./global/Login";
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<Navigate to="/Home" replace />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Category" element={<CategoryCatalogue />} />
+            <Route path="/Article" element={<ArticlePage />} />
           </Routes>
         </div>
       </BrowserRouter>

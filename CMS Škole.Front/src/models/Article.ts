@@ -1,3 +1,4 @@
+import { Category } from "./Category";
 import { User } from "./User";
 
 export interface Article {
@@ -8,4 +9,5 @@ export interface Article {
   description: string;
   author: User;
   image: string;
+  category?: Category;
 }

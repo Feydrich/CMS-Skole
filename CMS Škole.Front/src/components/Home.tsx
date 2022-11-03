@@ -13,14 +13,7 @@ function Home() {
     }
   }, []);
 
-  return (
-    <>
-      <h2>Home</h2>
-      <a href="#" onClick={() => sharedStore.setUser(null)}>
-        Log out
-      </a>
-    </>
-  );
+  return <></>;
 }
 
 export default observer(Home);

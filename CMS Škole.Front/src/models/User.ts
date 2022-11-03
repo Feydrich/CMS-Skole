@@ -1,7 +1,8 @@
-export interface User{
-    username: string;
-    jwt: string;
-    roles: string[]; /* Iskomunicirati je li array stringova ispravni format za ovo */
-    deviceUUID: string;
-    loginTime: Date;
+export interface User {
+  name: string;
+  surname: string;
+  username: string;
+  mail: string;
+  jwt: string;
+  roles: string[];
 }

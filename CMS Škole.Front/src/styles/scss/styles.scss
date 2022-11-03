@@ -1,42 +1,100 @@
-*{
-    margin: 0;
-    -webkit-box-sizing: border-box !important;
-	-moz-box-sizing: border-box !important;
-	-ms-box-sizing: border-box !important;
-	box-sizing: border-box !important;
-    font-family: OpenSans-Regular;
+* {
+  margin: 0;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  -ms-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  font-family: OpenSans-Regular;
+  box-sizing: border-box;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 12px !important;
+  width: 12px !important;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    width: 100%;
-    background-color: transparent;
+  width: 100%;
+  background-color: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-    border-radius: 6px;
+  background-color: lightgrey;
+  border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: gray;
+  background-color: gray;
 }
 
-.loadingOverlay{
-    z-index: 2;
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.loadingOverlay {
+  z-index: 2;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navBarWrapper {
+  width: 100%;
+  position: sticky;
+  top: 20px;
+}
+
+.navBarWrapper span {
+  cursor: pointer;
+}
+.navBarHeader {
+  width: 100%;
+  height: 60px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navBar {
+  width: 100%;
+  position: absolute;
+  transition: all 1s;
+  background-color: gray;
+  overflow: hidden;
+}
+
+.subCategoryItem {
+  width: 20%;
+  height: 20%;
+  float: left;
+}
+
+.subCategoryCatalogue {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow-x: auto;
+}
+
+.legend {
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+.mainContent {
+  width: 100%;
+  height: 100vh;
+  padding: 0 5%;
 }

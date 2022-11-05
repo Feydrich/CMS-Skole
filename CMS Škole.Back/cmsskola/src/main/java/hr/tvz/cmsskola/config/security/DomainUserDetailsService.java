@@ -1,7 +1,7 @@
 package hr.tvz.cmsskola.config.security;
 
-import hr.tvz.cmsskola.data.login.User;
-import hr.tvz.cmsskola.data.login.UserRepository;
+import hr.tvz.cmsskola.data.user.User;
+import hr.tvz.cmsskola.data.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

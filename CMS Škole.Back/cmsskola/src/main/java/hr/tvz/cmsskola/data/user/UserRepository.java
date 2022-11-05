@@ -1,4 +1,4 @@
-package hr.tvz.cmsskola.data.login;
+package hr.tvz.cmsskola.data.user;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;

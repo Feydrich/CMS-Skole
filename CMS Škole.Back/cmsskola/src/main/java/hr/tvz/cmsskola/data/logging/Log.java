@@ -1,12 +1,12 @@
 package hr.tvz.cmsskola.data.logging;
 
-import hr.tvz.cmsskola.data.common.AppConstants;
-import hr.tvz.cmsskola.data.login.User;
+import hr.tvz.cmsskola.data.user.User;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +28,7 @@ import lombok.ToString;
 @Table(name = "log")
 public class Log implements Serializable {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 

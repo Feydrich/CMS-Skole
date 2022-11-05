@@ -1,9 +1,9 @@
 package hr.tvz.cmsskola.data.login;
 
-import hr.tvz.cmsskola.config.security.SecurityUtils;
 import hr.tvz.cmsskola.config.security.jwt.JwtFilter;
 import hr.tvz.cmsskola.config.security.jwt.TokenProvider;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.user.UserRepository;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -57,11 +56,7 @@ public class LoginService {
   }
 
   public void logout() {
-    var optionalUsername = SecurityUtils.getCurrentUserUsername();
-    optionalUsername.ifPresent(username -> {
-      var optionalUser = userRepository.findByUsername(username);
-      optionalUser.ifPresent(user -> loggingService.log(logger, "logged out", user.getId()));
-    });
+    loggingService.log(logger, "logged out");
   }
 
   /**

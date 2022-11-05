@@ -3,7 +3,7 @@
 ## Osnovne informacije
 
  - port: 8081
- - [Swagger](http://localhost:8081/swagger-ui/)
+ - [Swagger](http://localhost:8081/api/swagger-ui/index.html#/)
 
 ## Pokretanje aplikacije
 

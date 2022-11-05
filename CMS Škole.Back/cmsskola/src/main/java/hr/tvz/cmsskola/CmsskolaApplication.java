@@ -9,5 +9,4 @@ public class CmsskolaApplication {
   public static void main(String[] args) {
     SpringApplication.run(CmsskolaApplication.class, args);
   }
-
 }

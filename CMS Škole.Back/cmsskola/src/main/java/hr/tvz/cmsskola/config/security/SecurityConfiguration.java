@@ -38,6 +38,8 @@ public class SecurityConfiguration {
         .and()
         .csrf()
         .disable()
+        .logout()
+        .disable()
         .authorizeRequests()
         // forbidden actions here
         .anyRequest()

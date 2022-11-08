@@ -4,11 +4,31 @@
   -moz-box-sizing: border-box !important;
   -ms-box-sizing: border-box !important;
   box-sizing: border-box !important;
-  font-family: OpenSans-Regular;
+  font-family: Agane;
   box-sizing: border-box;
 }
 body {
   background-color: #f5f5f5;
+}
+
+//https://www.fontsquirrel.com/fonts/arimo
+@font-face {
+  font-family: "Arimo";
+  src: url("../fonts/Arimo-Regular.ttf");
+}
+
+//https://www.fontsquirrel.com/fonts/agane
+@font-face {
+  font-family: "Agane";
+  src: url("../fonts/Agane-Regular.ttf");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Arimo;
 }
 
 /* width */
@@ -32,6 +52,12 @@ body {
   background-color: gray;
 }
 
+.navBarWrapper a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+}
+
 .loadingOverlay {
   z-index: 2;
   position: fixed;
@@ -48,7 +74,17 @@ body {
   width: 100%;
   position: sticky;
   background-color: lightgray;
+  z-index: 1000;
+  min-height: 60px;
+}
+
+.PCView {
   top: 40px;
+}
+
+.MobileView {
+  top: 0px;
+  display: none;
 }
 
 .navBarWrapper span {
@@ -65,8 +101,9 @@ body {
 
 .navBar {
   width: 100%;
+  height: 200px;
   position: absolute;
-  transition: all 1s;
+  transition: all 0.5s;
   background-color: gray;
   overflow: hidden;
 }
@@ -96,6 +133,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 5%;
+  z-index: 1000;
 }
 
 .mainContent {

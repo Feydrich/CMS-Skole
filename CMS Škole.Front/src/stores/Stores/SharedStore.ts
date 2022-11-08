@@ -9,7 +9,7 @@ const apiActions = {};
 
 export default class SharedStore {
   isLoading: boolean = false;
-  siteSettings: SiteInfo = { name: "Placeholder" };
+  siteSettings: SiteInfo = { name: "Placeholder", images: [] };
   notificationParameters: {
     style: "none" | "success" | "error" | "warning" | "info";
     message: string;
@@ -30,6 +30,7 @@ export default class SharedStore {
       changeLoading: action,
       createNotification: action,
       removeNotification: action,
+      getImagesForCarousel: action,
 
       //dataQueries
 
@@ -74,5 +75,16 @@ export default class SharedStore {
     runInAction(() => {
       this.notificationParameters = filteredCopy;
     });
+  };
+
+  getImagesForCarousel = () => {
+    this.siteSettings = {
+      ...this.siteSettings,
+      images: [
+        "https://wallpapers.com/images/hd/cute-cat-fuqkmbcov67c1nif.jpg",
+        "https://www.enjpg.com/img/2020/cute-cat-2.jpg",
+        "https://images2.alphacoders.com/121/1213770.jpg",
+      ],
+    };
   };
 }

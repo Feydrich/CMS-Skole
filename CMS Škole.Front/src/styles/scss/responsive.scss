@@ -1,0 +1,44 @@
+@media screen and (max-width: 600px) {
+  .PCView {
+    top: 40px;
+    display: none;
+  }
+
+  .MobileView {
+    top: 0px;
+    display: block;
+  }
+
+  .legend {
+    display: none;
+  }
+
+  .mainContent {
+    padding: 0px;
+  }
+
+  .articleCard {
+    width: 97%;
+    margin-top: 5%;
+  }
+
+  .navBarHeader {
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+
+  .navBar {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .subCategoryItem {
+    float: unset;
+    width: unset;
+    height: unset;
+  }
+}

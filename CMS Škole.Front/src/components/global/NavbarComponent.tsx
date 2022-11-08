@@ -14,62 +14,112 @@ function NavbarComponent() {
   }, []);
 
   const { categoriesStore } = useStore();
-  const [hoveredCategory, setHoveredCategory] = useState<Category | null>(null);
+  const [openFlag, setOpenFlag] = useState<Category | null>(null);
 
   return (
-    <nav
-      className="navBarWrapper"
-      onMouseLeave={() => setHoveredCategory(null)}
-    >
-      <section className="navBarHeader">
-        <span>
-          <Link to={"/Home"} onMouseEnter={() => setHoveredCategory(null)}>
-            Početna
-          </Link>
-        </span>
-        {(() => {
-          return categoriesStore.categories.map((x, index) => (
-            <span>
-              <Link
-                to={"/Category"}
-                onMouseEnter={() => setHoveredCategory(x)}
-                onClick={() => {
-                  setHoveredCategory(x);
-                  categoriesStore.setSelectedCategory(x);
-                }}
-                key={"category" + index}
-              >
-                {x.name}
-              </Link>
-            </span>
-          ));
-        })()}
-      </section>
-      <section
-        className="navBar"
-        style={
-          hoveredCategory
-            ? { height: "200px", opacity: 1, padding: "5%" }
-            : { height: "0px", opacity: 0 }
-        }
+    <>
+      <nav
+        className="navBarWrapper PCView"
+        onMouseLeave={() => setOpenFlag(null)}
       >
-        {(() => {
-          return hoveredCategory?.subCategories?.map((x, index) => (
-            <span
-              className="subCategoryItem"
-              key={"subCategory" + index + x.name}
-            >
-              <Link
-                to="/Category"
-                onClick={() => categoriesStore.setSelectedCategory(x)}
+        <section className="navBarHeader">
+          <span>
+            <Link to={"/Home"} onMouseEnter={() => setOpenFlag(null)}>
+              Početna
+            </Link>
+          </span>
+          {(() => {
+            return categoriesStore.categories.map((x, index) => (
+              <span>
+                <Link
+                  to={"/Category"}
+                  onMouseEnter={() => setOpenFlag(x)}
+                  onClick={() => {
+                    setOpenFlag(x);
+                    categoriesStore.setSelectedCategory(x);
+                  }}
+                  key={"category" + index}
+                >
+                  {x.name}
+                </Link>
+              </span>
+            ));
+          })()}
+        </section>
+        <section
+          className="navBar"
+          style={openFlag ? { opacity: 1, padding: "5%" } : { opacity: 0 }}
+        >
+          {(() => {
+            return openFlag?.subCategories?.map((x, index) => (
+              <span
+                className="subCategoryItem"
+                key={"subCategory" + index + x.name}
               >
-                {x.name}
-              </Link>
-            </span>
-          ));
-        })()}
-      </section>
-    </nav>
+                <Link
+                  to="/Category"
+                  onClick={() => categoriesStore.setSelectedCategory(x)}
+                >
+                  {x.name}
+                </Link>
+              </span>
+            ));
+          })()}
+        </section>
+      </nav>
+      <nav className="navBarWrapper MobileView">
+        <section className="navBarHeader">
+          <button onClick={() => setOpenFlag({} as Category)}>test</button>
+          <button onClick={() => setOpenFlag(null)}>test</button>
+        </section>
+        <section
+          className="navBar"
+          style={
+            openFlag
+              ? { opacity: 1, padding: "5%", width: "100%" }
+              : { opacity: 0, width: 0 }
+          }
+        >
+          {(() => {
+            return categoriesStore.categories.map((x, index) => (
+              <>
+                <span>
+                  <Link
+                    to={"/Category"}
+                    onMouseEnter={() => setOpenFlag(x)}
+                    onClick={() => {
+                      setOpenFlag(x);
+                      categoriesStore.setSelectedCategory(x);
+                    }}
+                    key={"category" + index}
+                  >
+                    {x.name}
+                  </Link>
+                </span>
+                <hr />
+                <br />
+                {(() => {
+                  return x.subCategories?.map((y, index) => (
+                    <span
+                      className="subCategoryItem"
+                      key={"subCategory" + index + y.name}
+                    >
+                      <Link
+                        to="/Category"
+                        onClick={() => categoriesStore.setSelectedCategory(y)}
+                      >
+                        {y.name}
+                      </Link>
+                    </span>
+                  ));
+                })()}
+                <br />
+              </>
+            ));
+          })()}
+        </section>
+      </nav>
+    </>
   );
 }
 

@@ -21,10 +21,13 @@ function ArticleCard({ article }: IArticleCardProps) {
       }}
     >
       <img src={article.image} />
-      <h2>{article.name}</h2>
-      <h3>{article.author.name}</h3>
-      <hr />
-      <p>{article.description}</p>
+      <div className="cardContent">
+        <h2>{article.name}</h2>
+        <h3>{article.author.name}</h3>
+        <hr />
+        <p>{article.description}</p>
+      </div>
+      
     </div>
   );
 }

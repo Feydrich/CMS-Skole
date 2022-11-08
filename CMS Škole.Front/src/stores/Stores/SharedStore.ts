@@ -9,7 +9,7 @@ const apiActions = {};
 
 export default class SharedStore {
   isLoading: boolean = false;
-  siteSettings: SiteInfo = { name: "Placeholder", images: [] };
+  siteSettings: SiteInfo = { name: "Osnovna škola Sesvetska Sela", images: [] };
   notificationParameters: {
     style: "none" | "success" | "error" | "warning" | "info";
     message: string;

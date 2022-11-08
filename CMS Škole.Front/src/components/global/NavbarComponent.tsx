@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Category } from "../../models/Category";
 import { useStore } from "../../stores/StoreManager";
+import { Icon } from "@iconify/react";
 
 function NavbarComponent() {
   const navbarPreflight = useRef(true);
@@ -30,19 +31,17 @@ function NavbarComponent() {
           </span>
           {(() => {
             return categoriesStore.categories.map((x, index) => (
-              <span>
-                <Link
-                  to={"/Category"}
-                  onMouseEnter={() => setOpenFlag(x)}
-                  onClick={() => {
-                    setOpenFlag(x);
-                    categoriesStore.setSelectedCategory(x);
-                  }}
-                  key={"category" + index}
-                >
-                  {x.name}
-                </Link>
-              </span>
+              <Link
+                to={"/Category"}
+                onMouseEnter={() => setOpenFlag(x)}
+                onClick={() => {
+                  setOpenFlag(x);
+                  categoriesStore.setSelectedCategory(x);
+                }}
+                key={"category" + index}
+              >
+                <span>{x.name}<Icon icon="bxs:chevron-down" /></span>
+              </Link>
             ));
           })()}
         </section>

@@ -1,3 +1,9 @@
+$primary-color: rgb(66, 161, 216);
+$primary-color-dark: rgb(7, 104, 159);
+$primary-color-transparent: rgb(66, 161, 216, 0.8);
+
+$secondary-color: rgb(140, 199, 144);
+
 * {
   margin: 0;
   -webkit-box-sizing: border-box !important;
@@ -7,6 +13,7 @@
   font-family: Agane;
   box-sizing: border-box;
 }
+
 body {
   background-color: #f5f5f5;
 }
@@ -56,6 +63,20 @@ h5 {
   text-decoration: none;
   text-transform: uppercase;
   color: white;
+  display: inline-block;
+  padding: 20px 20px;
+  align-content: center;
+
+  svg {
+    position: relative;
+    top: 0.1rem;
+    margin-left: 0.4rem;
+  }
+}
+
+.navBarWrapper a:hover {
+  background-color: $primary-color;
+  transition: background-color 0.2s;
 }
 
 .loadingOverlay {
@@ -90,10 +111,11 @@ h5 {
 .navBarWrapper span {
   cursor: pointer;
 }
+
 .navBarHeader {
   width: 100%;
   height: 60px;
-  background-color: lightgray;
+  background-color: $primary-color-dark;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -104,7 +126,7 @@ h5 {
   height: 200px;
   position: absolute;
   transition: all 0.5s;
-  background-color: gray;
+  background-color: $primary-color-transparent;
   overflow: hidden;
 }
 
@@ -132,8 +154,33 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5%;
+  padding: 25px 5%;
   z-index: 1000;
+
+  h1 {
+    font-size: 1.5rem;
+    color: $primary-color;
+    font-weight: 100;
+  }
+
+  .items {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    button {
+      color: white;
+      background-color: $primary-color-dark;
+      padding: 0.5rem;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+
+      svg {
+        margin-right: 5px;
+      }
+    }
+  }
 }
 
 .mainContent {
@@ -147,6 +194,7 @@ h5 {
     transform: translateY(-10px);
     opacity: 0.5;
   }
+
   to {
     transform: translateY(0px);
     opacity: 1;
@@ -156,19 +204,24 @@ h5 {
 .articleCard {
   width: 30%;
   margin: 1% 1.5%;
-  height: 400px;
   float: left;
-  background-color: lightgray;
-  padding: 20px;
+  background-color: $primary-color;
   overflow: hidden;
   animation-name: fadeIn;
   animation-duration: 1.5s;
   cursor: pointer;
   transition: background-color 0.5s;
+  border-bottom-right-radius: 10px;
+
+  .cardContent {
+    margin: 20px;
+    height: 250px;
+    text-overflow: ellipsis;
+  }
 }
 
 .articleCard:hover {
-  background-color: gray;
+  background-color: $secondary-color;
 }
 
 img {

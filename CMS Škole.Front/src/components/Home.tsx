@@ -4,6 +4,8 @@ import { useStore } from "../stores/StoreManager";
 import ArticleCard from "./Articles/ArticleCard";
 import Carousel from "./global/Carousel";
 
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 function Home() {
   const homePreflight = useRef(true);
 

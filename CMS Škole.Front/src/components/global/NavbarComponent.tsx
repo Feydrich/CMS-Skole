@@ -40,14 +40,21 @@ function NavbarComponent() {
                 }}
                 key={"category" + index}
               >
-                <span>{x.name}<Icon icon="bxs:chevron-down" /></span>
+                <span>
+                  {x.name}
+                  <Icon icon="bxs:chevron-down" />
+                </span>
               </Link>
             ));
           })()}
         </section>
         <section
           className="navBar"
-          style={openFlag ? { opacity: 1, padding: "5%" } : { opacity: 0 }}
+          style={
+            openFlag
+              ? { opacity: 1, padding: "5%" }
+              : { opacity: 0, pointerEvents: "none" }
+          }
         >
           {(() => {
             return openFlag?.subCategories?.map((x, index) => (

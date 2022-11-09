@@ -1,5 +1,6 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
-import { fakeCategories } from "../../helper/dummyData";
+import { toast } from "react-toastify";
+import { fakeCategories, fakeUsers } from "../../helper/dummyData";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
 import { User } from "../../models/User";
@@ -86,5 +87,15 @@ export default class SharedStore {
         "https://images2.alphacoders.com/121/1213770.jpg",
       ],
     };
+  };
+
+  tryLogin = (mail: string, password: string) => {
+    let found = fakeUsers.find((x) => x.mail === mail);
+    if (found) {
+      found.password === password && this.setUser(found);
+      toast("Welcome: " + found.name);
+    } else {
+      toast("Unable to login");
+    }
   };
 }

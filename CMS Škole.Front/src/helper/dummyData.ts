@@ -1,5 +1,6 @@
 import { Article } from "../models/Article";
 import { Category } from "../models/Category";
+import { User } from "../models/User";
 
 export const fakeCategories: Category[] = [
   {
@@ -73,7 +74,7 @@ export const fakeArticles: Article[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
     author: {
-      name: "Professor 1",
+      name: "Developer",
     },
     image: "https://images2.alphacoders.com/121/1213770.jpg",
   },
@@ -84,7 +85,7 @@ export const fakeArticles: Article[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
     author: {
-      name: "Professor 1",
+      name: "Developer",
     },
     image: "https://www.enjpg.com/img/2020/cute-cat-2.jpg",
   },
@@ -95,8 +96,14 @@ export const fakeArticles: Article[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
     author: {
-      name: "Professor 1",
+      name: "Developer",
     },
     image: "https://wallpapers.com/images/hd/cute-cat-fuqkmbcov67c1nif.jpg",
   },
+];
+
+export const fakeUsers: User[] = [
+  { name: "Developer", mail: "dev@gmail.com", password: "dev" },
+  { name: "Tester", mail: "tester@gmail.com", password: "dev" },
+  { name: "Professor 1", mail: "1@gmail.com", password: "dev" },
 ];

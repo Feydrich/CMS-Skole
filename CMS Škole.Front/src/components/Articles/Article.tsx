@@ -1,3 +1,4 @@
+import { Markup } from "interweave";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Article } from "../../models/Article";
@@ -24,19 +25,7 @@ function ArticlePage() {
       </b>
       <img src={articleStore.selectedArticle?.image} />
 
-      {(() => {
-        let x = [];
-        for (let i = 0; i < 10; i++) {
-          x.push(articleStore.selectedArticle?.description);
-        }
-
-        return x.map((y) => (
-          <>
-            <p>{y}</p>
-            <br />
-          </>
-        ));
-      })()}
+      <Markup content={articleStore.selectedArticle?.content} />
     </main>
   );
 }

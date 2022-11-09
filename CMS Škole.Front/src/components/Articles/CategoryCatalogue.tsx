@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Category } from "../models/Category";
-import { useStore } from "../stores/StoreManager";
-import ArticleCard from "./Articles/ArticleCard";
+import { Category } from "../../models/Category";
+import { useStore } from "../../stores/StoreManager";
+import ArticleCard from "./ArticleCard";
 
 function CategoryCatalogue() {
   const categoryCataloguePreflight = useRef(true);

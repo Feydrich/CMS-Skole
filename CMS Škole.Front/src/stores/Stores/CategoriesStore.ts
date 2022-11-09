@@ -37,7 +37,7 @@ export default class CategoriesStore {
   latestArticles = () => {
     this.articleList = fakeArticles;
   };
-  getArticles = (Category: Category) => {
+  getArticles = (Category?: Category, User?: User) => {
     const randomCase = Math.floor(Math.random() * 2);
     let local: Article[] = [];
     switch (randomCase) {
@@ -54,6 +54,12 @@ export default class CategoriesStore {
         break;
     }
     this.articleList = local;
+
+    /* DELETE ME */
+    if (User) {
+      let list = fakeArticles.filter((x) => x.author.name === User.name);
+      this.articleList = list;
+    }
   };
   setSelectedCategory = (x: Category | undefined) => {
     this.selectedCategory = x;

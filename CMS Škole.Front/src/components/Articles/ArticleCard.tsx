@@ -12,6 +12,10 @@ interface IArticleCardProps {
 function ArticleCard({ article }: IArticleCardProps) {
   const { articleStore } = useStore();
   const navigate = useNavigate();
+  const formattedDate = article.creationDate.getDate() + "."
+      + article.creationDate.getMonth() + "."
+      + article.creationDate.getFullYear() + ".";
+
   return (
     <div
       className="articleCard"
@@ -23,7 +27,7 @@ function ArticleCard({ article }: IArticleCardProps) {
       <img src={article.image} />
       <div className="cardContent">
         <h2>{article.name}</h2>
-        <h3>{article.author.name}</h3>
+        <h3>{formattedDate  + " - " + article.author.name}</h3>
         <hr />
         <p>{article.description}</p>
       </div>

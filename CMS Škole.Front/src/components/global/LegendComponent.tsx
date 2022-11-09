@@ -17,9 +17,10 @@ function LegendComponent() {
   // TODO postaviti prijava / odjava
   return (
     <div className="legend">
-      <h1>{sharedStore.siteSettings.name}</h1>
+      <Link to="/">
+        <h1>{sharedStore.siteSettings.name}</h1>
+      </Link>
       <div className="items">
-        <button>Item</button>
         <button><Icon icon="akar-icons:lock-off" />Prijava</button>
       </div>
     </div>

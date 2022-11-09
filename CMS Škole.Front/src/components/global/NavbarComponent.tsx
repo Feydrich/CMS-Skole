@@ -16,6 +16,35 @@ function NavbarComponent() {
 
   const { categoriesStore } = useStore();
   const [openFlag, setOpenFlag] = useState<Category | null>(null);
+  const animateHamburger = (e :HTMLButtonElement) => {
+    let top = e.getElementsByClassName("top")[0] as HTMLElement;
+    let middle = e.getElementsByClassName("middle")[0] as HTMLElement;
+    let bottom = e.getElementsByClassName("bottom")[0] as HTMLElement;
+
+    if (openFlag) {
+      top.style.transform = "";
+      top.style.top = "0";
+
+      middle.style.transform = "";
+      middle.style.left = "0";
+
+      bottom.style.transform = "";
+      bottom.style.top = "20px";
+
+      setOpenFlag(null);
+    } else {
+      top.style.transform = "rotate(-30deg)";
+      top.style.top = "3px";
+
+      middle.style.transform = "rotate(90deg)";
+      middle.style.left = "12px";
+
+      bottom.style.transform = "rotate(30deg)";
+      bottom.style.top = "17px";
+
+      setOpenFlag({} as Category);
+    }
+  }
 
   return (
     <>
@@ -47,29 +76,32 @@ function NavbarComponent() {
         </section>
         <section
           className="navBar"
-          style={openFlag ? { opacity: 1, padding: "5%" } : { opacity: 0 }}
+          style={openFlag ? { opacity: 1, height: undefined} : { opacity: 0, height: 0}}
         >
           {(() => {
             return openFlag?.subCategories?.map((x, index) => (
-              <span
+              <Link
                 className="subCategoryItem"
                 key={"subCategory" + index + x.name}
+                to="/Category"
+                onClick={() => categoriesStore.setSelectedCategory(x)}
               >
-                <Link
-                  to="/Category"
-                  onClick={() => categoriesStore.setSelectedCategory(x)}
-                >
-                  {x.name}
-                </Link>
-              </span>
+                <span>{x.name}</span>
+              </Link>
             ));
           })()}
         </section>
       </nav>
       <nav className="navBarWrapper MobileView">
         <section className="navBarHeader">
-          <button onClick={() => setOpenFlag({} as Category)}>test</button>
-          <button onClick={() => setOpenFlag(null)}>test</button>
+          <button onClick={(e) => animateHamburger(e.currentTarget)}
+            className = "hamburgerMenu"
+          >
+            <div className="top"></div>
+            <div className="middle"></div>
+            <div className="bottom"></div>
+          </button>
+          <button><Icon icon="akar-icons:lock-off" />Prijava</button>
         </section>
         <section
           className="navBar"

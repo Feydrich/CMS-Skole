@@ -9,6 +9,8 @@ import LegendComponent from "./global/LegendComponent";
 import Login from "./global/Login";
 import NavbarComponent from "./global/NavbarComponent";
 import Home from "./Home";
+import Carousel from "./global/Carousel";
+
 
 function App() {
   const appPreFlight = useRef(true);
@@ -23,8 +25,9 @@ function App() {
     <>
       <BrowserRouter>
         <LegendComponent />
+        <NavbarComponent />
+        <Carousel />
         <div className="mainContent">
-          <NavbarComponent />
           <Routes>
             <Route path="/" element={<Navigate to="/Home" replace />} />
             <Route path="/Home" element={<Home />} />

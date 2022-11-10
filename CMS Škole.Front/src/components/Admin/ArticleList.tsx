@@ -1,14 +1,16 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
 import { useStore } from "../../stores/StoreManager";
 import ArticleCard from "../Articles/ArticleCard";
 
 function ArticleList() {
   const articleListPreflight = useRef(true);
+  const navigate = useNavigate();
 
-  const { sharedStore, categoriesStore } = useStore();
+  const { sharedStore, categoriesStore, articleStore } = useStore();
 
   useEffect(() => {
     if (articleListPreflight.current) {
@@ -23,7 +25,14 @@ function ArticleList() {
   return (
     <main>
       <section className="crudHeader">
-        <button>Dodaj novo</button>
+        <button
+          onClick={() => {
+            articleStore.setArticleForCreation({} as Article);
+            navigate("/Editor");
+          }}
+        >
+          Dodaj novo
+        </button>
       </section>
       <h1>Vaše objave</h1>
       {categoriesStore.articleList

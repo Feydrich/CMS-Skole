@@ -22,10 +22,11 @@ export default class ArticleStore {
       articleForEdit: observable,
 
       //Methods: action
+      setArticleForCreation: action,
+      setArticleForEdit: action,
 
       //dataQueries
       getSelectedArticles: action,
-      setArticleForEdit: action,
 
       //Calculated values: computed
     });
@@ -43,5 +44,8 @@ export default class ArticleStore {
       (this.articleForEdit = this.categoryStore.articleList.find(
         (x) => x.id === id
       ));
+  };
+  setArticleForCreation = (data: Article) => {
+    this.articleForEdit = data;
   };
 }

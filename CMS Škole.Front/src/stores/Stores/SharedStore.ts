@@ -33,6 +33,9 @@ export default class SharedStore {
       setUser: action,
       setLoginIsOpen: action,
       tryLogin: action,
+      createUser: action,
+      editUser: action,
+      deleteUser: action,
 
       //Calculated values: computed
     });
@@ -65,13 +68,40 @@ export default class SharedStore {
     this.userList = fakeUsers;
   };
 
+  /* FIX */
+  createUser = (data: User) => {
+    this.userList?.push({ ...data, id: new Date().toISOString() });
+    toast('"' + data.name + '"je bio uspješno stvoren');
+  };
+  editUser = (data: User) => {
+    if (this.userList) {
+      let local = this.userList.map((x) => {
+        if (x.id === data.id) {
+          return data;
+        } else return x;
+      });
+      this.userList = local;
+      toast('"' + data.name + '"je bio uspješno izmijenjen');
+    }
+  };
+  deleteUser = (data: User) => {
+    if (this.userList) {
+      let local = this.userList.filter((x) => {
+        return x.id !== data.id;
+      });
+
+      this.userList = local;
+      toast('"' + data.name + '"je bio uspješno izbrisan');
+    }
+  };
+
   tryLogin = (mail: string, password: string) => {
     let found = fakeUsers.find((x) => x.mail === mail);
     if (found && found.password === password) {
       this.setUser(found);
       toast("Welcome: " + found.name);
     } else {
-      toast("Unable to login");
+      toast("Greška prilikom unosa");
     }
   };
 }

@@ -103,7 +103,25 @@ export const fakeArticles: Article[] = [
 ];
 
 export const fakeUsers: User[] = [
-  { name: "Developer", mail: "dev@gmail.com", password: "dev" },
-  { name: "Tester", mail: "tester@gmail.com", password: "dev" },
-  { name: "Professor 1", mail: "1@gmail.com", password: "dev" },
+  {
+    id: "1",
+    name: "Developer",
+    mail: "dev@gmail.com",
+    password: "dev",
+    roles: ["Admin"],
+  },
+  {
+    id: "2",
+    name: "Tester",
+    mail: "tester@gmail.com",
+    password: "dev",
+    roles: ["Regular user"],
+  },
+  {
+    id: "3",
+    name: "Professor 1",
+    mail: "1@gmail.com",
+    password: "dev",
+    roles: ["Guest"],
+  },
 ];

@@ -39,12 +39,10 @@ export default class CategoriesStore {
   };
   latestArticles = () => {
     /* DELETE ME */
-    toast("latest");
     this.articleList = fakeArticles;
   };
   getArticles = (Category?: Category, User?: User) => {
     /* DELETE ME */
-    toast("get");
     if (User && this.articleList) {
       let list = this.articleList.filter((x) => x.author.name === User.name);
       this.articleList = list;
@@ -55,7 +53,6 @@ export default class CategoriesStore {
   };
   editArticle = (data: Article) => {
     /* DELETE */
-    toast("entered edit" + JSON.stringify(data));
     if (this.articleList) {
       let local = this.articleList.map((x) => {
         if (x.id === data.id) {
@@ -64,9 +61,12 @@ export default class CategoriesStore {
       });
       this.articleList = local;
     }
+    toast('"' + data.name + '"je bio uspješno izmijenjen');
   };
   createArticle = (data: Article) => {
     /* DELETE */
-    this.articleList?.push(data);
+    // this.articleList?.push({ ...data, creationDate: new Date() });
+    // toast('"' + data.name + '"je bio uspješno stvoren');
+    toast("this is bugged, come back later");
   };
 }

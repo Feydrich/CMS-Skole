@@ -30,7 +30,7 @@ function Editor() {
         <TextField
           id="filled-multiline-flexible"
           label="Naslov"
-          value={localArticle.name}
+          value={localArticle.name ?? ""}
           onChange={(e) => {
             setLocalArticle({ ...localArticle, name: e.target.value });
           }}
@@ -40,7 +40,7 @@ function Editor() {
           label="Kratki opis"
           multiline
           maxRows={4}
-          value={localArticle.description}
+          value={localArticle.description ?? ""}
           onChange={(e) => {
             setLocalArticle({ ...localArticle, description: e.target.value });
           }}
@@ -58,9 +58,10 @@ function Editor() {
         </span>
         <button
           onClick={() => {
-            if (articleStore.articleForEdit) {
+            if (articleStore.articleForEdit?.id) {
               categoriesStore.editArticle(localArticle);
             } else {
+              categoriesStore.createArticle(localArticle);
             }
             navigate("/Home");
           }}

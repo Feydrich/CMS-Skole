@@ -18,6 +18,8 @@ export default class SharedStore {
     key: number;
   }[] = [];
   user: User | null = null;
+  userList: User[] = [];
+  loginIsOpen: boolean = false;
 
   constructor() {
     makeObservable(this, {
@@ -26,14 +28,18 @@ export default class SharedStore {
       siteSettings: observable,
       notificationParameters: observable,
       user: observable,
+      userList: observable,
+      loginIsOpen: observable,
 
       //Methods: action
       changeLoading: action,
       createNotification: action,
       removeNotification: action,
-      getImagesForCarousel: action,
 
       //dataQueries
+      getImagesForCarousel: action,
+      getUsers: action,
+      setLoginIsOpen: action,
 
       //Calculated values: computed
     });
@@ -45,6 +51,9 @@ export default class SharedStore {
 
   setUser = (data: User | null) => {
     this.user = data;
+  };
+  setLoginIsOpen = (data: boolean) => {
+    this.loginIsOpen = data;
   };
 
   createNotification = (
@@ -89,10 +98,14 @@ export default class SharedStore {
     };
   };
 
+  getUsers = () => {
+    this.userList = fakeUsers;
+  };
+
   tryLogin = (mail: string, password: string) => {
     let found = fakeUsers.find((x) => x.mail === mail);
-    if (found) {
-      found.password === password && this.setUser(found);
+    if (found && found.password === password) {
+      this.setUser(found);
       toast("Welcome: " + found.name);
     } else {
       toast("Unable to login");

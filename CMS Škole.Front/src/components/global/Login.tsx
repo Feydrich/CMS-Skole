@@ -1,3 +1,12 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
@@ -22,69 +31,86 @@ function Login() {
   }>({ username: "", password: "" });
 
   return (
-    <div className="loginPopUp">
+    <Dialog
+      open={sharedStore.loginIsOpen}
+      onClose={() => sharedStore.setLoginIsOpen(false)}
+    >
       {!sharedStore.user ? (
         <>
-          <span>
-            <h2>Login</h2>
-          </span>
-          <span>
-            <label>Username:</label>
-            <input
-              value={localUser.username}
-              onChange={(e) =>
-                setLocalUser({ ...localUser, username: e.target.value })
+          <DialogTitle>Login</DialogTitle>
+          <DialogContent>
+            <div>Unesite vaše podatke za pristup web stranici</div>
+            <div>
+              <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                defaultValue="korisnik@domena.hr"
+                value={localUser.username}
+                onChange={(e) =>
+                  setLocalUser({ ...localUser, username: e.target.value })
+                }
+              />
+              <br />
+              <TextField
+                id="outlined-password-input"
+                label="Šifra"
+                type="password"
+                autoComplete="current-password"
+                value={localUser.password}
+                onChange={(e) =>
+                  setLocalUser({ ...localUser, password: e.target.value })
+                }
+              />
+            </div>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              onClick={() =>
+                sharedStore.tryLogin(localUser.username, localUser.password)
               }
-            ></input>
-          </span>
-          <span>
-            <label>Password:</label>
-            <input
-              value={localUser.password}
-              onChange={(e) =>
-                setLocalUser({ ...localUser, password: e.target.value })
-              }
-              type="password"
-            ></input>
-          </span>
-          <span>
-            <button
-              onClick={() => {
-                sharedStore.tryLogin(localUser.username, localUser.password);
-              }}
             >
               Login
-            </button>
-          </span>
+            </Button>
+          </DialogActions>
         </>
       ) : (
         <>
-          <h2>Vaš profil:</h2>
-          <hr />
+          <DialogTitle>Login</DialogTitle>
+          <DialogContent>
+            <h2>Vaš profil:</h2>
+            <hr />
 
-          <Link to="/ArticleList">Editor</Link>
-          {Object.keys(sharedStore.user)
-            .filter((x) => x !== "jwt" && x !== "password")
-            .map((x) => (
-              <span>
-                <b>{x}: </b>
-                {sharedStore.user![x as keyof User]}
-              </span>
-            ))}
+            <Link
+              to="/ArticleList"
+              onClick={() => sharedStore.setLoginIsOpen(false)}
+            >
+              Editor
+            </Link>
+            {Object.keys(sharedStore.user)
+              .filter((x) => x !== "jwt" && x !== "password")
+              .map((x) => (
+                <span>
+                  <b>{x}: </b>
+                  {sharedStore.user![x as keyof User]}
+                </span>
+              ))}
+          </DialogContent>
 
-          <span>
-            <button
+          <DialogActions>
+            <Button
               onClick={() => {
                 sharedStore.setUser(null);
                 setLocalUser({ username: "", password: "" });
               }}
             >
               Logout
-            </button>
-          </span>
+            </Button>
+          </DialogActions>
         </>
       )}
-    </div>
+    </Dialog>
   );
 }
 

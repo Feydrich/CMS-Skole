@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useStore } from "../../stores/StoreManager";
 import { Icon } from "@iconify/react";
-import Login from "./Login";
 
 function LegendComponent() {
   const legendPreflight = useRef(true);
@@ -15,22 +14,25 @@ function LegendComponent() {
   }, []);
   const { sharedStore } = useStore();
 
-  useEffect(() => {
-    setLoginOpen(false);
-  }, [sharedStore.user]);
-
-  const [loginOpen, setLoginOpen] = useState(false);
-
   // TODO postaviti prijava / odjava
   return (
     <div className="legend">
-      <h1>{sharedStore.siteSettings.name}</h1>
+      <Link to="/">
+        <h1>{sharedStore.siteSettings.name}</h1>
+      </Link>
       <div className="items">
-        <button onClick={() => setLoginOpen(!loginOpen)}>
-          <Icon icon="akar-icons:lock-off" />
-          {sharedStore.user ? sharedStore.user.name : "Prijava"}
+        <button
+          onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
+        >
+          {sharedStore.user ? (
+            sharedStore.user.name
+          ) : (
+            <>
+              <Icon icon="akar-icons:lock-off" />
+              Prijava
+            </>
+          )}
         </button>
-        {loginOpen && <Login />}
       </div>
     </div>
   );

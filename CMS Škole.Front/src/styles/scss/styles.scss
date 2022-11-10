@@ -1,7 +1,8 @@
 $primary-color: rgb(66, 161, 216);
 $primary-color-dark: rgb(7, 104, 159);
-$primary-color-transparent: rgb(66, 161, 216, 0.8);
+$primary-color-transparent: rgb(66, 161, 216, 0.9);
 $secondary-color: rgb(140, 199, 144);
+$secondary-color-dark: rgb(61, 129, 65);
 
 * {
   margin: 0;
@@ -58,26 +59,6 @@ h5 {
   background-color: gray;
 }
 
-.navBarWrapper a {
-  text-decoration: none;
-  text-transform: uppercase;
-  color: white;
-  display: inline-block;
-  padding: 20px 20px;
-  align-content: center;
-
-  svg {
-    position: relative;
-    top: 0.1rem;
-    margin-left: 0.4rem;
-  }
-}
-
-.navBarWrapper a:hover {
-  background-color: $primary-color;
-  transition: background-color 0.2s;
-}
-
 .loadingOverlay {
   z-index: 2;
   position: fixed;
@@ -91,24 +72,33 @@ h5 {
 }
 
 .navBarWrapper {
-  width: 100%;
   position: sticky;
   background-color: lightgray;
   z-index: 1000;
-  min-height: 60px;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    display: inline-block;
+    align-content: center;
+
+    svg {
+      position: relative;
+      top: 0.1rem;
+      margin-left: 0.4rem;
+    }
+  }
 }
 
 .PCView {
-  top: 40px;
+  top: 50px;
+  margin: 0 5%;
 }
 
 .MobileView {
   top: 0px;
   display: none;
-}
-
-.navBarWrapper span {
-  cursor: pointer;
 }
 
 .navBarHeader {
@@ -118,21 +108,82 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  padding: 0 2rem;
+  text-align: center;
+
+  a {
+    padding: 20px 0;
+    width: 100%;
+    transition: background-color 0.2s;
+  }
+
+  a:hover {
+    background-color: $primary-color;
+  }
+
+  span {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+  }
+
+  button {
+    color: white;
+    background-color: $primary-color;
+    padding: 0.5rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: dashed transparent 1px;
+
+    svg {
+      margin-right: 5px;
+    }
+  }
+
+  button:active {
+    background-color: $primary-color;
+    border: dashed $secondary-color 1px;
+  }
 }
 
 .navBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
   width: 100%;
   height: 200px;
   position: absolute;
   transition: all 0.5s;
   background-color: $primary-color-transparent;
   overflow: hidden;
+  padding: 2rem;
+
+  hr {
+    background-color: $secondary-color;
+  }
 }
 
 .subCategoryItem {
-  width: 20%;
-  height: 20%;
-  float: left;
+  display: block;
+  width: 20rem;
+  height: fit-content;
+  padding: 0.5rem;
+  margin-right: 2rem;
+  transition: background-color 0.2s;
+  border: dashed transparent 3px;
+}
+
+.subCategoryItem:hover {
+  background-color: $primary-color-dark;
+}
+
+.subCategoryItem:active {
+  border: dashed $secondary-color 3px;
 }
 
 .subCategoryCatalogue {
@@ -156,6 +207,10 @@ h5 {
   padding: 25px 5%;
   z-index: 1001;
 
+  a {
+    text-decoration: none;
+  }
+
   h1 {
     font-size: 1.5rem;
     color: $primary-color;
@@ -175,6 +230,8 @@ h5 {
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.2s;
+      border: dashed transparent 3px;
 
       svg {
         margin-right: 5px;
@@ -183,6 +240,15 @@ h5 {
       &:hover {
         background-color: $primary-color;
       }
+    }
+
+    button:hover {
+      background-color: $primary-color;
+    }
+
+    button:active {
+      background-color: $primary-color;
+      border: dashed $secondary-color-dark 3px;
     }
   }
 }
@@ -214,18 +280,28 @@ h5 {
   animation-name: fadeIn;
   animation-duration: 1.5s;
   cursor: pointer;
-  transition: background-color 0.5s;
+  transition: all 0.5s;
   border-bottom-right-radius: 10px;
 
   .cardContent {
     margin: 20px;
-    height: 250px;
     text-overflow: ellipsis;
+
+    h3 {
+      font-weight: 100;
+      font-size: 0.9rem;
+    }
+
+    p {
+      margin-top: 1rem;
+    }
   }
 }
 
 .articleCard:hover {
   background-color: $secondary-color;
+  transform: scale(1.02, 1.03);
+  box-shadow: 0px 4px 10px rgb(0 0 0 / 20%);
 }
 
 img {
@@ -239,11 +315,11 @@ img {
 }
 
 main {
-  margin-top: 20px;
   background-color: white;
   animation-name: fadeIn;
   animation-duration: 1.5s;
   min-height: 80vh;
+  margin-top: 20px;
 }
 
 .loginPopUp {
@@ -298,4 +374,35 @@ main {
 
 .previewBox {
   overflow: auto;
+}
+
+button.hamburgerMenu {
+  position: relative;
+  width: 30px;
+  height: 24px;
+  background-color: transparent;
+
+  div {
+    background-color: white;
+    width: 100%;
+    height: 4px;
+    border-radius: 5px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+
+  .top {
+    top: 0;
+    left: 0;
+  }
+
+  .middle {
+    top: 10px;
+    left: 0;
+  }
+
+  .bottom {
+    top: 20px;
+    left: 0;
+  }
 }

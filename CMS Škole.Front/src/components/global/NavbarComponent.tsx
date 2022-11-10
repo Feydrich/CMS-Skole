@@ -14,8 +14,42 @@ function NavbarComponent() {
     }
   }, []);
 
-  const { categoriesStore } = useStore();
+  const { sharedStore, categoriesStore } = useStore();
   const [openFlag, setOpenFlag] = useState<Category | null>(null);
+
+  useEffect(() => {
+    sharedStore.setLoginIsOpen(false);
+  }, [sharedStore.user]);
+
+  const animateHamburger = (e: HTMLButtonElement) => {
+    let top = e.getElementsByClassName("top")[0] as HTMLElement;
+    let middle = e.getElementsByClassName("middle")[0] as HTMLElement;
+    let bottom = e.getElementsByClassName("bottom")[0] as HTMLElement;
+
+    if (openFlag) {
+      top.style.transform = "";
+      top.style.top = "0";
+
+      middle.style.transform = "";
+      middle.style.left = "0";
+
+      bottom.style.transform = "";
+      bottom.style.top = "20px";
+
+      setOpenFlag(null);
+    } else {
+      top.style.transform = "rotate(-30deg)";
+      top.style.top = "3px";
+
+      middle.style.transform = "rotate(90deg)";
+      middle.style.left = "12px";
+
+      bottom.style.transform = "rotate(30deg)";
+      bottom.style.top = "17px";
+
+      setOpenFlag({} as Category);
+    }
+  };
 
   return (
     <>
@@ -58,25 +92,40 @@ function NavbarComponent() {
         >
           {(() => {
             return openFlag?.subCategories?.map((x, index) => (
-              <span
+              <Link
                 className="subCategoryItem"
                 key={"subCategory" + index + x.name}
+                to="/Category"
+                onClick={() => categoriesStore.setSelectedCategory(x)}
               >
-                <Link
-                  to="/Category"
-                  onClick={() => categoriesStore.setSelectedCategory(x)}
-                >
-                  {x.name}
-                </Link>
-              </span>
+                <span>{x.name}</span>
+              </Link>
             ));
           })()}
         </section>
       </nav>
       <nav className="navBarWrapper MobileView">
         <section className="navBarHeader">
-          <button onClick={() => setOpenFlag({} as Category)}>test</button>
-          <button onClick={() => setOpenFlag(null)}>test</button>
+          <button
+            onClick={(e) => animateHamburger(e.currentTarget)}
+            className="hamburgerMenu"
+          >
+            <div className="top"></div>
+            <div className="middle"></div>
+            <div className="bottom"></div>
+          </button>
+          <button
+            onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
+          >
+            {sharedStore.user ? (
+              sharedStore.user.name
+            ) : (
+              <>
+                <Icon icon="akar-icons:lock-off" />
+                Prijava
+              </>
+            )}
+          </button>
         </section>
         <section
           className="navBar"
@@ -90,9 +139,13 @@ function NavbarComponent() {
             return categoriesStore.categories.map((x, index) => (
               <>
                 <span>
+                  <Link to={"/Home"}>Početna</Link>
+                </span>
+                <hr />
+                <br />
+                <span>
                   <Link
                     to={"/Category"}
-                    onMouseEnter={() => setOpenFlag(x)}
                     onClick={() => {
                       setOpenFlag(x);
                       categoriesStore.setSelectedCategory(x);

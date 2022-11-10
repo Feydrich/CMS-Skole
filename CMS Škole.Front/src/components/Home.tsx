@@ -2,9 +2,9 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { useStore } from "../stores/StoreManager";
 import ArticleCard from "./Articles/ArticleCard";
-import Carousel from "./global/Carousel";
 
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Carousel from "./global/Carousel";
 
 function Home() {
   const homePreflight = useRef(true);

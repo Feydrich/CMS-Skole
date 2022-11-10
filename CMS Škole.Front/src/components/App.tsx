@@ -28,9 +28,10 @@ function App() {
     <>
       <BrowserRouter>
         <LegendComponent />
-        <div className="mainContent">
-          <NavbarComponent />
+        <NavbarComponent />
+        {sharedStore.loginIsOpen && <Login />}
 
+        <div className="mainContent">
           <ToastContainer />
           <Routes>
             <Route path="/" element={<Navigate to="/Home" replace />} />

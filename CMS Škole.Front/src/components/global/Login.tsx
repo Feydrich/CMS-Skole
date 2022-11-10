@@ -1,5 +1,16 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { User } from "../../models/User";
 import { useStore } from "../../stores/StoreManager";
 
@@ -14,17 +25,92 @@ function Login() {
     }
   }, []);
 
-  const [loginMode, setLoginMode] = useState(true);
+  const [localUser, setLocalUser] = useState<{
+    username: string;
+    password: string;
+  }>({ username: "", password: "" });
 
   return (
-    <button
-      onClick={(e) => {
-        e.preventDefault();
-        sharedStore.setUser({ username: "test" } as User);
-      }}
+    <Dialog
+      open={sharedStore.loginIsOpen}
+      onClose={() => sharedStore.setLoginIsOpen(false)}
     >
-      Login
-    </button>
+      {!sharedStore.user ? (
+        <>
+          <DialogTitle>Login</DialogTitle>
+          <DialogContent>
+            <div>Unesite vaše podatke za pristup web stranici</div>
+            <div>
+              <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                defaultValue="korisnik@domena.hr"
+                value={localUser.username}
+                onChange={(e) =>
+                  setLocalUser({ ...localUser, username: e.target.value })
+                }
+              />
+              <br />
+              <TextField
+                id="outlined-password-input"
+                label="Šifra"
+                type="password"
+                autoComplete="current-password"
+                value={localUser.password}
+                onChange={(e) =>
+                  setLocalUser({ ...localUser, password: e.target.value })
+                }
+              />
+            </div>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              onClick={() =>
+                sharedStore.tryLogin(localUser.username, localUser.password)
+              }
+            >
+              Login
+            </Button>
+          </DialogActions>
+        </>
+      ) : (
+        <>
+          <DialogTitle>Login</DialogTitle>
+          <DialogContent>
+            <h2>Vaš profil:</h2>
+            <hr />
+
+            <Link
+              to="/ArticleList"
+              onClick={() => sharedStore.setLoginIsOpen(false)}
+            >
+              Editor
+            </Link>
+            {Object.keys(sharedStore.user)
+              .filter((x) => x !== "jwt" && x !== "password")
+              .map((x) => (
+                <span>
+                  <b>{x}: </b>
+                  {sharedStore.user![x as keyof User]}
+                </span>
+              ))}
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              onClick={() => {
+                sharedStore.setUser(null);
+                setLocalUser({ username: "", password: "" });
+              }}
+            >
+              Logout
+            </Button>
+          </DialogActions>
+        </>
+      )}
+    </Dialog>
   );
 }
 

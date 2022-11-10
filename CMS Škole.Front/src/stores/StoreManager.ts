@@ -1,17 +1,23 @@
-import { createContext, useContext } from "react"
-import SharedStore from "./SharedStore/SharedStore";
+import { createContext, useContext } from "react";
+import ArticleStore from "./Stores/ArticleStore";
+import CategoriesStore from "./Stores/CategoriesStore";
+import SharedStore from "./Stores/SharedStore";
 
 interface Store {
-    sharedStore: SharedStore;
+  sharedStore: SharedStore;
+  categoriesStore: CategoriesStore;
+  articleStore: ArticleStore;
 }
-const sharedStore = new SharedStore()
+const sharedStore = new SharedStore();
 
 export const store: Store = {
-    sharedStore: sharedStore
-}
+  sharedStore: sharedStore,
+  categoriesStore: new CategoriesStore(),
+  articleStore: new ArticleStore(),
+};
 
 export const StoreContext = createContext(store);
 
 export function useStore() {
-    return useContext(StoreContext);
+  return useContext(StoreContext);
 }

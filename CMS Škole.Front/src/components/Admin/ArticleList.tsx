@@ -6,14 +6,16 @@ import { useStore } from "../../stores/StoreManager";
 import ArticleCard from "../Articles/ArticleCard";
 
 function ArticleList() {
-  const categoryCataloguePreflight = useRef(true);
+  const articleListPreflight = useRef(true);
 
   const { sharedStore, categoriesStore } = useStore();
 
   useEffect(() => {
-    if (categoryCataloguePreflight.current) {
-      categoryCataloguePreflight.current = false;
+    if (articleListPreflight.current) {
+      articleListPreflight.current = false;
       sharedStore.user &&
+        /* DELETE */
+        !categoriesStore.articleList &&
         categoriesStore.getArticles({} as Category, sharedStore.user);
     }
   }, []);
@@ -24,9 +26,11 @@ function ArticleList() {
         <button>Dodaj novo</button>
       </section>
       <h1>Vaše objave</h1>
-      {categoriesStore.articleList?.map((x) => (
-        <ArticleCard article={x} />
-      ))}
+      {categoriesStore.articleList
+        ?.filter((x) => x.author.name === sharedStore.user?.name)
+        .map((x) => (
+          <ArticleCard article={x} />
+        ))}
     </main>
   );
 }

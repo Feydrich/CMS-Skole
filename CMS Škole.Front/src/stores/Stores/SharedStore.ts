@@ -11,14 +11,8 @@ const apiActions = {};
 export default class SharedStore {
   isLoading: boolean = false;
   siteSettings: SiteInfo = { name: "Osnovna škola Sesvetska Sela", images: [] };
-  notificationParameters: {
-    style: "none" | "success" | "error" | "warning" | "info";
-    message: string;
-    icon: boolean;
-    key: number;
-  }[] = [];
   user: User | null = null;
-  userList: User[] = [];
+  userList: User[] | null = null;
   loginIsOpen: boolean = false;
 
   constructor() {
@@ -26,20 +20,19 @@ export default class SharedStore {
       //Variables: observable
       isLoading: observable,
       siteSettings: observable,
-      notificationParameters: observable,
       user: observable,
       userList: observable,
       loginIsOpen: observable,
 
       //Methods: action
       changeLoading: action,
-      createNotification: action,
-      removeNotification: action,
 
       //dataQueries
       getImagesForCarousel: action,
       getUsers: action,
+      setUser: action,
       setLoginIsOpen: action,
+      tryLogin: action,
 
       //Calculated values: computed
     });
@@ -56,44 +49,14 @@ export default class SharedStore {
     this.loginIsOpen = data;
   };
 
-  createNotification = (
-    style: "none" | "success" | "error" | "warning" | "info",
-    message: string,
-    icon: boolean
-  ) => {
-    let localCopy = this.notificationParameters;
-    let data = {
-      style: style,
-      message: message,
-      icon: icon,
-      key: Math.floor(Math.random() * Date.now()),
-    };
-    localCopy.push(data);
-    this.notificationParameters = localCopy;
-    const timer = setTimeout(() => {
-      this.removeNotification(data.key);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  };
-
-  removeNotification = (key: number) => {
-    let localCopy = this.notificationParameters;
-    let filteredCopy = localCopy.filter((notification) => {
-      return notification.key !== key;
-    });
-    runInAction(() => {
-      this.notificationParameters = filteredCopy;
-    });
-  };
-
   getImagesForCarousel = () => {
     this.siteSettings = {
       ...this.siteSettings,
       images: [
-        "https://wallpapers.com/images/hd/cute-cat-fuqkmbcov67c1nif.jpg",
-        "https://www.enjpg.com/img/2020/cute-cat-2.jpg",
-        "https://images2.alphacoders.com/121/1213770.jpg",
+        "https://www.daysoftheyear.com/wp-content/uploads/happy-cat-month-1.jpg",
+        "https://www.beverlyhillsvets.com/blog/wp-content/uploads/2020/02/iStock-1149249445.jpg",
+        "https://smb.ibsrv.net/imageresizer/image/blog_images/1200x1200/23330/97482/0443241001547141937.jpg",
+        "https://images.theconversation.com/files/182925/original/file-20170822-30538-gebk45.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop",
       ],
     };
   };

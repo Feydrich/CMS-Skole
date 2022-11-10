@@ -18,6 +18,9 @@ function NavbarComponent() {
   const [openFlag, setOpenFlag] = useState<Category | null>(null);
 
   useEffect(() => {
+    setOpenFlag(null);
+  }, [categoriesStore.selectedCategory]);
+  useEffect(() => {
     sharedStore.setLoginIsOpen(false);
   }, [sharedStore.user]);
 
@@ -64,22 +67,23 @@ function NavbarComponent() {
             </Link>
           </span>
           {(() => {
-            return categoriesStore.categories.map((x, index) => (
-              <Link
-                to={"/Category"}
-                onMouseEnter={() => setOpenFlag(x)}
-                onClick={() => {
-                  setOpenFlag(x);
-                  categoriesStore.setSelectedCategory(x);
-                }}
-                key={"category" + index}
-              >
-                <span>
-                  {x.name}
-                  <Icon icon="bxs:chevron-down" />
-                </span>
-              </Link>
-            ));
+            if (categoriesStore.categories)
+              return categoriesStore.categories.map((x, index) => (
+                <Link
+                  to={"/Category"}
+                  onMouseEnter={() => setOpenFlag(x)}
+                  onClick={() => {
+                    setOpenFlag(x);
+                    categoriesStore.setSelectedCategory(x);
+                  }}
+                  key={"category" + index}
+                >
+                  <span>
+                    {x.name}
+                    <Icon icon="bxs:chevron-down" />
+                  </span>
+                </Link>
+              ));
           })()}
         </section>
         <section
@@ -136,45 +140,46 @@ function NavbarComponent() {
           }
         >
           {(() => {
-            return categoriesStore.categories.map((x, index) => (
-              <>
-                <span>
-                  <Link to={"/Home"}>Početna</Link>
-                </span>
-                <hr />
-                <br />
-                <span>
-                  <Link
-                    to={"/Category"}
-                    onClick={() => {
-                      setOpenFlag(x);
-                      categoriesStore.setSelectedCategory(x);
-                    }}
-                    key={"category" + index}
-                  >
-                    {x.name}
-                  </Link>
-                </span>
-                <hr />
-                <br />
-                {(() => {
-                  return x.subCategories?.map((y, index) => (
-                    <span
-                      className="subCategoryItem"
-                      key={"subCategory" + index + y.name}
+            if (categoriesStore.categories)
+              return categoriesStore.categories.map((x, index) => (
+                <div className="mobileWrapper" key={"mobileWrapper" + index}>
+                  <span key={"categoryMobile1" + index}>
+                    <Link to={"/Home"}>Početna</Link>
+                  </span>
+                  <hr />
+                  <br />
+                  <span key={"categoryMobile2" + index}>
+                    <Link
+                      to={"/Category"}
+                      onClick={() => {
+                        setOpenFlag(x);
+                        categoriesStore.setSelectedCategory(x);
+                      }}
+                      key={"category" + index}
                     >
-                      <Link
-                        to="/Category"
-                        onClick={() => categoriesStore.setSelectedCategory(y)}
+                      {x.name}
+                    </Link>
+                  </span>
+                  <hr />
+                  <br />
+                  {(() => {
+                    return x.subCategories?.map((y, index) => (
+                      <span
+                        className="subCategoryItem"
+                        key={"subCategory" + index + y.name}
                       >
-                        {y.name}
-                      </Link>
-                    </span>
-                  ));
-                })()}
-                <br />
-              </>
-            ));
+                        <Link
+                          to="/Category"
+                          onClick={() => categoriesStore.setSelectedCategory(y)}
+                        >
+                          {y.name}
+                        </Link>
+                      </span>
+                    ));
+                  })()}
+                  <br />
+                </div>
+              ));
           })()}
         </section>
       </nav>

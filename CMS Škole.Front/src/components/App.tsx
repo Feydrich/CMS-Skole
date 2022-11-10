@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ArticleList from "./Admin/ArticleList";
 import Editor from "./Admin/Editor";
+import UserList from "./Admin/UserList";
 
 function App() {
   const appPreFlight = useRef(true);
@@ -44,6 +45,7 @@ function App() {
               <>
                 <Route path="/ArticleList" element={<ArticleList />} />
                 <Route path="/Editor" element={<Editor />} />
+                <Route path="/UserList" element={<UserList />} />
               </>
             )}
           </Routes>

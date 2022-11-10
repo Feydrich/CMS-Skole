@@ -14,16 +14,14 @@ function Home() {
   useEffect(() => {
     if (homePreflight.current) {
       homePreflight.current = false;
-      categoriesStore.latestArticles();
+      /* DELETE */
+      !categoriesStore.articleList && categoriesStore.latestArticles();
     }
   }, []);
 
   return (
     <main>
       <Carousel />
-      {categoriesStore.articleList?.map((x, index) => (
-        <ArticleCard key={"articleCard" + index} article={x} />
-      ))}
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}

@@ -9,11 +9,12 @@ interface Store {
   articleStore: ArticleStore;
 }
 const sharedStore = new SharedStore();
+const categoriesStore = new CategoriesStore();
 
 export const store: Store = {
   sharedStore: sharedStore,
-  categoriesStore: new CategoriesStore(),
-  articleStore: new ArticleStore(),
+  categoriesStore: categoriesStore,
+  articleStore: new ArticleStore(categoriesStore),
 };
 
 export const StoreContext = createContext(store);

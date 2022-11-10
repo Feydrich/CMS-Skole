@@ -14,19 +14,6 @@
   color: rgba(255, 255, 255, 1);
 }
 
-/*Light blue cover above the slide show*/
-.card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 900;
-
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 .card_part {
   position: absolute;
   top: 0;
@@ -42,30 +29,6 @@
   transform: translateX(100%);
   animation: opaqTransition 28s cubic-bezier(0, 0, 0, 0.97) infinite;
   background-size: cover;
-}
-
-.card_part section {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.card_part.card_part-two {
-  z-index: 6;
-  animation-delay: 7s;
-}
-
-.card_part.card_part-three {
-  z-index: 5;
-  animation-delay: 14s;
-}
-
-.card_part.card_part-four {
-  z-index: 4;
-  animation-delay: 21s;
 }
 
 @keyframes opaqTransition {

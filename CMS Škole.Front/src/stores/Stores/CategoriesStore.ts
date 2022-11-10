@@ -1,4 +1,5 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction, toJS } from "mobx";
+import { toast } from "react-toastify";
 import { fakeArticles, fakeCategories } from "../../helper/dummyData";
 import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
@@ -9,7 +10,7 @@ import { requests } from "../agent";
 const apiActions = {};
 
 export default class CategoriesStore {
-  categories: Category[] = [];
+  categories: Category[] | null = null;
   selectedCategory: Category | undefined = undefined;
   articleList: Article[] | null = null;
 
@@ -26,6 +27,8 @@ export default class CategoriesStore {
       latestArticles: action,
       //dataQueries
       getCategories: action,
+      editArticle: action,
+      createArticle: action,
 
       //Calculated values: computed
     });
@@ -35,33 +38,35 @@ export default class CategoriesStore {
     this.categories = fakeCategories;
   };
   latestArticles = () => {
+    /* DELETE ME */
+    toast("latest");
     this.articleList = fakeArticles;
   };
   getArticles = (Category?: Category, User?: User) => {
-    const randomCase = Math.floor(Math.random() * 2);
-    let local: Article[] = [];
-    switch (randomCase) {
-      case 0:
-        fakeArticles.forEach((x, index) => {
-          if ((index + 1) % 2 == 0) local.push(x);
-        });
-
-        break;
-      case 1:
-        fakeArticles.forEach((x, index) => {
-          if ((index + 1) % 2 == 1) local.push(x);
-        });
-        break;
-    }
-    this.articleList = local;
-
     /* DELETE ME */
-    if (User) {
-      let list = fakeArticles.filter((x) => x.author.name === User.name);
+    toast("get");
+    if (User && this.articleList) {
+      let list = this.articleList.filter((x) => x.author.name === User.name);
       this.articleList = list;
     }
   };
   setSelectedCategory = (x: Category | undefined) => {
     this.selectedCategory = x;
+  };
+  editArticle = (data: Article) => {
+    /* DELETE */
+    toast("entered edit" + JSON.stringify(data));
+    if (this.articleList) {
+      let local = this.articleList.map((x) => {
+        if (x.id === data.id) {
+          return data;
+        } else return x;
+      });
+      this.articleList = local;
+    }
+  };
+  createArticle = (data: Article) => {
+    /* DELETE */
+    this.articleList?.push(data);
   };
 }

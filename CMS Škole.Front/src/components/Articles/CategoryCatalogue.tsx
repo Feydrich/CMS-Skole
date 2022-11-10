@@ -13,7 +13,8 @@ function CategoryCatalogue() {
   useEffect(() => {
     if (categoryCataloguePreflight.current) {
       categoryCataloguePreflight.current = false;
-      categoriesStore.getArticles({} as Category);
+      !categoriesStore.articleList &&
+        categoriesStore.getArticles({} as Category);
     }
   }, []);
 

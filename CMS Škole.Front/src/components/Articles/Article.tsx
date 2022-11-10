@@ -1,4 +1,5 @@
 import { Markup } from "interweave";
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Article } from "../../models/Article";

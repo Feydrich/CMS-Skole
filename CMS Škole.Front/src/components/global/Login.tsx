@@ -45,7 +45,7 @@ function Login() {
                 required
                 id="outlined-required"
                 label="Email"
-                defaultValue="korisnik@domena.hr"
+                placeholder="korisnik@domena.hr"
                 value={localUser.username}
                 onChange={(e) =>
                   setLocalUser({ ...localUser, username: e.target.value })
@@ -88,10 +88,16 @@ function Login() {
             >
               Editor
             </Link>
+            <Link
+              to="/UserList"
+              onClick={() => sharedStore.setLoginIsOpen(false)}
+            >
+              Users
+            </Link>
             {Object.keys(sharedStore.user)
               .filter((x) => x !== "jwt" && x !== "password")
-              .map((x) => (
-                <span>
+              .map((x, index) => (
+                <span key={"attribute" + index}>
                   <b>{x}: </b>
                   {sharedStore.user![x as keyof User]}
                 </span>

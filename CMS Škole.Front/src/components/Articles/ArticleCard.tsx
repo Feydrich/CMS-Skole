@@ -12,18 +12,22 @@ interface IArticleCardProps {
 function ArticleCard({ article }: IArticleCardProps) {
   const { articleStore, sharedStore } = useStore();
   const navigate = useNavigate();
-  const formattedDate = article.creationDate.getDate() + "."
-      + article.creationDate.getMonth() + "."
-      + article.creationDate.getFullYear() + ".";
+  const formattedDate =
+    article.creationDate.getDate() +
+    "." +
+    article.creationDate.getMonth() +
+    "." +
+    article.creationDate.getFullYear() +
+    ".";
 
   return (
     <>
       <div className="articleCard">
-        <div>
+        <div className="CRUDCardHeader">
           {article.author.name === sharedStore.user?.name && (
             <button
               onClick={() => {
-                articleStore.getSelectedArticles(article.id);
+                articleStore.setArticleForEdit(article.id);
                 navigate("/Editor");
               }}
             >

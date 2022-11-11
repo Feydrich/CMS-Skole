@@ -10,6 +10,7 @@ import Login from "./global/Login";
 import NavbarComponent from "./global/NavbarComponent";
 import Home from "./Home";
 import Carousel from "./global/Carousel";
+import FooterComponent from "./global/FooterComponent";
 
 
 function App() {
@@ -27,16 +28,23 @@ function App() {
         <LegendComponent />
         <NavbarComponent />
         <Carousel />
-        <div className="mainContent">
+        
+          <div className="mainContent">
           <Routes>
             <Route path="/" element={<Navigate to="/Home" replace />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Category" element={<CategoryCatalogue />} />
             <Route path="/Article" element={<ArticlePage />} />
           </Routes>
-        </div>
+          
+          </div>
+        <FooterComponent />
+          
+        
       </BrowserRouter>
+      
     </>
+    
   );
 }
 

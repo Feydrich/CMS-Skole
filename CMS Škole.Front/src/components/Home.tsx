@@ -17,12 +17,14 @@ function Home() {
 
   return (
     <main>
+    
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}
+      
     </main>
   );
 }

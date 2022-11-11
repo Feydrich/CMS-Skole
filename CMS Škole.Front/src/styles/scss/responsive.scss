@@ -55,4 +55,18 @@
     width: 100%;
     height: unset;
   }
+
+  .footer-info{
+    display: none;
+  }
+
+  
+}
+
+@media screen and (max-width: 992px) {
+
+  .sideNav{
+    display: none;
+  }
+
 }

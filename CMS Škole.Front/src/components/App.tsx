@@ -11,10 +11,13 @@ import NavbarComponent from "./global/NavbarComponent";
 import Home from "./Home";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ArticleList from "./Admin/ArticleList";
-import Editor from "./Admin/Editor";
-import UserList from "./Admin/UserList";
-import SiteSettings from "./Admin/SiteSettings";
+import React from "react";
+import Loading from "./global/Loading";
+
+const ArticleList = React.lazy(() => import("./Admin/ArticleList"));
+const Editor = React.lazy(() => import("./Admin/Editor"));
+const UserList = React.lazy(() => import("./Admin/UserList"));
+const SiteSettings = React.lazy(() => import("./Admin/SiteSettings"));
 
 function App() {
   const appPreFlight = useRef(true);
@@ -61,7 +64,7 @@ function App() {
         <div className="mainContent">
           <ToastContainer />
           <Routes>
-            <Route path="/" element={<Navigate to="/Home" replace />} />
+            <Route path="*" element={<Navigate to="/Home" replace />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Category" element={<CategoryCatalogue />} />
             <Route path="/Article" element={<ArticlePage />} />
@@ -69,10 +72,38 @@ function App() {
             {/* ADMIN */}
             {sharedStore.user && (
               <>
-                <Route path="/ArticleList" element={<ArticleList />} />
-                <Route path="/Editor" element={<Editor />} />
-                <Route path="/UserList" element={<UserList />} />
-                <Route path="/SiteSettings" element={<SiteSettings />} />
+                <Route
+                  path="/ArticleList"
+                  element={
+                    <React.Suspense fallback={<Loading />}>
+                      <ArticleList />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/Editor"
+                  element={
+                    <React.Suspense fallback={<Loading />}>
+                      <Editor />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/UserList"
+                  element={
+                    <React.Suspense fallback={<Loading />}>
+                      <UserList />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/SiteSettings"
+                  element={
+                    <React.Suspense fallback={<Loading />}>
+                      <SiteSettings />
+                    </React.Suspense>
+                  }
+                />
               </>
             )}
           </Routes>

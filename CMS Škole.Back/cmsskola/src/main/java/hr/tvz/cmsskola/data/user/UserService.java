@@ -1,10 +1,10 @@
 package hr.tvz.cmsskola.data.user;
 
+import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,15 +15,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-  public Logger logger = LoggerFactory.getLogger(UserService.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-  @Autowired
-  public final UserRepository userRepository;
-
-  @Autowired
-  public final LoggingService loggingService;
-
-  @Autowired public final PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final ClaimService claimService;
+  private final LoggingService loggingService;
+  private final PasswordEncoder passwordEncoder;
 
   public Page<User> getAll(Pageable pageable) {
     return userRepository.findAll(pageable);
@@ -46,10 +43,10 @@ public class UserService {
     String logText;
     HttpStatus httpStatus;
     if (user.getId() == null) {
-      logText = "created user" + user.getUsername() + " id = " + user.getId();
+      logText = "created user " + user.getUsername() + " id = " + user.getId();
       httpStatus = HttpStatus.CREATED;
     } else {
-      logText = "updated user" + user.getUsername() + " id = " + user.getId();
+      logText = "updated user " + user.getUsername() + " id = " + user.getId();
       httpStatus = HttpStatus.OK;
     }
     loggingService.log(logger, logText);
@@ -61,16 +58,23 @@ public class UserService {
     logger.info("Trying to delete user id {}", userId);
 
     var optionalUser = userRepository.findById(userId);
-    optionalUser.ifPresent(user -> {
-      userRepository.deleteById(user.getId());
-      String logText = "updated user" + user.getUsername() + " id= " + user.getId();
-      loggingService.log(logger, logText);
-    });
+    optionalUser.ifPresent(
+        user -> {
+          deleteForeignKeys(user);
+
+          userRepository.deleteById(user.getId());
+          String logText = "deleted user " + user.getUsername() + " id= " + user.getId();
+          loggingService.log(logger, logText);
+        });
   }
 
   private void encryptPassword(User user) {
     if (user.getPassword() != null) {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
+  }
+
+  private void deleteForeignKeys(User user) {
+    user.getClaims().forEach(claim -> claimService.delete(claim.getId()));
   }
 }

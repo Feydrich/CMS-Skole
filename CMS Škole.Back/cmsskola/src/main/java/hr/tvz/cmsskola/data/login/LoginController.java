@@ -1,9 +1,10 @@
 package hr.tvz.cmsskola.data.login;
 
 import hr.tvz.cmsskola.data.login.LoginService.JWTToken;
+import hr.tvz.cmsskola.data.user.User;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.flywaydb.core.internal.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
-  @Autowired public final LoginService loginService;
+  private final LoginService loginService;
 
   @PostMapping(path = "/login")
-  public ResponseEntity<JWTToken> login(@Valid @RequestBody LoginService.LoginDTO login) {
+  public ResponseEntity<Pair<JWTToken, User>> login(
+      @Valid @RequestBody LoginService.LoginDTO login) {
     return loginService.login(login);
   }
 

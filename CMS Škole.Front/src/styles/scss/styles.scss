@@ -360,7 +360,6 @@ h5 {
 .articleCard {
   width: 30%;
   margin: 1% 1.5%;
-  float: left;
   background-color: $primary-color;
   overflow: hidden;
   animation-name: fadeIn;
@@ -368,6 +367,7 @@ h5 {
   cursor: pointer;
   transition: all 0.5s;
   border-bottom-right-radius: 10px;
+  display: inline-block;
 
   .cardContent {
     margin: 20px;
@@ -404,6 +404,9 @@ main {
   background-color: white;
   animation-name: fadeIn;
   animation-duration: 1.5s;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 button.hamburgerMenu {

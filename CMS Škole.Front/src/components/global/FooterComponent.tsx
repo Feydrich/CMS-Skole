@@ -55,11 +55,11 @@ function FooterComponent() {
                 <div className="footer-info-right">
                     <h6 className="footerTitle">Brzi linkovi</h6> 
                     <ul>                  
-                        <li><a href="http://scanfcode.com/about/">About Us</a></li>
-                        <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
-                        <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
-                        <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
-                        <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Contribute</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Sitemap</a></li>
                         </ul>
                 </div>
             </div>
@@ -67,8 +67,8 @@ function FooterComponent() {
 
             <hr />
 
-            <p className="footer-info">Copyright &copy; 2022 Sva prava pridržana od strane
-                <a href="#">TVZ</a>.
+            <p className="footer-info">Copyright &copy; 2022 Sva prava pridržana od strane &nbsp;
+                <a href="#"> TVZ</a>.
             </p>
 
         </footer>

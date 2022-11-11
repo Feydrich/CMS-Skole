@@ -1,5 +1,6 @@
 export interface SiteInfo {
   name: string;
+  description: string;
   images: string[];
   colorSchemes: {
     primaryColor: string;
@@ -7,5 +8,7 @@ export interface SiteInfo {
     primaryColorTransparent: string;
     secondaryColor: string;
     secondaryColorDark: string;
+    background: string;
+    legend: string;
   };
 }

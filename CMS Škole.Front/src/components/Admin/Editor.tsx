@@ -27,6 +27,16 @@ function Editor() {
   return (
     <main>
       <div className="headerCRUD">
+        {localArticle.id && (
+          <Button
+            onClick={() => {
+              navigate("/Home");
+              categoriesStore.deleteArticle(localArticle.id);
+            }}
+          >
+            DELETE
+          </Button>
+        )}
         <TextField
           id="filled-multiline-flexible"
           label="Naslov"
@@ -71,6 +81,7 @@ function Editor() {
               } else {
                 categoriesStore.createArticle({
                   ...localArticle,
+                  id: new Date().toISOString(),
                   author: sharedStore.user!,
                   creationDate: new Date(),
                 });

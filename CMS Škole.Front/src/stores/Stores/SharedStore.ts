@@ -12,6 +12,7 @@ export default class SharedStore {
   isLoading: boolean = false;
   siteSettings: SiteInfo = {
     name: "Osnovna škola Sesvetska Sela",
+    description: "OŠ Sesvetska Sela započela je s radom 03. rujna 2007. godine. Nalazi se u Letničkoj ulici u Sesvetskim Selima, koja su dio Gradske četvrti Sesvete. Ponosni smo na naziv škole i na okoliš koji stvara jedan lijep ugođaj: spaja seoski mir i ljepotu prirode s gradskom organizacijom i uređenjem života.",
     images: [],
     colorSchemes: {
       primaryColor: "#42a1d8",
@@ -19,6 +20,8 @@ export default class SharedStore {
       primaryColorTransparent: "#42a1d8",
       secondaryColor: "#8cc790",
       secondaryColorDark: "#3d8141",
+      background: "#f5f5f5",
+      legend: "#ffffff"
     },
   };
   user: User | null = null;
@@ -122,6 +125,8 @@ export default class SharedStore {
     primaryColorTransparent: string;
     secondaryColor: string;
     secondaryColorDark: string;
+    background: string;
+    legend: string;
   }) => {
     this.siteSettings.colorSchemes = colors;
   };

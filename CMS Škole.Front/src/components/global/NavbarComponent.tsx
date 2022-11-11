@@ -140,13 +140,15 @@ function NavbarComponent() {
               : { opacity: 0, width: 0, pointerEvents: "none" }
           }
         >
+          <span key={"categoryMobile1"}>
+            <Link to={"/Home"} onClick={() => setOpenFlag(null)}>
+              Početna
+            </Link>
+          </span>
           {(() => {
             if (categoriesStore.categories)
               return categoriesStore.categories.map((x, index) => (
                 <div className="mobileWrapper" key={"mobileWrapper" + index}>
-                  <span key={"categoryMobile1" + index}>
-                    <Link to={"/Home"}>Početna</Link>
-                  </span>
                   <hr />
                   <br />
                   <span key={"categoryMobile2" + index}>

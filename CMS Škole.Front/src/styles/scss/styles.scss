@@ -4,6 +4,9 @@ $primary-color-transparent: var(--primary-color-transparent);
 $secondary-color: var(--secondary-color);
 $secondary-color-dark: var(--secondary-color-dark);
 
+$background: var(--background);
+$legend: var(--legend);
+
 * {
   margin: 0;
   -webkit-box-sizing: border-box !important;
@@ -15,7 +18,97 @@ $secondary-color-dark: var(--secondary-color-dark);
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: $background;
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+footer{
+  background: $primary-color-dark;
+  height: auto;
+  padding-top: 40px;
+  color: #fff;
+  
+}
+
+.footer-info  {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.footer-info-center, .footer-info-right {
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 20%;
+  padding: 20px;
+}
+.footer-info-left {
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 50%;
+  padding: 20px;
+}
+.footerAbout{
+padding-right: 30px;
+}
+
+.sideNav{
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 20%;
+  padding: 20px;
+}
+.singleItemContent{
+  flex-direction: column;
+  margin-bottom: 10px;
+  //width: 80%;
+  width: 80%;
+  padding: 20px;
+}
+.item-info{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+}
+
+footer a {
+  text-decoration: none;
+  color: #fff;
+  font-family: "Arimo";
+
+}
+
+.footerTitle{
+  font-size: large;
+  padding-bottom: 10px;
+}
+.sideNavLink{
+  text-decoration: none;
+  font-family: "Arimo";
+}
+.sideNavLi{
+  border-top: 1px solid gray ;
+  padding: 10px;
+}
+.subCategoryNav{
+  padding-right: 30px;
+}
+.subCategoryNav a {
+  color: gray;
+  font-size: x-large;
 }
 
 //https://www.fontsquirrel.com/fonts/arimo
@@ -204,7 +297,7 @@ h5 {
   height: 40px;
   position: sticky;
   top: 0px;
-  background-color: white;
+  background-color: $legend;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -259,7 +352,7 @@ h5 {
 
 .mainContent {
   width: 100%;
-  height: 100vh;
+ 
   padding: 0 5%;
 }
 
@@ -275,18 +368,17 @@ h5 {
   }
 }
 
-.CRUDCardHeader {
+.CRUDCardHeader, .crudHeader {
   width: 100%;
   height: 50px;
 }
-.CRUDCardHeader Button {
+.CRUDCardHeader button {
   width: 100%;
   height: 100%;
 }
 .articleCard {
   width: 30%;
   margin: 1% 1.5%;
-  float: left;
   background-color: $primary-color;
   overflow: hidden;
   animation-name: fadeIn;
@@ -294,6 +386,8 @@ h5 {
   cursor: pointer;
   transition: all 0.5s;
   border-bottom-right-radius: 10px;
+  display: inline-block;
+  height: 50vh;
 
   .cardContent {
     margin: 20px;
@@ -330,6 +424,10 @@ main {
   animation-name: fadeIn;
   animation-duration: 1.5s;
   margin-top: 20px;
+  //display: flex;
+  //flex-wrap: wrap;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
 .loginPopUp {

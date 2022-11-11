@@ -30,6 +30,16 @@ export const fakeCategories: Category[] = [
       { id: "third", name: "Placeholder 3" },
     ],
   },
+  // {
+  //   id: "fourth",
+  //   name: "Presentation",
+  //   subCategories: [
+  //     { id: "first", name: "Some" },
+  //     { id: "second", name: "Kind" },
+  //     { id: "third", name: "Of interesting" },
+  //     { id: "third", name: "Content" },
+  //   ],
+  // },
 ];
 
 export const fakeArticles: Article[] = [

@@ -25,6 +25,7 @@ function Home() {
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}
+      
     </main>
   );
 }

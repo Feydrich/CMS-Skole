@@ -44,9 +44,6 @@
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
   }
 
   .subCategoryItem {
@@ -75,4 +72,19 @@
     align-items: center;
     justify-content: space-evenly;
   }
+
+
+  .footer-info{
+    display: none;
+  }
+
+  
+}
+
+@media screen and (max-width: 992px) {
+
+  .sideNav{
+    display: none;
+  }
+
 }

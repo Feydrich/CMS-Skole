@@ -27,8 +27,9 @@ export default class CategoriesStore {
       latestArticles: action,
       //dataQueries
       getCategories: action,
-      editArticle: action,
       createArticle: action,
+      editArticle: action,
+      deleteArticle: action,
 
       //Calculated values: computed
     });
@@ -67,5 +68,16 @@ export default class CategoriesStore {
     /* DELETE */
     this.articleList?.push(data);
     toast('"' + data.name + '" je bio uspješno stvoren');
+  };
+  deleteArticle = (data: string) => {
+    /* DELETE */
+    if (this.articleList) {
+      let local = this.articleList.filter((x) => {
+        return x.id !== data;
+      });
+
+      this.articleList = local;
+      toast('Objava uspješno obrisana!');
+    }
   };
 }

@@ -33,28 +33,39 @@ function CategoryCatalogue() {
           {categoriesStore.selectedCategory!.parentCategory.name}
         </Link>
       )}
-      <hr />
-      {categoriesStore.selectedCategory!.subCategories && (
-        <section className="subCategoryCatalogue">
-          {categoriesStore.selectedCategory!.subCategories.map((x, index) => (
-            <Link
-              to={"/Category"}
-              //className={"subCategoryItem"}
-              onClick={() => {
-                categoriesStore.setSelectedCategory(x);
-              }}
-              key={"subCategoryCatalogue" + index}
-            >
-              {x.name}
-            </Link>
-          ))}
-        </section>
-      )}
-      <hr />
 
-      {categoriesStore.articleList?.map((x, index) => (
-        <ArticleCard key={"articleCard" + index} article={x} />
-      ))}
+      <div className="item-info">
+        <div className="sideNav">
+          <ul>
+            {categoriesStore.selectedCategory!.subCategories && (
+              <div className="subCategoryNav">
+                {categoriesStore.selectedCategory!.subCategories.map(
+                  (x, index) => (
+                    <li className="sideNavLi" key={"subCategoryNav" + index}>
+                      <Link
+                        className="sideNavLink"
+                        to={"/Category"}
+                        //className={"subCategoryItem"}
+                        onClick={() => {
+                          categoriesStore.setSelectedCategory(x);
+                        }}
+                      >
+                        {x.name}
+                      </Link>
+                    </li>
+                  )
+                )}
+              </div>
+            )}
+          </ul>
+        </div>
+
+        <div className="singleItemContent">
+          {categoriesStore.articleList?.map((x, index) => (
+            <ArticleCard key={"articleCard" + index} article={x} />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }

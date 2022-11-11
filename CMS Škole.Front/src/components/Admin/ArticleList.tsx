@@ -35,7 +35,6 @@ function ArticleList() {
           Dodaj novo
         </Button>
       </section>
-      <h1>Vaše objave</h1>
       {categoriesStore.articleList
         ?.filter((x) => x.author.name === sharedStore.user?.name)
         .map((x) => (

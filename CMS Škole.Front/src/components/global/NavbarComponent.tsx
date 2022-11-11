@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Category } from "../../models/Category";
 import { useStore } from "../../stores/StoreManager";
 import { Icon } from "@iconify/react";
+import { Button } from "@mui/material";
 
 function NavbarComponent() {
   const navbarPreflight = useRef(true);
@@ -118,7 +119,7 @@ function NavbarComponent() {
             <div className="middle"></div>
             <div className="bottom"></div>
           </button>
-          <button
+          <Button
             onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
           >
             {sharedStore.user ? (
@@ -129,14 +130,14 @@ function NavbarComponent() {
                 Prijava
               </>
             )}
-          </button>
+          </Button>
         </section>
         <section
           className="navBar"
           style={
             openFlag
               ? { opacity: 1, padding: "5%", width: "100%" }
-              : { opacity: 0, width: 0 }
+              : { opacity: 0, width: 0, pointerEvents: "none" }
           }
         >
           {(() => {

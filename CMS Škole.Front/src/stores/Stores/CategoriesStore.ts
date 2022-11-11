@@ -65,8 +65,7 @@ export default class CategoriesStore {
   };
   createArticle = (data: Article) => {
     /* DELETE */
-    // this.articleList?.push({ ...data, creationDate: new Date() });
-    // toast('"' + data.name + '"je bio uspješno stvoren');
-    toast("this is bugged, come back later");
+    this.articleList?.push(data);
+    toast('"' + data.name + '" je bio uspješno stvoren');
   };
 }

@@ -10,13 +10,14 @@ import {
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../models/User";
 import { useStore } from "../../stores/StoreManager";
 
 function Login() {
   const loginPreflight = useRef(true);
 
+  const navigate = useNavigate();
   const { sharedStore } = useStore();
 
   useEffect(() => {
@@ -76,23 +77,10 @@ function Login() {
         </>
       ) : (
         <>
-          <DialogTitle>Login</DialogTitle>
+          <DialogTitle>Vaš profil:</DialogTitle>
           <DialogContent>
-            <h2>Vaš profil:</h2>
             <hr />
 
-            <Link
-              to="/ArticleList"
-              onClick={() => sharedStore.setLoginIsOpen(false)}
-            >
-              Editor
-            </Link>
-            <Link
-              to="/UserList"
-              onClick={() => sharedStore.setLoginIsOpen(false)}
-            >
-              Users
-            </Link>
             {Object.keys(sharedStore.user)
               .filter((x) => x !== "jwt" && x !== "password")
               .map((x, index) => (
@@ -104,6 +92,30 @@ function Login() {
           </DialogContent>
 
           <DialogActions>
+            <Button
+              onClick={() => {
+                navigate("/ArticleList");
+                sharedStore.setLoginIsOpen(false);
+              }}
+            >
+              Editor
+            </Button>
+            <Button
+              onClick={() => {
+                navigate("/UserList");
+                sharedStore.setLoginIsOpen(false);
+              }}
+            >
+              Users
+            </Button>
+            <Button
+              onClick={() => {
+                navigate("/SiteSettings");
+                sharedStore.setLoginIsOpen(false);
+              }}
+            >
+              Postavke Stranice
+            </Button>
             <Button
               onClick={() => {
                 sharedStore.setUser(null);

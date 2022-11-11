@@ -10,7 +10,17 @@ const apiActions = {};
 
 export default class SharedStore {
   isLoading: boolean = false;
-  siteSettings: SiteInfo = { name: "Osnovna škola Sesvetska Sela", images: [] };
+  siteSettings: SiteInfo = {
+    name: "Osnovna škola Sesvetska Sela",
+    images: [],
+    colorSchemes: {
+      primaryColor: "#42a1d8",
+      primaryColorDark: "#07689f",
+      primaryColorTransparent: "#42a1d8",
+      secondaryColor: "#8cc790",
+      secondaryColorDark: "#3d8141",
+    },
+  };
   user: User | null = null;
   userList: User[] | null = null;
   loginIsOpen: boolean = false;
@@ -26,6 +36,7 @@ export default class SharedStore {
 
       //Methods: action
       changeLoading: action,
+      changeStyles: action,
 
       //dataQueries
       getImagesForCarousel: action,
@@ -103,5 +114,15 @@ export default class SharedStore {
     } else {
       toast("Greška prilikom unosa");
     }
+  };
+
+  changeStyles = (colors: {
+    primaryColor: string;
+    primaryColorDark: string;
+    primaryColorTransparent: string;
+    secondaryColor: string;
+    secondaryColorDark: string;
+  }) => {
+    this.siteSettings.colorSchemes = colors;
   };
 }

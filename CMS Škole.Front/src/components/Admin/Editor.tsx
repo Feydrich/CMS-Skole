@@ -7,7 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import { Markup } from "interweave";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 function Editor() {
   const EditorPreflight = useRef(true);
@@ -30,6 +30,7 @@ function Editor() {
         <TextField
           id="filled-multiline-flexible"
           label="Naslov"
+          required
           value={localArticle.name ?? ""}
           onChange={(e) => {
             setLocalArticle({ ...localArticle, name: e.target.value });
@@ -39,6 +40,7 @@ function Editor() {
           id="filled-multiline-flexible"
           label="Kratki opis"
           multiline
+          required
           maxRows={4}
           value={localArticle.description ?? ""}
           onChange={(e) => {
@@ -50,24 +52,37 @@ function Editor() {
           <br />
           <input
             type="file"
+            required
             name="myImage"
             onChange={(event) => {
               toast(event.target.value);
             }}
           />
         </span>
-        <button
+        <Button
           onClick={() => {
-            if (articleStore.articleForEdit?.id) {
-              categoriesStore.editArticle(localArticle);
+            if (
+              localArticle.name &&
+              localArticle.description &&
+              localArticle.content
+            ) {
+              if (articleStore.articleForEdit?.id) {
+                categoriesStore.editArticle(localArticle);
+              } else {
+                categoriesStore.createArticle({
+                  ...localArticle,
+                  author: sharedStore.user!,
+                  creationDate: new Date(),
+                });
+              }
+              navigate("/Home");
             } else {
-              categoriesStore.createArticle(localArticle);
+              toast("Jedno od obaveznih polja je ostavljeno prazno");
             }
-            navigate("/Home");
           }}
         >
           Save
-        </button>
+        </Button>
       </div>
       <ReactQuill
         className="editorBox"

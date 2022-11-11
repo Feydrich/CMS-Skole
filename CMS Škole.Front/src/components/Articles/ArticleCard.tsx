@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -22,17 +23,17 @@ function ArticleCard({ article }: IArticleCardProps) {
 
   return (
     <>
-      <div className="articleCard">
+      <div className="articleCard" key={"article" + article.id}>
         <div className="CRUDCardHeader">
           {article.author.name === sharedStore.user?.name && (
-            <button
+            <Button
               onClick={() => {
                 articleStore.setArticleForEdit(article.id);
                 navigate("/Editor");
               }}
             >
               Edit
-            </button>
+            </Button>
           )}
         </div>
         <div

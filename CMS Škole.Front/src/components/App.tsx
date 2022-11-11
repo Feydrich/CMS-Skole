@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ArticleList from "./Admin/ArticleList";
 import Editor from "./Admin/Editor";
 import UserList from "./Admin/UserList";
+import SiteSettings from "./Admin/SiteSettings";
 
 function App() {
   const appPreFlight = useRef(true);
@@ -24,6 +25,31 @@ function App() {
       appPreFlight.current = false;
     }
   }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root?.style.setProperty(
+      "--primary-color",
+      sharedStore.siteSettings.colorSchemes.primaryColor
+    );
+    root?.style.setProperty(
+      "--primary-color-dark",
+      sharedStore.siteSettings.colorSchemes.primaryColorDark
+    );
+    root?.style.setProperty(
+      "--primary-color-transparent",
+      sharedStore.siteSettings.colorSchemes.primaryColorTransparent
+    );
+    root?.style.setProperty(
+      "--secondary-color",
+      sharedStore.siteSettings.colorSchemes.secondaryColor
+    );
+    root?.style.setProperty(
+      "--secondary-color-dark",
+      sharedStore.siteSettings.colorSchemes.secondaryColorDark
+    );
+    //root?.style.setProperty("--text-color", darkTheme ? "#fff" : "#262833");
+  }, [sharedStore.siteSettings.colorSchemes]);
 
   return (
     <>
@@ -46,6 +72,7 @@ function App() {
                 <Route path="/ArticleList" element={<ArticleList />} />
                 <Route path="/Editor" element={<Editor />} />
                 <Route path="/UserList" element={<UserList />} />
+                <Route path="/SiteSettings" element={<SiteSettings />} />
               </>
             )}
           </Routes>

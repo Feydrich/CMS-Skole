@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,14 +26,14 @@ function ArticleList() {
   return (
     <main>
       <section className="crudHeader">
-        <button
+        <Button
           onClick={() => {
             articleStore.setArticleForCreation({} as Article);
             navigate("/Editor");
           }}
         >
           Dodaj novo
-        </button>
+        </Button>
       </section>
       <h1>Vaše objave</h1>
       {categoriesStore.articleList

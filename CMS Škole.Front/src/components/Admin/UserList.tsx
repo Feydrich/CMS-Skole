@@ -181,14 +181,14 @@ function UserList() {
   return (
     <main>
       <h1>Popis korisnika</h1>
-      <button
+      <Button
         onClick={() => {
           setUserForCrud({} as User);
           setEditFlag(true);
         }}
       >
         CREATE
-      </button>
+      </Button>
       <CreateOrEditForm
         editFlag={editFlag}
         setEditFlag={setEditFlag}
@@ -220,22 +220,22 @@ function UserList() {
             {x.name} {x.surname} - {x.mail}
           </span>
           <span>
-            <button
+            <Button
               onClick={() => {
                 setUserForCrud(x);
                 setEditFlag(true);
               }}
             >
               EDIT
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => {
                 setUserForCrud(x);
                 setDeleteFlag(true);
               }}
             >
               DELETE
-            </button>
+            </Button>
           </span>
         </div>
       ))}

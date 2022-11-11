@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useStore } from "../../stores/StoreManager";
 import { Icon } from "@iconify/react";
+import { Button } from "@mui/material";
 
 function LegendComponent() {
   const legendPreflight = useRef(true);
@@ -21,7 +22,7 @@ function LegendComponent() {
         <h1>{sharedStore.siteSettings.name}</h1>
       </Link>
       <div className="items">
-        <button
+        <Button
           onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
         >
           {sharedStore.user ? (
@@ -32,7 +33,7 @@ function LegendComponent() {
               Prijava
             </>
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

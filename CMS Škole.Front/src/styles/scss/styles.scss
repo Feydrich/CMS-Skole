@@ -1,8 +1,8 @@
-$primary-color: rgb(66, 161, 216);
-$primary-color-dark: rgb(7, 104, 159);
-$primary-color-transparent: rgb(66, 161, 216, 0.9);
-$secondary-color: rgb(140, 199, 144);
-$secondary-color-dark: rgb(61, 129, 65);
+$primary-color: var(--primary-color);
+$primary-color-dark: var(--primary-color-dark);
+$primary-color-transparent: var(--primary-color-transparent);
+$secondary-color: var(--secondary-color);
+$secondary-color-dark: var(--secondary-color-dark);
 
 * {
   margin: 0;
@@ -131,7 +131,7 @@ h5 {
     width: 100%;
   }
 
-  button {
+  Button {
     color: white;
     background-color: $primary-color;
     padding: 0.5rem;
@@ -147,7 +147,7 @@ h5 {
     }
   }
 
-  button:active {
+  Button:active {
     background-color: $primary-color;
     border: dashed $secondary-color 1px;
   }
@@ -226,7 +226,7 @@ h5 {
     justify-content: flex-end;
     gap: 0.5rem;
 
-    button {
+    Button {
       color: white;
       background-color: $primary-color-dark;
       padding: 0.5rem;
@@ -246,11 +246,11 @@ h5 {
       }
     }
 
-    button:hover {
+    Button:hover {
       background-color: $primary-color;
     }
 
-    button:active {
+    Button:active {
       background-color: $primary-color;
       border: dashed $secondary-color-dark 3px;
     }
@@ -279,7 +279,7 @@ h5 {
   width: 100%;
   height: 50px;
 }
-.CRUDCardHeader button {
+.CRUDCardHeader Button {
   width: 100%;
   height: 100%;
 }
@@ -327,10 +327,8 @@ img {
 }
 
 main {
-  background-color: white;
   animation-name: fadeIn;
   animation-duration: 1.5s;
-  min-height: 80vh;
   margin-top: 20px;
 }
 
@@ -388,7 +386,7 @@ main {
   overflow: auto;
 }
 
-button.hamburgerMenu {
+Button.hamburgerMenu {
   position: relative;
   width: 30px;
   height: 24px;
@@ -437,4 +435,17 @@ button.hamburgerMenu {
   align-items: center;
   justify-content: space-evenly;
   border-top: solid 1px gray;
+}
+
+.exampleContainer {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerExample {
+  width: 100%;
+  height: 10vh;
 }

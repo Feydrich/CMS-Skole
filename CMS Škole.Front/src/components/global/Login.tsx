@@ -34,35 +34,34 @@ function Login() {
     <Dialog
       open={sharedStore.loginIsOpen}
       onClose={() => sharedStore.setLoginIsOpen(false)}
+      className="loginDialog"
     >
       {!sharedStore.user ? (
         <>
           <DialogTitle>Login</DialogTitle>
           <DialogContent>
             <div>Unesite vaše podatke za pristup web stranici</div>
-            <div>
-              <TextField
-                required
-                id="outlined-required"
-                label="Email"
-                placeholder="korisnik@domena.hr"
-                value={localUser.username}
-                onChange={(e) =>
-                  setLocalUser({ ...localUser, username: e.target.value })
-                }
-              />
-              <br />
-              <TextField
-                id="outlined-password-input"
-                label="Šifra"
-                type="password"
-                autoComplete="current-password"
-                value={localUser.password}
-                onChange={(e) =>
-                  setLocalUser({ ...localUser, password: e.target.value })
-                }
-              />
-            </div>
+
+            <TextField
+              required
+              id="outlined-required"
+              label="Email"
+              placeholder="korisnik@domena.hr"
+              value={localUser.username}
+              onChange={(e) =>
+                setLocalUser({ ...localUser, username: e.target.value })
+              }
+            />
+            <TextField
+              id="outlined-password-input"
+              label="Šifra"
+              type="password"
+              autoComplete="current-password"
+              value={localUser.password}
+              onChange={(e) =>
+                setLocalUser({ ...localUser, password: e.target.value })
+              }
+            />
           </DialogContent>
 
           <DialogActions>

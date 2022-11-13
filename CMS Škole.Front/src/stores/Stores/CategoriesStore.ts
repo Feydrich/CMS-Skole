@@ -62,6 +62,7 @@ export default class CategoriesStore {
       });
       this.articleList = local;
     }
+    console.log(data.content)
     toast('"' + data.name + '"je bio uspješno izmijenjen');
   };
   createArticle = (data: Article) => {

@@ -37,8 +37,8 @@ function ArticleList() {
       </section>
       {categoriesStore.articleList
         ?.filter((x) => x.author.name === sharedStore.user?.name)
-        .map((x) => (
-          <ArticleCard article={x} />
+        .map((x, index) => (
+          <ArticleCard key={"card" + index} article={x} />
         ))}
     </main>
   );

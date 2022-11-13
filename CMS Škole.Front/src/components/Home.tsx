@@ -40,17 +40,21 @@ function Home() {
           <a href="#"><FontAwesomeIcon icon={faBullhorn} /></a>
           <p>Novosti</p> </div> 
       </div>
+
+
       <div className="homeContainer">
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />
       ))}
       </div>
+
       <div className="dividerContainerImages">
-          <div className="dividerImg" data-hover="Test"> <img src={require('../styles/images/biologija.jpg')} /></div>
+          <div className="dividerImg"> <img src={require('../styles/images/biologija.jpg')} /></div>
           <div className="dividerImg"> <img src={require('../styles/images/svemir.jpg')} /></div>
           <div className="dividerImg"> <img src={require('../styles/images/umjetnost.jpg')} /></div> 
           <div className="dividerImg"> <img src={require('../styles/images/smotra.jpg')} /></div> 
       </div>
+
       <div className="homeContainer">
       {categoriesStore.articleList?.map((x, index) => (
         <ArticleCard key={"articleCard" + index} article={x} />

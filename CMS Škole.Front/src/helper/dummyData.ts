@@ -55,7 +55,7 @@ export const fakeArticles: Article[] = [
     name: "Opasnosti od strujnog udara na području željezničke infrastrukture",
     creationDate: new Date(),
     description:
-      "U cilju prevencije mladih osoba od opasnosti kretanja po području željezničke infrastrukture na području grada Zagreba, objavljujemo u nastavku priložene letke i brošure u svrhu edukacije mladih i prevencije od strujnog udara na području željezničke infrastrukture.",
+      "U cilju prevencije mladih osoba od opasnosti kretanja po području željezničke infrastrukture na području grada Zagreba, objavljujemo u nastavku...",
     author: {
       name: "Professor 1",
     },

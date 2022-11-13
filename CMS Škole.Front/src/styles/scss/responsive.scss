@@ -19,7 +19,7 @@
   }
 
   .articleCard {
-    width: 97%;
+    width: 100%;
     margin-top: 5%;
 
     .cardContent {
@@ -122,6 +122,16 @@
   .dividerContainerImages{
     display: none;
     
+  }
+
+  .homeContainer{
+    margin: auto;
+  }
+  .item-info{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
   }
 }
 

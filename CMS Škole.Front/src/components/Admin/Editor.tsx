@@ -7,7 +7,14 @@ import "react-quill/dist/quill.snow.css";
 import { Markup } from "interweave";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 
 function Editor() {
   const EditorPreflight = useRef(true);
@@ -21,11 +28,43 @@ function Editor() {
     }
   }, []);
 
+  const [confirmFlag, setConfirmFlag] = useState(false);
+
   const [localArticle, setLocalArticle] = useState<Article>(
     articleStore.articleForEdit ?? ({} as Article)
   );
   return (
     <main>
+      <Dialog
+        open={confirmFlag}
+        onClose={() => {
+          setConfirmFlag(false);
+        }}
+      >
+        <DialogTitle>
+          Je ste li sigurni da želite izbrisati "
+          {articleStore.articleForEdit?.name}"?
+        </DialogTitle>
+
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setConfirmFlag(false);
+              navigate("/Home");
+              categoriesStore.deleteArticle(localArticle.id);
+            }}
+          >
+            DA
+          </Button>
+          <Button
+            onClick={() => {
+              setConfirmFlag(false);
+            }}
+          >
+            NE
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div className="headerCRUD">
         <TextField
           id="filled-multiline-flexible"
@@ -88,8 +127,7 @@ function Editor() {
           {localArticle.id && (
             <Button
               onClick={() => {
-                navigate("/Home");
-                categoriesStore.deleteArticle(localArticle.id);
+                setConfirmFlag(true);
               }}
             >
               DELETE

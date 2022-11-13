@@ -21,6 +21,13 @@ function ArticlePage() {
     }
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!articleStore.selectedArticle) {
+      navigate("Home");
+    }
+  }, [articleStore]);
+
   return (
     <main>
       <div className="singleItemContent">
@@ -44,7 +51,10 @@ function ArticlePage() {
           Objavljeno:
           {articleStore.selectedArticle?.creationDate.toDateString()}
         </b>
-        <img src={articleStore.selectedArticle?.image} />
+        <img
+          className="articleImage"
+          src={articleStore.selectedArticle?.image}
+        />
 
         <Markup content={articleStore.selectedArticle?.content} />
       </div>

@@ -76,10 +76,14 @@ function Home() {
       </div>
 
       <div className="homeContainer">
-        {categoriesStore.articleList?.map(
-          (x, index) =>
-            index < 5 && <ArticleCard key={"articleCard" + index} article={x} />
-        )}
+        {categoriesStore.articleList
+          ?.map(
+            (x, index) =>
+              index < 5 && (
+                <ArticleCard key={"articleCard" + index} article={x} />
+              )
+          )
+          .reverse()}
       </div>
     </main>
   );

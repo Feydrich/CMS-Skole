@@ -73,6 +73,7 @@ letter-spacing: 0.5px;
   flex-direction: column;
   margin-bottom: 10px;
   padding: 20px;
+  min-height: 80vh;
   
   h1{
     padding-bottom: 10px;
@@ -80,11 +81,23 @@ letter-spacing: 0.5px;
   h3{
     padding-bottom: 20px;
   }
-  img{
-    padding-top: 40px;
-    max-height: 60vh;
-  }
+  
+  
+}
 
+.articleImage{
+  position: absolute;
+  width: 100px;
+  min-height: 50px;
+  top: 0;
+  right: 50px;
+  opacity: 0.5;
+  transition: width 1s, opacity 1s;
+  border-radius: 25px;
+  &:hover{
+   width: 50%;
+   opacity: 1;
+  }
 }
 .item-info{
   display: flex;
@@ -396,6 +409,7 @@ h5 {
 
 .CRUDCardButton{
   position: absolute;
+  cursor: pointer;
   top: 0;
   right: 0;
   width: 50px;
@@ -634,6 +648,7 @@ Button.hamburgerMenu {
 
 .dividerContent{
   color: #ffffff;
+  cursor: pointer;
   width: 25%;
   overflow: hidden;
   display: inline-block;
@@ -665,6 +680,7 @@ Button.hamburgerMenu {
 }
 .dividerImg {
 float:left;
+cursor: pointer;
 width:20%;
 margin: 20px auto;
 display: block;

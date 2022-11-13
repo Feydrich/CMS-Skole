@@ -27,16 +27,6 @@ function Editor() {
   return (
     <main>
       <div className="headerCRUD">
-        {localArticle.id && (
-          <Button
-            onClick={() => {
-              navigate("/Home");
-              categoriesStore.deleteArticle(localArticle.id);
-            }}
-          >
-            DELETE
-          </Button>
-        )}
         <TextField
           id="filled-multiline-flexible"
           label="Naslov"
@@ -51,7 +41,7 @@ function Editor() {
           label="Kratki opis"
           multiline
           required
-          maxRows={4}
+          maxRows={2}
           value={localArticle.description ?? ""}
           onChange={(e) => {
             setLocalArticle({ ...localArticle, description: e.target.value });
@@ -69,31 +59,43 @@ function Editor() {
             }}
           />
         </span>
-        <Button
-          onClick={() => {
-            if (
-              localArticle.name &&
-              localArticle.description &&
-              localArticle.content
-            ) {
-              if (articleStore.articleForEdit?.id) {
-                categoriesStore.editArticle(localArticle);
+        <span>
+          <Button
+            onClick={() => {
+              if (
+                localArticle.name &&
+                localArticle.description &&
+                localArticle.content
+              ) {
+                if (articleStore.articleForEdit?.id) {
+                  categoriesStore.editArticle(localArticle);
+                } else {
+                  categoriesStore.createArticle({
+                    ...localArticle,
+                    id: new Date().toISOString(),
+                    author: sharedStore.user!,
+                    creationDate: new Date(),
+                  });
+                }
+                navigate("/Home");
               } else {
-                categoriesStore.createArticle({
-                  ...localArticle,
-                  id: new Date().toISOString(),
-                  author: sharedStore.user!,
-                  creationDate: new Date(),
-                });
+                toast("Jedno od obaveznih polja je ostavljeno prazno");
               }
-              navigate("/Home");
-            } else {
-              toast("Jedno od obaveznih polja je ostavljeno prazno");
-            }
-          }}
-        >
-          Save
-        </Button>
+            }}
+          >
+            Save
+          </Button>
+          {localArticle.id && (
+            <Button
+              onClick={() => {
+                navigate("/Home");
+                categoriesStore.deleteArticle(localArticle.id);
+              }}
+            >
+              DELETE
+            </Button>
+          )}
+        </span>
       </div>
       <ReactQuill
         className="editorBox"

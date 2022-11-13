@@ -1,4 +1,5 @@
 $primary-color-dark: var(--primary-color-dark);
+$background: var(--background);
 
 .MuiPaper-root {
   width: 100%;
@@ -25,5 +26,12 @@ $primary-color-dark: var(--primary-color-dark);
   border: 1px solid !important;
   margin: 0px 1px !important;
   height: 50px !important;
+}
+
+.headerCRUD{
+  #filled-multiline-flexible, .MuiInputBase-multiline, .MuiButtonBase-root{
+    background-color: $background;
+    border-radius: 5px;
+  }
 }
 

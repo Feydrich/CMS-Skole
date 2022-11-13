@@ -26,7 +26,7 @@ function Home() {
   return (
     <main>
       <Carousel />
-      {/* <div className="dividerContainerIcons">
+      <div className="dividerContainerIcons">
         <div className="dividerContent">
           <a href="#">
             <FontAwesomeIcon icon={faSchool} />
@@ -51,7 +51,7 @@ function Home() {
           </a>
           <p>Novosti</p>
         </div>
-      </div> */}
+      </div>
 
       <div className="homeContainer">
         {categoriesStore.articleList?.map(

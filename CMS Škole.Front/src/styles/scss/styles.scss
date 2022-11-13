@@ -3,6 +3,7 @@ $primary-color-dark: var(--primary-color-dark);
 $primary-color-transparent: var(--primary-color-transparent);
 $secondary-color: var(--secondary-color);
 $secondary-color-dark: var(--secondary-color-dark);
+$font-color: var(--font-color);
 
 $background: var(--background);
 $legend: var(--legend);
@@ -14,7 +15,7 @@ $legend: var(--legend);
   -ms-box-sizing: border-box !important;
   box-sizing: border-box !important;
   box-sizing: border-box;
-  font-family: Agane;
+  font-family: Roboto,sans-serif;;
 }
 
 body {
@@ -22,6 +23,8 @@ body {
   margin:0;
   padding:0;
   height:100%;
+  color: $font-color;
+  line-height: 1.5;
 }
 
 footer{
@@ -39,7 +42,6 @@ footer{
 }
 
 .footer-info-center, .footer-info-right {
-  font-size: small;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -56,6 +58,8 @@ footer{
 }
 .footerAbout{
 padding-right: 30px;
+font-size: 16px;
+letter-spacing: 0.5px;
 }
 
 .sideNav{
@@ -70,11 +74,22 @@ padding-right: 30px;
   //width: 80%;
   width: 80%;
   padding: 20px;
+
+  h1{
+    padding-bottom: 10px;
+  }
+  h3{
+    padding-bottom: 20px;
+  }
+  img{
+    padding-top: 40px;
+  }
+
 }
 .item-info{
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: 50px 10px 10px 10px;
   width: 100%;
 }
 
@@ -89,11 +104,16 @@ footer a {
   color: #fff;
   font-family: "Arimo";
 
+
+}
+footer li {
+ padding-bottom: 10px;
 }
 
 .footerTitle{
-  font-size: large;
+  font-size: 18px;
   padding-bottom: 10px;
+  letter-spacing: 2px;
 }
 .sideNavLink{
   text-decoration: none;
@@ -105,6 +125,7 @@ footer a {
 }
 .subCategoryNav{
   padding-right: 30px;
+  margin-top: 20px;
 }
 .subCategoryNav a {
   color: gray;
@@ -211,6 +232,7 @@ h5 {
   a {
     padding: 20px 0;
     width: 100%;
+    font-size: 18px;
     transition: background-color 0.2s;
   }
 
@@ -310,7 +332,7 @@ h5 {
 
   h1 {
     font-size: 1.5rem;
-    color: $primary-color;
+    color: $primary-color-dark;
     font-weight: 100;
   }
 
@@ -352,7 +374,6 @@ h5 {
 
 .mainContent {
   width: 100%;
- 
   padding: 0 5%;
 }
 
@@ -377,7 +398,7 @@ h5 {
   height: 100%;
 }
 .articleCard {
-  width: 30%;
+  width: 20%;
   margin: 1% 1.5%;
   background-color: $primary-color;
   overflow: hidden;
@@ -387,21 +408,27 @@ h5 {
   transition: all 0.5s;
   border-bottom-right-radius: 10px;
   display: inline-block;
-  height: 50vh;
+  height: 60vh;
 
   .cardContent {
-    margin: 20px;
+    margin: 10px;
     text-overflow: ellipsis;
 
+    h2 {
+      padding: 5px;
+    }
     h3 {
-      font-weight: 100;
+      font-weight: 200;
       font-size: 0.9rem;
+      padding: 10px;
     }
 
     p {
       margin-top: 1rem;
+      padding: 0px 10px 0px 10px;
     }
   }
+
 }
 
 .articleCard:hover {
@@ -412,18 +439,20 @@ h5 {
 
 img {
   width: 100%;
+  max-height: 100%;
+  padding: 10px;
   object-fit: cover;
-  max-height: 400px;
 }
 
 .articleCard img {
-  height: 150px;
+  height: 250px;
 }
 
 main {
   animation-name: fadeIn;
   animation-duration: 1.5s;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: 50px;
   //display: flex;
   //flex-wrap: wrap;
   flex-direction: row;
@@ -546,4 +575,73 @@ Button.hamburgerMenu {
 .headerExample {
   width: 100%;
   height: 10vh;
+}
+
+.dividerContainerIcons{
+  background-color:$primary-color-dark;
+  height: 20vh;
+  padding: 20px;
+ 
+  
+}
+.dividerContainerImages{
+  background-color:$primary-color-dark;
+  height: 500px;
+  
+}
+.imagesContainer{
+  width: 25%;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+}
+
+
+.dividerContent{
+  color: #ffffff;
+  width: 25%;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+ 
+  a{
+    color: #ffffff;
+    font-size: 100px;
+  }
+  p{
+    font-size: 18px;
+    padding: 20px;
+  }
+  :hover{
+    border-bottom: 2px solid white;
+  }
+  
+
+}
+
+.dividerContainerImages{
+  background-color:$primary-color-dark;
+  height: 350px;
+  margin: 30px 0px 30px 0px;
+  position: relative;
+}
+.dividerImg {
+float:left;
+width:22%;
+margin: 20px 0px 20px 50px;
+height:300px;
+display: block;
+overflow: hidden;
+
+
+:hover{
+  opacity: 0.7;
+}
+
+}
+.homeContainer{
+  margin: 0 7%;
+}
+.categoryTitle{
+  padding: 20px;
 }

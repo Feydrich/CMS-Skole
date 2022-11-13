@@ -36,7 +36,7 @@ function ArticleCard({ article }: IArticleCardProps) {
             </Button>
           )}
         </div>
-        <div
+        <div className="moreCon"
           onClick={() => {
             articleStore.getSelectedArticles(article.id);
             navigate("/Article");
@@ -49,6 +49,7 @@ function ArticleCard({ article }: IArticleCardProps) {
             <h3>{article.author.name}</h3>
             <hr />
             <p>{article.description}</p>
+            <p className="more">Više...</p>
           </div>
         </div>
       </div>

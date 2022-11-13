@@ -20,7 +20,7 @@ function CategoryCatalogue() {
 
   return (
     <main>
-      <h1>{categoriesStore.selectedCategory!.name}</h1>
+      <h1 className="categoryTitle">{categoriesStore.selectedCategory!.name}</h1>
       {categoriesStore.selectedCategory!.parentCategory && (
         <Link
           to={"/Category"}

@@ -10,5 +10,6 @@ export interface SiteInfo {
     secondaryColorDark: string;
     background: string;
     legend: string;
+    fontColor:string;
   };
 }

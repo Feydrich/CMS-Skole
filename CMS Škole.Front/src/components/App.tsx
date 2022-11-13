@@ -60,6 +60,10 @@ function App() {
       "--legend",
       sharedStore.siteSettings.colorSchemes.legend
     );
+    root?.style.setProperty(
+      "--font-color",
+      sharedStore.siteSettings.colorSchemes.fontColor
+    );
     //root?.style.setProperty("--text-color", darkTheme ? "#fff" : "#262833");
   }, [sharedStore.siteSettings.colorSchemes]);
 

@@ -10,6 +10,10 @@ export const fakeCategories: Category[] = [
       { id: "first", name: "Povijest" },
       { id: "second", name: "Kontakti" },
       { id: "third", name: "Lokacija" },
+      { id: "fourth", name: "Radno vrijeme" },
+      { id: "fifth", name: "Popis djelatnika" },
+      { id: "sixth", name: "Školski odbor" },
+      { id: "seventh", name: "Popis djelatnika" },
     ],
   },
   {
@@ -17,98 +21,90 @@ export const fakeCategories: Category[] = [
     name: "Oglasna ploča",
     subCategories: [
       { id: "first", name: "Obavijesti" },
-      { id: "second", name: "Aktualnosti" },
+      { id: "second", name: "Novosti" },
       { id: "third", name: "Znamenitosti" },
     ],
   },
   {
     id: "third",
-    name: "Novosti",
+    name: "Nastava",
     subCategories: [
-      { id: "first", name: "Placeholder 1" },
-      { id: "second", name: "Placeholder 2" },
-      { id: "third", name: "Placeholder 3" },
+      { id: "first", name: "Upisi u prvi razred" },
+      { id: "second", name: "Informatika" },
+      { id: "third", name: "Likovni" },
+      { id: "third", name: "Vikendom u sportske dvorane" },
+      { id: "fourth", name: "Izvannastavne aktivnosti" },
     ],
   },
-  // {
-  //   id: "fourth",
-  //   name: "Presentation",
-  //   subCategories: [
-  //     { id: "first", name: "Some" },
-  //     { id: "second", name: "Kind" },
-  //     { id: "third", name: "Of interesting" },
-  //     { id: "third", name: "Content" },
-  //   ],
-  // },
 ];
 
 export const fakeArticles: Article[] = [
   {
     id: "1",
-    name: "Placeholder",
+    name: "Dan jabuka u Produženom boravku 1. razreda",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "I ove školske godine obilježili smo Svjetski dan jabuka. Djeca su bila uključena u razne aktivnosti s ciljem da upoznaju koliko je jabuka važna u svakodnevnoj prehrani.",
     author: {
       name: "Professor 1",
     },
-    image: "https://wallpaperaccess.com/full/32048.jpg",
+    image: "https://img.freepik.com/free-photo/red-apple-basket_74190-6134.jpg?w=1380&t=st=1668285796~exp=1668286396~hmac=b0dc5de2acac897a8bf8726543f89db0230075870ddc4b0177de50c00d0575ff",
   },
   {
     id: "2",
-    name: "Placeholder",
+    name: "Opasnosti od strujnog udara na području željezničke infrastrukture",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "U cilju prevencije mladih osoba od opasnosti kretanja po području željezničke infrastrukture na području grada Zagreba, objavljujemo u nastavku priložene letke i brošure u svrhu edukacije mladih i prevencije od strujnog udara na području željezničke infrastrukture.",
     author: {
       name: "Professor 1",
     },
     image:
-      "https://static.scientificamerican.com/sciam/cache/file/92E141F8-36E4-4331-BB2EE42AC8674DD3_source.jpg?w=590&h=800&1966AE6B-E8E5-4D4A-AACA385519F64D03",
+      "https://cdn.pixabay.com/photo/2013/04/01/10/59/electricity-98829_960_720.png",
   },
   {
     id: "3",
-    name: "Placeholder",
+    name: "Potvrde o školovanju dostupne u e-Dnevniku",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "U e-Dnevniku za učenike i roditelje je napravljena nadogradnja kojom je omogućen ispis potvrda o statusu školovanja za učenike osnovnih i srednjih škola. ",
     author: {
       name: "Professor 1",
     },
-    image: "https://wallpapers.com/images/featured/g9rdx9uk2425fip2.jpg",
+    image: "https://cdn.pixabay.com/photo/2017/10/14/09/56/journal-2850091_960_720.jpg",
   },
   {
     id: "4",
-    name: "Placeholder",
+    name: "Red vožnje",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "Red vožnje organiziranog prijevoza učenika od 15. rujna 2022. - školski autobus linija 881",
     author: {
       name: "Developer",
     },
-    image: "https://images2.alphacoders.com/121/1213770.jpg",
+    image: "https://www.zagreb.info/wp-content/uploads/2015/11/12010760_1135413573155193_58493144524179038_o-e1466666556533.jpg",
   },
   {
     id: "5",
-    name: "Placeholder",
+    name: "Učenici 4. b razrednog odjela osvojili nagradu Kauflanda za sve učenike naše škole",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "Učenici 4. b razrednog odjela prošle školske godine sudjelovali su u natječaju Kauflanda Škola voća i povrća. ",
     author: {
       name: "Developer",
     },
-    image: "https://www.enjpg.com/img/2020/cute-cat-2.jpg",
+    image: "http://os-sesvetska-sela-zg.skole.hr/upload/os-sesvetska-sela-zg/images/newsimg/1007/KAUFLAND.jpg",
   },
   {
     id: "6",
-    name: "Placeholder",
+    name: "Matematička radionica u produženom boravku",
     creationDate: new Date(),
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
+      "U sklopu Dana škole održana je Matematička radionica u organizaciji učiteljica iz produženog boravka. Učenici su uživali u  matematičkim igrama i zajedničkom druženju. Pogledajte kako nam je bilo.",
     author: {
       name: "Developer",
     },
-    image: "https://wallpapers.com/images/hd/cute-cat-fuqkmbcov67c1nif.jpg",
+    image: "https://cdn.pixabay.com/photo/2016/07/28/04/31/math-1547018_960_720.jpg",
   },
 ];
 

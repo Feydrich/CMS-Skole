@@ -71,8 +71,6 @@ letter-spacing: 0.5px;
 .singleItemContent{
   flex-direction: column;
   margin-bottom: 10px;
-  //width: 80%;
-  width: 80%;
   padding: 20px;
 
   h1{
@@ -389,18 +387,44 @@ h5 {
   }
 }
 
-.CRUDCardHeader, .crudHeader {
+.crudHeader {
   width: 100%;
   height: 50px;
 }
-.CRUDCardHeader button {
-  width: 100%;
-  height: 100%;
-}
-.articleCard {
-  width: 22%;
-  margin: 1.5% 1.5%;
+
+.CRUDCardButton{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
   background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  &:hover{
+    background-color: $primary-color-dark;
+    svg{
+      color: #ffffff;
+    }
+  }
+  &:focus{
+    width: 40px;
+    height: 40px;
+  }
+  svg{
+    width: 80% !important;
+    height: 80% !important;
+  }
+}
+
+
+.articleCard {
+  position: relative;
+  width: calc((100% / 5));
+  //margin: 1.5% 0.25%;
+  background-color: $background;
   overflow: hidden;
   animation-name: fadeIn;
   animation-duration: 1.5s;
@@ -408,33 +432,35 @@ h5 {
   transition: all 0.5s;
   border-bottom-right-radius: 10px;
   display: inline-block;
-  height: 55vh;
-
-  .cardContent {
-    margin: 5px;
-    text-overflow: ellipsis;
-
-    h2 {
-      padding: 5px;
-    }
-    h3 {
-      font-weight: 200;
-      font-size: 0.8vw;
-      padding: 10px;
-    }
-
-    p {
-      margin-top: 1rem;
-      padding: 0px 10px 0px 10px;
-    }
+  height: 50vh;
+  box-shadow: 0px 4px 10px rgb(0 0 0 / 20%);
+  z-index: 1;
+  img, .cardContent{
+    height: 50%;
   }
 
+  .cardContent {
+    padding: 10px;
+    #title{
+      max-height: 60%;
+      min-height: 40%;
+      border-bottom: 1px solid $font-color;
+      font-size: 0.8em;
+      overflow: hidden;
+    }
+    #content{
+      height: 40%;
+      overflow: hidden;
+    }
+
+  }
+  
 }
 
 .articleCard:hover {
   background-color: $secondary-color;
   transform: scale(1.02, 1.03);
-  box-shadow: 0px 4px 10px rgb(0 0 0 / 20%);
+  z-index: 2;
 }
 
 img {
@@ -495,7 +521,7 @@ main {
 .navBarWrapper,
 .navBar,
 .loginPopUp,
-.articleCard {
+.articleCard:hover {
   -webkit-box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
@@ -505,6 +531,7 @@ main {
 .previewBox {
   height: 65vh;
   padding: 20px;
+  background-color: $background;
   width: 50%;
   float: left;
 }
@@ -601,6 +628,8 @@ Button.hamburgerMenu {
   overflow: hidden;
   display: inline-block;
   text-align: center;
+  outline: 0px solid rgba(255,255,255,0);
+  transition: outline 0.25s;
  
   a{
     color: #ffffff;
@@ -610,9 +639,10 @@ Button.hamburgerMenu {
     font-size: 18px;
     padding: 20px;
   }
-  :hover{
-    border-bottom: 2px solid white;
+  &:hover{
+    outline: 2px solid rgba(255,255,255,0.5);
   }
+  
   
 
 }
@@ -637,7 +667,8 @@ overflow: hidden;
 
 }
 .homeContainer{
-  margin: 0 10%;
+  //margin: 0 5%;
+  padding: 20px 0;
 }
 .categoryTitle{
   padding: 20px;

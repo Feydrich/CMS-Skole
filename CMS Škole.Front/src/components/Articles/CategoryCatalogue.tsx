@@ -20,7 +20,9 @@ function CategoryCatalogue() {
 
   return (
     <main>
-      <h1 className="categoryTitle">{categoriesStore.selectedCategory!.name}</h1>
+      <h1 className="categoryTitle">
+        {categoriesStore.selectedCategory!.name}
+      </h1>
       {categoriesStore.selectedCategory!.parentCategory && (
         <Link
           to={"/Category"}
@@ -35,9 +37,9 @@ function CategoryCatalogue() {
       )}
 
       <div className="item-info">
-        <div className="sideNav">
-          <ul>
-            {categoriesStore.selectedCategory!.subCategories && (
+        {categoriesStore.selectedCategory!.subCategories && (
+          <div className="sideNav">
+            <ul>
               <div className="subCategoryNav">
                 {categoriesStore.selectedCategory!.subCategories.map(
                   (x, index) => (
@@ -56,11 +58,18 @@ function CategoryCatalogue() {
                   )
                 )}
               </div>
-            )}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        )}
 
-        <div className="singleItemContent">
+        <div
+          className="singleItemContent"
+          style={{
+            width: categoriesStore.selectedCategory!.subCategories
+              ? "80%"
+              : "100%",
+          }}
+        >
           {categoriesStore.articleList?.map((x, index) => (
             <ArticleCard key={"articleCard" + index} article={x} />
           ))}

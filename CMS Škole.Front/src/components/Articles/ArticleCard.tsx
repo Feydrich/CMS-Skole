@@ -1,6 +1,8 @@
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Article } from "../../models/Article";
 import { User } from "../../models/User";
@@ -13,42 +15,38 @@ interface IArticleCardProps {
 function ArticleCard({ article }: IArticleCardProps) {
   const { articleStore, sharedStore } = useStore();
   const navigate = useNavigate();
-  const formattedDate =
-    article.creationDate.getDate() +
-    "." +
-    article.creationDate.getMonth() +
-    "." +
-    article.creationDate.getFullYear() +
-    ".";
 
   return (
     <>
       <div className="articleCard" key={"article" + article.id}>
-        <div className="CRUDCardHeader">
-          {article.author.name === sharedStore.user?.name && (
-            <Button
-              onClick={() => {
-                articleStore.setArticleForEdit(article.id);
-                navigate("/Editor");
-              }}
-            >
-              Edit
-            </Button>
-          )}
-        </div>
+        {article.author.name === sharedStore.user?.name && (
+          <span
+            className="CRUDCardButton"
+            onClick={() => {
+              articleStore.setArticleForEdit(article.id);
+              navigate("/Editor");
+            }}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </span>
+        )}
         <div
           onClick={() => {
             articleStore.getSelectedArticles(article.id);
             navigate("/Article");
           }}
+          style={{ width: "100%", height: "100%" }}
         >
           <img src={article.image} />
           <div className="cardContent">
-            <h2>{article.name}</h2>
+            <div id="title">
+              <h2>{article.name}</h2>
+            </div>
+            <div id="content">
+              <p>{article.description}</p>
+            </div>
 
-            <h3>{article.author.name}</h3>
-            <hr />
-            <p>{article.description}</p>
+            {/* <h3>{article.author.name}</h3> */}
           </div>
         </div>
       </div>

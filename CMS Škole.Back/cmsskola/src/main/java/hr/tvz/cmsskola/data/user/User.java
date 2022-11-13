@@ -1,7 +1,6 @@
 package hr.tvz.cmsskola.data.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.claim.Claim;
 import hr.tvz.cmsskola.data.role.Role;
 import java.util.Collection;
@@ -45,7 +44,6 @@ public class User implements UserDetails {
 
   @ManyToOne
   @JoinColumn(name = "role")
-  @JsonBackReference
   private Role role;
 
   private String name;
@@ -57,7 +55,7 @@ public class User implements UserDetails {
 
   @OneToMany
   @JoinColumn(name = "user")
-  @JsonManagedReference
+  @JsonIgnore
   @Exclude
   private Collection<Claim> claims;
 
@@ -81,7 +79,8 @@ public class User implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Collection<Claim> roleClaims = role != null ? role.getClaims() : List.of();
-    return Stream.concat(claims.stream(), roleClaims.stream()).toList();
+    Collection<Claim> userClaims = claims != null ? claims : List.of();
+    return Stream.concat(userClaims.stream(), roleClaims.stream()).toList();
   }
 
   @Override

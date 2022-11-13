@@ -4,6 +4,7 @@ import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,12 +22,17 @@ public class RoleService {
   private final ClaimService claimService;
   private final UserService userService;
   private final LoggingService loggingService;
+  private final ModelMapper modelMapper;
 
   public Role getById(Long id) {
     return roleRepository.findById(id).orElse(null);
   }
 
   public ResponseEntity<Role> save(Role role) {
+    if (role.getId() != null) {
+      role = fillWithPrev(role);
+    }
+
     logger.info("Trying to save role {}", role.getName());
 
     role = roleRepository.save(role);
@@ -71,5 +77,15 @@ public class RoleService {
               user.setRole(null);
               userService.save(user);
             });
+  }
+
+  private Role fillWithPrev(Role entity) {
+    var optPrev = roleRepository.findById(entity.getId());
+    if (optPrev.isPresent()) {
+      var prev = optPrev.get();
+      modelMapper.map(entity, prev);
+      entity = prev;
+    }
+    return entity;
   }
 }

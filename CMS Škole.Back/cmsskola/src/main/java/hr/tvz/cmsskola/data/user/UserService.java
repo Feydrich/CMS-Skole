@@ -3,6 +3,7 @@ package hr.tvz.cmsskola.data.user;
 import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ public class UserService {
   private final ClaimService claimService;
   private final LoggingService loggingService;
   private final PasswordEncoder passwordEncoder;
+  private final ModelMapper modelMapper;
 
   public Page<User> getAll(Pageable pageable) {
     return userRepository.findAll(pageable);
@@ -35,9 +37,13 @@ public class UserService {
   }
 
   public ResponseEntity<User> save(User user) {
+    encryptPassword(user);
+    if (user.getId() != null) {
+      user = fillWithPrev(user);
+    }
+
     logger.info("Trying to save user {}", user.getUsername());
 
-    encryptPassword(user);
     user = userRepository.save(user);
 
     String logText;
@@ -76,5 +82,15 @@ public class UserService {
 
   private void deleteForeignKeys(User user) {
     user.getClaims().forEach(claim -> claimService.delete(claim.getId()));
+  }
+
+  private User fillWithPrev(User entity) {
+    var optPrev = userRepository.findById(entity.getId());
+    if (optPrev.isPresent()) {
+      var prev = optPrev.get();
+      modelMapper.map(entity, prev);
+      entity = prev;
+    }
+    return entity;
   }
 }

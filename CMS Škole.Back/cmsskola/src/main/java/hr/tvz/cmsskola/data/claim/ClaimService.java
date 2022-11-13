@@ -2,6 +2,7 @@ package hr.tvz.cmsskola.data.claim;
 
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,14 +17,18 @@ public class ClaimService {
   private static final Logger logger = LoggerFactory.getLogger(ClaimService.class);
 
   private final ClaimRepository claimRepository;
-
   private final LoggingService loggingService;
+  private final ModelMapper modelMapper;
 
   public Claim getById(Long id) {
     return claimRepository.findById(id).orElse(null);
   }
 
   public ResponseEntity<Claim> save(Claim claim) {
+    if (claim.getId() != null) {
+      claim = fillWithPrev(claim);
+    }
+
     logger.info("Trying to save claim {}", claim.getAuthority());
 
     claim = claimRepository.save(claim);
@@ -56,5 +61,15 @@ public class ClaimService {
 
   public Page<Claim> get(Pageable pageable) {
     return claimRepository.findAll(pageable);
+  }
+
+  private Claim fillWithPrev(Claim entity) {
+    var optPrev = claimRepository.findById(entity.getId());
+    if (optPrev.isPresent()) {
+      var prev = optPrev.get();
+      modelMapper.map(entity, prev);
+      entity = prev;
+    }
+    return entity;
   }
 }

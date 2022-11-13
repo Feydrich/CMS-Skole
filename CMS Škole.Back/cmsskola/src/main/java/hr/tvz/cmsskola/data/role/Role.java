@@ -1,6 +1,6 @@
 package hr.tvz.cmsskola.data.role;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.claim.Claim;
 import hr.tvz.cmsskola.data.user.User;
 import java.util.Collection;
@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -35,12 +36,14 @@ public class Role {
 
   @OneToMany
   @JoinColumn(name = "role")
-  @JsonManagedReference
+  @JsonIgnore
+  @Exclude
   private Collection<Claim> claims;
 
   @OneToMany
   @JoinColumn(name = "role")
-  @JsonManagedReference
+  @JsonIgnore
+  @Exclude
   private Collection<User> users;
 
   private String name;

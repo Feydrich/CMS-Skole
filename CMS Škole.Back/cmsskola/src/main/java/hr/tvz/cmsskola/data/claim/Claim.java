@@ -1,12 +1,12 @@
 package hr.tvz.cmsskola.data.claim;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import hr.tvz.cmsskola.data.claim.ClaimUtils.Action;
 import hr.tvz.cmsskola.data.claim.ClaimUtils.Level;
 import hr.tvz.cmsskola.data.role.Role;
 import hr.tvz.cmsskola.data.user.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,14 +35,12 @@ public class Claim implements GrantedAuthority {
   @Column(name = "id")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "role")
-  @JsonBackReference
   private Role role;
 
   @ManyToOne
   @JoinColumn(name = "user")
-  @JsonBackReference
   private User user;
 
   private String operation;

@@ -1,11 +1,11 @@
-package hr.tvz.cmsskola.data.claim;
+package hr.tvz.cmsskola.data.webpage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.category.Category;
-import hr.tvz.cmsskola.data.claim.ClaimUtils.Action;
-import hr.tvz.cmsskola.data.claim.ClaimUtils.Level;
-import hr.tvz.cmsskola.data.role.Role;
-import hr.tvz.cmsskola.data.user.User;
-import hr.tvz.cmsskola.data.webpage.WebPage;
+import hr.tvz.cmsskola.data.claim.Claim;
+import hr.tvz.cmsskola.data.image.Image;
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -29,39 +30,33 @@ import org.springframework.security.core.GrantedAuthority;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "claim")
-public class Claim implements GrantedAuthority {
+@Table(name = "web_page")
+public class WebPage {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "role")
-  private Role role;
+  private String htmlUri;
 
-  @ManyToOne
-  @JoinColumn(name = "user")
-  private User user;
+  private String url;
 
   @ManyToOne
   @JoinColumn(name = "category")
   private Category category;
 
-  @ManyToOne
+  @OneToMany
   @JoinColumn(name = "web_page")
-  private WebPage webPage;
+  @JsonIgnore
+  @Exclude
+  private Collection<Claim> claims;
 
-  private String operation;
+  @OneToMany
+  @JoinColumn(name = "web_page")
+  private Collection<Image> images;
 
-  @Column(name = "level")
-  private Level level;
-
-  @Column(name = "action")
-  private Action action;
-
-  @Override
-  public String getAuthority() {
-    return ClaimUtils.extractAuthority(this);
-  }
+  @OneToMany
+  @JoinColumn(name = "web_page")
+  private Collection<Article> articles;
 }

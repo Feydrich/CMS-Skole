@@ -49,6 +49,8 @@ public class User implements UserDetails {
   private String name;
   private String surname;
   private String username;
+
+  @JsonIgnore
   private String password;
 
   private String mail;

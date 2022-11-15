@@ -26,7 +26,7 @@ public class ImageService {
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
 
-  private static final String PATH = "images";
+  private static final String PATH = "public/images";
 
   public ResponseEntity<byte[]> getById(Long id) {
     var image = imageRepository.findById(id).orElse(null);
@@ -82,7 +82,7 @@ public class ImageService {
       Image image = optionalImage.get();
       File file = new File(image.getImageUri());
       if (!file.delete()) {
-        throw new IOException();
+        throw new IOException("unable to delete file");
       }
 
       imageRepository.deleteById(image.getId());
@@ -104,13 +104,26 @@ public class ImageService {
   private String saveFile(MultipartFile image) throws IOException {
     String name = image.getOriginalFilename() + RandomString.make(8) + "." + image.getContentType();
     Path path = Path.of(PATH, name);
+
+    makeDir();
+    if (!path.toFile().createNewFile()) {
+      throw new IOException("unable to create file");
+    }
     File newFile = path.toFile();
     image.transferTo(newFile);
 
     if (!newFile.createNewFile()) {
-      throw new IOException();
+      throw new IOException("unable to create file");
     }
 
     return path.toString();
+  }
+
+  private void makeDir() {
+    File rootDir = new File(PATH);
+    if (!rootDir.isDirectory()) {
+      logger.info("making directory {}", PATH);
+      rootDir.mkdirs();
+    }
   }
 }

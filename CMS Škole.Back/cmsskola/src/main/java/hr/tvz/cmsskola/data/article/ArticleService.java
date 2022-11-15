@@ -27,7 +27,7 @@ public class ArticleService {
   private final ModelMapper modelMapper;
 
   private static final String HTML = ".html";
-  private static final String PATH = "images";
+  private static final String PATH = "public/articles";
 
   public Article getById(Long id) {
     Article article = articleRepository.findById(id).orElse(null);
@@ -74,7 +74,7 @@ public class ArticleService {
       Article article = optionalArticle.get();
       File file = new File(article.getHtmlUri());
       if (!file.delete()) {
-        throw new IOException();
+        throw new IOException("unable to delete file");
       }
 
       deleteForeignKeys(article);
@@ -105,10 +105,22 @@ public class ArticleService {
     String name = title + RandomString.make(8) + "." + HTML;
     Path path = Path.of(PATH, name);
 
+    makeDir();
+    if (!path.toFile().createNewFile()) {
+      throw new IOException("unable to create file");
+    }
     byte[] htmlBytes = html.getBytes();
     Files.write(path, htmlBytes);
 
     return path.toString();
+  }
+
+  private void makeDir() {
+    File rootDir = new File(PATH);
+    if (!rootDir.isDirectory()) {
+      logger.info("making directory {}", PATH);
+      rootDir.mkdirs();
+    }
   }
 
   private void readHtml(Article article) {

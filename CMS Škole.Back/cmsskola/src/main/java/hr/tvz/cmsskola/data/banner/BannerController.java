@@ -1,4 +1,4 @@
-package hr.tvz.cmsskola.data.image;
+package hr.tvz.cmsskola.data.banner;
 
 import java.io.IOException;
 import javax.validation.Valid;
@@ -13,31 +13,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "image")
-public class ImageController {
-  private final ImageService imageService;
+@RequestMapping(path = "banner")
+public class BannerController {
+  private final BannerService bannerService;
 
   @GetMapping(path = "{id}")
-  public ResponseEntity<byte[]> getById(@PathVariable Long id) {
-    return imageService.getById(id);
+  public Banner getById(@PathVariable Long id) {
+    return bannerService.getById(id);
   }
 
-  // todo preautorize admin
+  // todo preautorize admin, add image uppload
   @PostMapping(path = "save")
-  public ResponseEntity<Image> save(
-      @Valid @RequestBody Image image, @RequestParam MultipartFile file) {
-    return imageService.save(image, file);
+  public ResponseEntity<Banner> save(@Valid @RequestBody Banner banner) {
+    return bannerService.save(banner);
   }
 
   // todo preautorize admin
   @DeleteMapping(path = "")
-  public ResponseEntity<Image> delete(@RequestParam Long id) {
+  public ResponseEntity<Banner> delete(@RequestParam Long id) {
     try {
-      imageService.delete(id);
+      bannerService.delete(id);
     } catch (IOException e) {
       return ResponseEntity.internalServerError().build();
     }

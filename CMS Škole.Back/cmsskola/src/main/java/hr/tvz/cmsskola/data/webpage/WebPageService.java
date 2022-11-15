@@ -6,8 +6,12 @@ import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +33,13 @@ public class WebPageService {
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
 
+  private static final String HTML = ".html";
+  private static final String PATH = "public/pages";
+
   public WebPage getById(Long id) {
-    return webPageRepository.findById(id).orElse(null);
+    var webPage = webPageRepository.findById(id).orElse(null);
+    readHtml(webPage);
+    return webPage;
   }
 
   public ResponseEntity<WebPage> save(WebPage webPage) {
@@ -39,6 +48,14 @@ public class WebPageService {
     }
 
     logger.info("Trying to save webPage {}", webPage.getUrl());
+
+    String url;
+    try {
+      url = saveFile(webPage.getUrl(), webPage.getHtml());
+    } catch (IOException e) {
+      return ResponseEntity.internalServerError().build();
+    }
+    webPage.setHtmlUri(url);
 
     webPage = webPageRepository.save(webPage);
 
@@ -71,7 +88,9 @@ public class WebPageService {
   }
 
   public Page<WebPage> get(Pageable pageable) {
-    return webPageRepository.findAll(pageable);
+    var page =  webPageRepository.findAll(pageable);
+    page.getContent().forEach(this::readHtml);
+    return page;
   }
 
   private void deleteForeignKeys(WebPage webPage) throws IOException {
@@ -92,5 +111,37 @@ public class WebPageService {
       entity = prev;
     }
     return entity;
+  }
+
+  private String saveFile(String url, String html) throws IOException {
+    String name = url.split("/^[^/]*/")[0] + RandomString.make(8) + "." + HTML;
+    Path path = Path.of(PATH, name);
+
+    makeDir();
+    if (!path.toFile().createNewFile()) {
+      throw new IOException("unable to create file");
+    }
+    byte[] htmlBytes = html.getBytes();
+    Files.write(path, htmlBytes);
+
+    return path.toString();
+  }
+
+  private void makeDir() {
+    File rootDir = new File(PATH);
+    if (!rootDir.isDirectory()) {
+      logger.info("making directory {}", PATH);
+      rootDir.mkdirs();
+    }
+  }
+
+  private void readHtml(WebPage webPage) {
+    if (webPage != null) {
+      try {
+        String html = Files.readAllLines(Path.of(webPage.getHtmlUri())).get(0);
+        webPage.setHtml(html);
+      } catch (IOException ignored) {
+      }
+    }
   }
 }

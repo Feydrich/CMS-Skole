@@ -28,7 +28,7 @@ import lombok.ToString.Exclude;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Category")
+@Table(name = "category")
 public class Category {
 
   @Id

@@ -1,15 +1,14 @@
-package hr.tvz.cmsskola.data.image;
+package hr.tvz.cmsskola.data.banner;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.tvz.cmsskola.data.article.Article;
-import hr.tvz.cmsskola.data.webpage.WebPage;
+import hr.tvz.cmsskola.data.image.Image;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -26,24 +24,19 @@ import lombok.ToString.Exclude;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "image")
-public class Image {
+@Table(name = "banner")
+public class Banner {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "image_uri")
-  @JsonIgnore
-  private String imageUri;
+  private String name;
+  private LocalDateTime created;
+  private Boolean archive;
+  private Integer order;
 
-  @ManyToOne
-  @JoinColumn(name = "web_page")
-  @Exclude
-  private WebPage webPage;
-
-  @ManyToOne
-  @JoinColumn(name = "article")
-  @Exclude
-  private Article article;
+  @OneToOne
+  @JoinColumn(name = "id")
+  private Image image;
 }

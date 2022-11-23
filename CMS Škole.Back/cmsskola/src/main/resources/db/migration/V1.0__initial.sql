@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS school;
 -- ===================== ROLE =====================
 
 CREATE TABLE IF NOT EXISTS "role" (
-                        id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                        id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                         "name" varchar NOT NULL,
                         CONSTRAINT role_pk PRIMARY KEY (id)
 );
@@ -13,12 +13,12 @@ CREATE TABLE IF NOT EXISTS "role" (
 -- ===================== BANNER =====================
 
 CREATE TABLE IF NOT EXISTS  banner (
-                        id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                        id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                         "name" varchar NOT NULL,
                         image_uri varchar NOT NULL,
                         created date NOT NULL DEFAULT CURRENT_DATE,
                         archive bool NOT NULL DEFAULT false,
-                        "order" int4 NOT NULL,
+                        "order" bigint NOT NULL,
                         CONSTRAINT banner_pk PRIMARY KEY (id)
 );
 
@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS  banner (
 -- ===================== USER =====================
 
 CREATE TABLE IF NOT EXISTS "user" (
-                        id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                        id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                         "name" varchar NULL,
                         surname varchar NULL,
                         username varchar NOT NULL,
                         "password" varchar NOT NULL,
-                        "role" int4 NULL,
+                        "role" bigint NULL,
                         mail varchar NULL,
                         CONSTRAINT user_pk PRIMARY KEY (id),
                         CONSTRAINT user_role_fk FOREIGN KEY ("role") REFERENCES "role"(id)
@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS "user" (
 -- ===================== CATEGORY =====================
 
 CREATE TABLE IF NOT EXISTS category (
-                          id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                          id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                           "name" varchar NOT NULL,
-                          supercategory int4 NULL,
+                          supercategory bigint NULL,
                           CONSTRAINT category_pk PRIMARY KEY (id),
                           CONSTRAINT category_supercategory_fk FOREIGN KEY (supercategory) REFERENCES category(id)
 );
@@ -52,10 +52,10 @@ CREATE TABLE IF NOT EXISTS category (
 -- ===================== WEB PAGE =====================
 
 CREATE TABLE IF NOT EXISTS web_page (
-                          id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                          id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                           html_uri varchar NULL,
                           url varchar NOT NULL,
-                          category int4 NULL,
+                          category bigint NULL,
                           CONSTRAINT web_page_pk PRIMARY KEY (id),
                           CONSTRAINT web_page_category_fk FOREIGN KEY (category) REFERENCES category(id)
 );
@@ -64,13 +64,13 @@ CREATE TABLE IF NOT EXISTS web_page (
 -- ===================== ARTICLE =====================
 
 CREATE TABLE IF NOT EXISTS article (
-                         id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                         id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                          title varchar NULL,
                          html_uri varchar NOT NULL,
-                         web_page int4 NOT NULL,
-                         author int4 NOT NULL,
-                         created date NOT NULL DEFAULT CURRENT_DATE,
-                         updated date NOT NULL DEFAULT CURRENT_DATE,
+                         web_page bigint NOT NULL,
+                         author bigint NOT NULL,
+                         created date DEFAULT CURRENT_DATE,
+                         updated date DEFAULT CURRENT_DATE,
                          lasts_until date NULL,
                          archived bool NOT NULL DEFAULT false,
                          priority bool NOT NULL DEFAULT false,
@@ -83,12 +83,12 @@ CREATE TABLE IF NOT EXISTS article (
 -- ===================== CLAIM =====================
 
 CREATE TABLE IF NOT EXISTS claim (
-                       id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-                       "role" int4 NULL,
-                       "user" int4 NULL,
+                       id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+                       "role" bigint NULL,
+                       "user" bigint NULL,
                        operation varchar NOT NULL,
-                       category int4 NULL,
-                       web_page int4 NULL,
+                       category bigint NULL,
+                       web_page bigint NULL,
                        CONSTRAINT claim_pk PRIMARY KEY (id),
                        CONSTRAINT claim_category_fk FOREIGN KEY (category) REFERENCES category(id),
                        CONSTRAINT claim_role_fk FOREIGN KEY ("role") REFERENCES "role"(id),
@@ -100,10 +100,10 @@ CREATE TABLE IF NOT EXISTS claim (
 -- ===================== SUBSCRIPTION =====================
 
 CREATE TABLE IF NOT EXISTS "subscription" (
-                                id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-                                "user" int4 NOT NULL,
-                                category int4 NULL,
-                                web_page int4 NULL,
+                                id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+                                "user" bigint NOT NULL,
+                                category bigint NULL,
+                                web_page bigint NULL,
                                 CONSTRAINT subscription_pk PRIMARY KEY (id),
                                 CONSTRAINT subscription_category_fk FOREIGN KEY (category) REFERENCES category(id),
                                 CONSTRAINT subscription_user_fk FOREIGN KEY ("user") REFERENCES "user"(id),
@@ -114,10 +114,10 @@ CREATE TABLE IF NOT EXISTS "subscription" (
 -- ===================== IMAGE =====================
 
 CREATE TABLE IF NOT EXISTS image (
-                       id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+                       id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
                        image_uri varchar NOT NULL,
-                       web_page int4 NULL,
-                       article int4 NULL,
+                       web_page bigint NULL,
+                       article bigint NULL,
                        CONSTRAINT image_pk PRIMARY KEY (id),
                        CONSTRAINT image_article_fk FOREIGN KEY (article) REFERENCES article(id),
                        CONSTRAINT image_web_page_fk FOREIGN KEY (web_page) REFERENCES web_page(id)
@@ -127,10 +127,10 @@ CREATE TABLE IF NOT EXISTS image (
 -- ===================== LOG =====================
 
 CREATE TABLE IF NOT EXISTS log (
-                     id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-                     "user" int4 NOT NULL,
-                     article int4 NULL,
-                     web_page int4 NULL,
+                     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+                     "user" bigint NOT NULL,
+                     article bigint NULL,
+                     web_page bigint NULL,
                      "text" varchar NOT NULL,
                      tstamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                      CONSTRAINT log_pk PRIMARY KEY (id),

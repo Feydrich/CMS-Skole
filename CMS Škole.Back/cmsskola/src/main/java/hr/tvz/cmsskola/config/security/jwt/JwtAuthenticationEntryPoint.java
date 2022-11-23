@@ -8,7 +8,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,9 +21,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-  @Autowired public final HttpMessageConverter<String> messageConverter;
-
-  @Autowired public final ObjectMapper mapper;
+  private final HttpMessageConverter<String> messageConverter;
+  private final ObjectMapper mapper;
 
   @Override
   public void commence(

@@ -1,7 +1,8 @@
-package hr.tvz.cmsskola.data.user;
+package hr.tvz.cmsskola.data.category;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import java.util.Collection;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,21 +21,21 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "user")
-public class UserController {
-  private final UserService userService;
+@RequestMapping(path = "category")
+public class CategoryController {
+  private final CategoryService categoryService;
 
   @GetMapping(path = "{id}")
-  public User getById(@PathVariable Long id) {
-    return userService.getById(id);
+  public Category getById(@PathVariable Long id) {
+    return categoryService.getById(id);
+  }
+
+  @GetMapping(path = "getBySuperCategory/{superCategoryId}")
+  public Collection<Category> getBySuperCategory(@PathVariable Long superCategoryId) {
+    return categoryService.getBySuperCategory(superCategoryId);
   }
 
   @GetMapping(path = "")
-  public User getByUsername(@RequestParam String username) {
-    return userService.getByUsername(username);
-  }
-
-  @GetMapping(path = "all")
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "page",
@@ -53,20 +54,20 @@ public class UserController {
         paramType = "query",
         dataTypeClass = String.class)
   })
-  public Page<User> getAll(@ApiIgnore Pageable pageable) {
-    return userService.getAll(pageable);
+  public Page<Category> get(@ApiIgnore Pageable pageable) {
+    return categoryService.get(pageable);
   }
 
   // todo preautorize admin
   @PostMapping(path = "save")
-  public ResponseEntity<User> save(@Valid @RequestBody User user) {
-    return userService.save(user);
+  public ResponseEntity<Category> save(@Valid @RequestBody Category category) {
+    return categoryService.save(category);
   }
 
   // todo preautorize admin
   @DeleteMapping(path = "")
-  public ResponseEntity<String> delete(@RequestParam Long id) {
-    userService.delete(id);
+  public ResponseEntity<Category> delete(@RequestParam Long id) {
+    categoryService.delete(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

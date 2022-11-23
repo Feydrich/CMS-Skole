@@ -3,7 +3,6 @@ package hr.tvz.cmsskola.config.security;
 import hr.tvz.cmsskola.data.user.User;
 import hr.tvz.cmsskola.data.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DomainUserDetailsService implements UserDetailsService {
 
-  @Autowired public final UserRepository userRepository;
+  private final UserRepository userRepository;
 
   @Override
   @Transactional

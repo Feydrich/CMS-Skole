@@ -1,0 +1,1 @@
+ALTER TABLE ARTICLE ADD COLUMN description varchar;

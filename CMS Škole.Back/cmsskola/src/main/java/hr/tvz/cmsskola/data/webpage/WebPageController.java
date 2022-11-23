@@ -1,7 +1,8 @@
-package hr.tvz.cmsskola.data.user;
+package hr.tvz.cmsskola.data.webpage;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import java.io.IOException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,21 +21,16 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "user")
-public class UserController {
-  private final UserService userService;
+@RequestMapping(path = "webpage")
+public class WebPageController {
+  private final WebPageService webPageService;
 
   @GetMapping(path = "{id}")
-  public User getById(@PathVariable Long id) {
-    return userService.getById(id);
+  public WebPage getById(@PathVariable Long id) {
+    return webPageService.getById(id);
   }
 
   @GetMapping(path = "")
-  public User getByUsername(@RequestParam String username) {
-    return userService.getByUsername(username);
-  }
-
-  @GetMapping(path = "all")
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "page",
@@ -53,20 +49,24 @@ public class UserController {
         paramType = "query",
         dataTypeClass = String.class)
   })
-  public Page<User> getAll(@ApiIgnore Pageable pageable) {
-    return userService.getAll(pageable);
+  public Page<WebPage> get(@ApiIgnore Pageable pageable) {
+    return webPageService.get(pageable);
   }
 
   // todo preautorize admin
   @PostMapping(path = "save")
-  public ResponseEntity<User> save(@Valid @RequestBody User user) {
-    return userService.save(user);
+  public ResponseEntity<WebPage> save(@Valid @RequestBody WebPage webPage) {
+    return webPageService.save(webPage);
   }
 
   // todo preautorize admin
   @DeleteMapping(path = "")
-  public ResponseEntity<String> delete(@RequestParam Long id) {
-    userService.delete(id);
+  public ResponseEntity<WebPage> delete(@RequestParam Long id) {
+    try {
+      webPageService.delete(id);
+    } catch (IOException e) {
+      return ResponseEntity.internalServerError().build();
+    }
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

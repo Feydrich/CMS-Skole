@@ -3,14 +3,15 @@ package hr.tvz.cmsskola.data.login;
 import hr.tvz.cmsskola.config.security.jwt.JwtFilter;
 import hr.tvz.cmsskola.config.security.jwt.TokenProvider;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.user.User;
 import hr.tvz.cmsskola.data.user.UserRepository;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.flywaydb.core.internal.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,24 +24,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-  Logger logger = LoggerFactory.getLogger(LoginService.class);
+  private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
-  @Autowired public final UserRepository userRepository;
+  private final UserRepository userRepository;
+  private final TokenProvider tokenProvider;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
+  private final LoggingService loggingService;
 
-  @Autowired public final TokenProvider tokenProvider;
-
-  @Autowired public final AuthenticationManagerBuilder authenticationManagerBuilder;
-
-  @Autowired private final LoggingService loggingService;
-
-  public ResponseEntity<JWTToken> login(LoginDTO login) {
+  public ResponseEntity<Pair<JWTToken, User>> login(LoginDTO login) {
     logger.debug("attempting to login {}", login.username);
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
 
     Authentication authentication;
-      authentication =
-          authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -49,10 +46,13 @@ public class LoginService {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-    var optionalUser = userRepository.findByUsername(login.getUsername());
-    optionalUser.ifPresent(user -> loggingService.log(logger, "logged in", user.getId()));
+    var user = userRepository.findByUsername(login.getUsername()).orElse(null);
 
-    return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    if (user != null) {
+      loggingService.log(logger, "logged in", user.getId());
+    }
+
+    return new ResponseEntity<>(Pair.of(new JWTToken(jwt), user), httpHeaders, HttpStatus.OK);
   }
 
   public void logout() {
@@ -70,8 +70,7 @@ public class LoginService {
 
   @Data
   static class LoginDTO {
-    @NotNull
-    private String username;
+    @NotNull private String username;
     @NotNull private String password;
   }
 }

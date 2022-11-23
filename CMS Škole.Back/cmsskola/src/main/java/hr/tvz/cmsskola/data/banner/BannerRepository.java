@@ -1,7 +1,7 @@
-package hr.tvz.cmsskola.data.logging;
+package hr.tvz.cmsskola.data.banner;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LoggingRepository extends PagingAndSortingRepository<Log, Long> {}
+public interface BannerRepository extends PagingAndSortingRepository<Banner, Long> {}

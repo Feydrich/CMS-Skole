@@ -7,6 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("log")
 @RequiredArgsConstructor
-public class LoggingController {
-
-}
+public class LoggingController {}

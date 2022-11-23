@@ -1,4 +1,4 @@
-package hr.tvz.cmsskola.data.user;
+package hr.tvz.cmsskola.data.role;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,21 +20,16 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "user")
-public class UserController {
-  private final UserService userService;
+@RequestMapping(path = "role")
+public class RoleController {
+  private final RoleService roleService;
 
   @GetMapping(path = "{id}")
-  public User getById(@PathVariable Long id) {
-    return userService.getById(id);
+  public Role getById(@PathVariable Long id) {
+    return roleService.getById(id);
   }
 
   @GetMapping(path = "")
-  public User getByUsername(@RequestParam String username) {
-    return userService.getByUsername(username);
-  }
-
-  @GetMapping(path = "all")
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "page",
@@ -53,20 +48,20 @@ public class UserController {
         paramType = "query",
         dataTypeClass = String.class)
   })
-  public Page<User> getAll(@ApiIgnore Pageable pageable) {
-    return userService.getAll(pageable);
+  public Page<Role> get(@ApiIgnore Pageable pageable) {
+    return roleService.get(pageable);
   }
 
   // todo preautorize admin
   @PostMapping(path = "save")
-  public ResponseEntity<User> save(@Valid @RequestBody User user) {
-    return userService.save(user);
+  public ResponseEntity<Role> save(@Valid @RequestBody Role role) {
+    return roleService.save(role);
   }
 
   // todo preautorize admin
   @DeleteMapping(path = "")
-  public ResponseEntity<String> delete(@RequestParam Long id) {
-    userService.delete(id);
+  public ResponseEntity<Role> delete(@RequestParam Long id) {
+    roleService.delete(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

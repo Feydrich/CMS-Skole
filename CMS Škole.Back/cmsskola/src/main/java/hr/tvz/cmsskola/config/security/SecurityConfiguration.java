@@ -3,7 +3,6 @@ package hr.tvz.cmsskola.config.security;
 import hr.tvz.cmsskola.config.security.jwt.JwtAuthenticationEntryPoint;
 import hr.tvz.cmsskola.config.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,9 +21,8 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-  @Autowired public final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-  @Autowired public final JwtFilter jwtFilter;
+  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private final JwtFilter jwtFilter;
 
   @Bean
   public PasswordEncoder passwordEncoder() {

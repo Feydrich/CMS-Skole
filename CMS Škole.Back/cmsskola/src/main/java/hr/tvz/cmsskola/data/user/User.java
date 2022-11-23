@@ -80,6 +80,11 @@ public class User implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Collection<Claim> roleClaims = role != null ? role.getClaims() : List.of();
     Collection<Claim> userClaims = claims != null ? claims : List.of();
+
+    if (roleClaims == null) {
+      roleClaims = List.of();
+    }
+
     return Stream.concat(userClaims.stream(), roleClaims.stream()).toList();
   }
 

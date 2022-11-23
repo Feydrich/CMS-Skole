@@ -41,6 +41,36 @@ function SiteSettings() {
         style={{ backgroundColor: localColors.primaryColorTransparent }}
       >
         <span>
+          <label>Pozadina:</label>
+          <br />
+          <input
+            value={localColors.background}
+            type={"color"}
+            required={true}
+            onChange={(e) =>
+              setLocalColors({
+                ...localColors,
+                background: e.target.value,
+              })
+            }
+          />
+        </span>
+        <span>
+          <label>Header:</label>
+          <br />
+          <input
+            value={localColors.legend}
+            type={"color"}
+            required={true}
+            onChange={(e) =>
+              setLocalColors({
+                ...localColors,
+                legend: e.target.value,
+              })
+            }
+          />
+        </span>
+        <span>
           <label>Primarna boja:</label>
           <br />
           <input
@@ -112,6 +142,21 @@ function SiteSettings() {
           />
         </span>
         <span>
+          <label>Boja teksta:</label>
+          <br />
+          <input
+            value={localColors.fontColor}
+            type={"color"}
+            required={true}
+            onChange={(e) =>
+              setLocalColors({
+                ...localColors,
+                fontColor: e.target.value,
+              })
+            }
+          />
+        </span>
+        <span>
           <Button onClick={(e) => sharedStore.changeStyles(localColors)}>
             Save
           </Button>
@@ -133,7 +178,8 @@ function SiteSettings() {
             style={{ backgroundColor: localColors.primaryColorDark }}
           ></div>
           <img src={article.image} />
-          <div className="cardContent">
+          <div className="cardContent"
+          style={{ color: localColors.fontColor }}>
             <h2>{article.name}</h2>
 
             <h3>{article.author.name}</h3>

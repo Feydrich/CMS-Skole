@@ -67,6 +67,7 @@ function Login() {
 
           <DialogActions>
             <Button
+            variant="contained"
               onClick={() =>
                 sharedStore.tryLogin(localUser.username, localUser.password)
               }
@@ -93,6 +94,7 @@ function Login() {
 
           <DialogActions>
             <Button
+            variant="contained"
               onClick={() => {
                 navigate("/ArticleList");
                 sharedStore.setLoginIsOpen(false);
@@ -101,6 +103,7 @@ function Login() {
               Editor
             </Button>
             <Button
+            variant="contained"
               onClick={() => {
                 navigate("/UserList");
                 sharedStore.setLoginIsOpen(false);
@@ -109,6 +112,7 @@ function Login() {
               Users
             </Button>
             <Button
+            variant="contained"
               onClick={() => {
                 navigate("/SiteSettings");
                 sharedStore.setLoginIsOpen(false);
@@ -117,6 +121,7 @@ function Login() {
               Postavke Stranice
             </Button>
             <Button
+            variant="contained"
               onClick={() => {
                 sharedStore.setUser(null);
                 setLocalUser({ username: "", password: "" });

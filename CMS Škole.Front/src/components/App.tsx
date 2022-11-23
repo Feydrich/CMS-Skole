@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import Loading from "./global/Loading";
+import FooterComponent from "./global/FooterComponent";
 
 const ArticleList = React.lazy(() => import("./Admin/ArticleList"));
 const Editor = React.lazy(() => import("./Admin/Editor"));
@@ -50,6 +51,18 @@ function App() {
     root?.style.setProperty(
       "--secondary-color-dark",
       sharedStore.siteSettings.colorSchemes.secondaryColorDark
+    );
+    root?.style.setProperty(
+      "--background",
+      sharedStore.siteSettings.colorSchemes.background
+    );
+    root?.style.setProperty(
+      "--legend",
+      sharedStore.siteSettings.colorSchemes.legend
+    );
+    root?.style.setProperty(
+      "--font-color",
+      sharedStore.siteSettings.colorSchemes.fontColor
     );
     //root?.style.setProperty("--text-color", darkTheme ? "#fff" : "#262833");
   }, [sharedStore.siteSettings.colorSchemes]);
@@ -108,6 +121,7 @@ function App() {
             )}
           </Routes>
         </div>
+        <FooterComponent />
       </BrowserRouter>
     </>
   );

@@ -5,7 +5,7 @@ import { useStore } from "../../stores/StoreManager";
 
 import "../../styles/scss/carousel.scss";
 
-const placeholder = require("../../styles/images/placeholder.jpg");
+const placeholder = require("../../styles/images/banner.jpg");
 
 function Carousel() {
   const appPreFlight = useRef(true);

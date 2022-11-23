@@ -19,8 +19,24 @@
   }
 
   .articleCard {
-    width: 97%;
+    width: 100%;
     margin-top: 5%;
+
+    .cardContent {
+      h2 {
+        padding: 5px;
+        font-size: 5vw;
+      }
+      h3 {
+        font-weight: 200;
+        font-size: 3vw;
+        padding: 10px;
+      }
+      p {
+        margin-top: 1rem;
+        padding: 0px 10px 0px 10px;
+      }
+    }
   }
 
   .navBarHeader {
@@ -44,9 +60,6 @@
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
   }
 
   .subCategoryItem {
@@ -75,4 +88,54 @@
     align-items: center;
     justify-content: space-evenly;
   }
+
+
+  .footer-info{
+    display: none;
+  }
+
+
+  .dividerContent{
+    color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    object-fit: cover;
+    
+    a{
+      font-size:4vw;
+    }
+    p{
+      font-size:3vw;
+      padding: 5px;
+     
+      padding-left: 2vw;
+    }
+  }
+  .dividerContainerIcons{
+    height: 20%;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .dividerContainerImages{
+    display: none;
+    
+  }
+
+
+  .item-info{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 992px) {
+
+  .sideNav{
+    display: none;
+  }
+
 }

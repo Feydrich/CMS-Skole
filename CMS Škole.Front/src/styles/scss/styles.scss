@@ -3,6 +3,10 @@ $primary-color-dark: var(--primary-color-dark);
 $primary-color-transparent: var(--primary-color-transparent);
 $secondary-color: var(--secondary-color);
 $secondary-color-dark: var(--secondary-color-dark);
+$font-color: var(--font-color);
+
+$background: var(--background);
+$legend: var(--legend);
 
 * {
   margin: 0;
@@ -11,11 +15,134 @@ $secondary-color-dark: var(--secondary-color-dark);
   -ms-box-sizing: border-box !important;
   box-sizing: border-box !important;
   box-sizing: border-box;
-  font-family: Agane;
+  font-family: Roboto,sans-serif;;
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: $background;
+  margin:0;
+  padding:0;
+  height:100%;
+  color: $font-color;
+  line-height: 1.5;
+}
+
+footer{
+  background: $primary-color-dark;
+  height: auto;
+  padding-top: 40px;
+  color: #fff;
+  
+}
+
+.footer-info  {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.footer-info-center, .footer-info-right {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 20%;
+  padding: 20px;
+}
+.footer-info-left {
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 50%;
+  padding: 20px;
+}
+.footerAbout{
+padding-right: 30px;
+font-size: 16px;
+letter-spacing: 0.5px;
+}
+
+.sideNav{
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 20%;
+  padding: 20px;
+}
+.singleItemContent{
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 20px;
+  min-height: 80vh;
+  
+  h1{
+    padding-bottom: 10px;
+  }
+  h3{
+    padding-bottom: 20px;
+  }
+  
+  
+}
+
+.articleImage{
+  position: absolute;
+  width: 100px;
+  min-height: 50px;
+  top: 0;
+  right: 50px;
+  opacity: 0.5;
+  transition: width 1s, opacity 1s;
+  border-radius: 25px;
+  &:hover{
+   width: 50%;
+   opacity: 1;
+  }
+}
+.item-info{
+  display: flex;
+  justify-content: center;
+  padding: 50px 10px 10px 10px;
+  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+}
+
+footer a {
+  text-decoration: none;
+  color: #fff;
+  font-family: "Arimo";
+
+
+}
+footer li {
+ padding-bottom: 10px;
+}
+
+.footerTitle{
+  font-size: 18px;
+  padding-bottom: 10px;
+  letter-spacing: 2px;
+}
+.sideNavLink{
+  text-decoration: none;
+  font-family: "Arimo";
+}
+.sideNavLi{
+  border-top: 1px solid gray ;
+  padding: 10px;
+}
+.subCategoryNav{
+  padding-right: 30px;
+  margin-top: 20px;
+}
+.subCategoryNav a {
+  color: gray;
+  font-size: x-large;
 }
 
 //https://www.fontsquirrel.com/fonts/arimo
@@ -118,6 +245,7 @@ h5 {
   a {
     padding: 20px 0;
     width: 100%;
+    font-size: 18px;
     transition: background-color 0.2s;
   }
 
@@ -204,7 +332,7 @@ h5 {
   height: 40px;
   position: sticky;
   top: 0px;
-  background-color: white;
+  background-color: $legend;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -217,7 +345,7 @@ h5 {
 
   h1 {
     font-size: 1.5rem;
-    color: $primary-color;
+    color: $primary-color-dark;
     font-weight: 100;
   }
 
@@ -259,7 +387,6 @@ h5 {
 
 .mainContent {
   width: 100%;
-  height: 100vh;
   padding: 0 5%;
 }
 
@@ -275,61 +402,103 @@ h5 {
   }
 }
 
-.CRUDCardHeader {
+.crudHeader {
   width: 100%;
   height: 50px;
 }
-.CRUDCardHeader Button {
-  width: 100%;
-  height: 100%;
-}
-.articleCard {
-  width: 30%;
-  margin: 1% 1.5%;
-  float: left;
+
+.CRUDCardButton{
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
   background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  &:hover{
+    background-color: $primary-color-dark;
+    svg{
+      color: #ffffff;
+    }
+  }
+  &:focus{
+    width: 40px;
+    height: 40px;
+  }
+  svg{
+    width: 80% !important;
+    height: 80% !important;
+  }
+}
+
+
+.articleCard {
+  position: relative;
+  width: calc((100% / 5));
+  //margin: 1.5% 0.25%;
+  background-color: $background;
   overflow: hidden;
   animation-name: fadeIn;
   animation-duration: 1.5s;
   cursor: pointer;
   transition: all 0.5s;
   border-bottom-right-radius: 10px;
+  display: inline-block;
+  height: 50vh;
+  box-shadow: 0px 4px 10px rgb(0 0 0 / 20%);
+  z-index: 1;
+  img, .cardContent{
+    height: 50%;
+  }
 
   .cardContent {
-    margin: 20px;
-    text-overflow: ellipsis;
-
-    h3 {
-      font-weight: 100;
-      font-size: 0.9rem;
+    padding: 10px;
+    #title{
+      max-height: 60%;
+      min-height: 40%;
+      border-bottom: 1px solid $font-color;
+      font-size: 0.8em;
+      overflow: hidden;
+    }
+    #content{
+      height: 40%;
+      overflow: hidden;
     }
 
-    p {
-      margin-top: 1rem;
-    }
   }
+  
 }
 
 .articleCard:hover {
   background-color: $secondary-color;
   transform: scale(1.02, 1.03);
-  box-shadow: 0px 4px 10px rgb(0 0 0 / 20%);
+  z-index: 2;
 }
 
 img {
   width: 100%;
+  max-height: 100%;
+  padding: 10px;
   object-fit: cover;
-  max-height: 400px;
 }
 
 .articleCard img {
-  height: 150px;
+  height: 250px;
 }
 
 main {
   animation-name: fadeIn;
   animation-duration: 1.5s;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  //display: flex;
+  //flex-wrap: wrap;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
 .loginPopUp {
@@ -368,7 +537,7 @@ main {
 .navBarWrapper,
 .navBar,
 .loginPopUp,
-.articleCard {
+.articleCard:hover {
   -webkit-box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.5);
@@ -378,6 +547,7 @@ main {
 .previewBox {
   height: 65vh;
   padding: 20px;
+  background-color: $background;
   width: 50%;
   float: left;
 }
@@ -430,11 +600,19 @@ Button.hamburgerMenu {
 
 .userBar {
   width: 100%;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  height: 100px;
   border-top: solid 1px gray;
+  span{
+    display: block;
+    float: left;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px
+  }
 }
 
 .exampleContainer {
@@ -448,4 +626,89 @@ Button.hamburgerMenu {
 .headerExample {
   width: 100%;
   height: 10vh;
+}
+
+.dividerContainerIcons{
+  background-color:$primary-color-dark;
+  padding: 20px;
+}
+.dividerContainerImages{
+  background-color:$primary-color-dark;
+  height: 500px;
+  display: flex;
+  
+}
+.imagesContainer{
+  width: 25%;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+}
+
+
+.dividerContent{
+  color: #ffffff;
+  cursor: pointer;
+  width: 25%;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  outline: 0px solid rgba(255,255,255,0);
+  transition: outline 0.25s;
+ 
+  a{
+    color: #ffffff;
+    font-size: 3vw;
+  }
+  p{
+    font-size: 18px;
+    padding: 20px;
+  }
+  &:hover{
+    outline: 2px solid rgba(255,255,255,0.5);
+  }
+  
+  
+
+}
+
+.dividerContainerImages{
+  background-color:$primary-color-dark;
+  height: 15vw;
+  margin: 30px 0px 30px 0px;
+  
+}
+.dividerImg {
+float:left;
+cursor: pointer;
+width:20%;
+margin: 20px auto;
+display: block;
+overflow: hidden;
+
+
+:hover{
+  opacity: 0.7;
+}
+
+}
+.homeContainer{
+  //margin: 0 5%;
+  padding: 20px 0;
+}
+.categoryTitle{
+  padding: 20px;
+}
+
+table{
+  width: 100%;
+  border-spacing: 0;
+
+}
+
+th{
+  background-color: $primary-color;
+}
+td{
+  border: 1px solid $font-color;
 }

@@ -7,7 +7,16 @@ import { User } from "../../models/User";
 import { requests } from "../agent";
 import CategoriesStore from "./CategoriesStore";
 
-const apiActions = {};
+const apiActions = {
+  testAxios: () => {
+    // return requests.get(`category`);
+  },
+  testFetch: () => {
+    fetch("http://localhost:8081/api/category", {
+      mode: "no-cors",
+    }).then((data) => console.log("1: ", data));
+  },
+};
 
 export default class ArticleStore {
   selectedArticle: Article | undefined = undefined;
@@ -27,6 +36,7 @@ export default class ArticleStore {
 
       //dataQueries
       getSelectedArticles: action,
+      testArticle: action,
 
       //Calculated values: computed
     });
@@ -47,5 +57,9 @@ export default class ArticleStore {
   };
   setArticleForCreation = (data: Article) => {
     this.articleForEdit = data;
+  };
+  testArticle = async () => {
+    await apiActions.testFetch();
+    console.log("2: ", await apiActions.testAxios());
   };
 }

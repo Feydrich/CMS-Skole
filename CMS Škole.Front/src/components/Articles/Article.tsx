@@ -18,6 +18,7 @@ function ArticlePage() {
     if (articlereflight.current) {
       articlereflight.current = false;
       categoriesStore.getArticles({} as Category);
+      articleStore.testArticle();
     }
   }, []);
 

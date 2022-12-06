@@ -1,8 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 
-//treba zamijeniti s php communication logikom
-//axios.defaults.baseURL = frontendSettings.ApiUrl;
-
 axios.interceptors.request.use((config) => {
 	
     const token = document.cookie

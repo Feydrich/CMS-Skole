@@ -12,9 +12,9 @@ const apiActions = {
     // return requests.get(`category`);
   },
   testFetch: () => {
-    fetch("http://localhost:8081/api/category", {
-      mode: "no-cors",
-    }).then((data) => console.log("1: ", data));
+    fetch("http://localhost:8081/api/category")
+    .then((response) =>response.json())
+    .then((data) => console.log("1: ", data));
   },
 };
 

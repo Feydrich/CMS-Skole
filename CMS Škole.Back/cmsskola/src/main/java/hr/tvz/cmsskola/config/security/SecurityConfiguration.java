@@ -54,15 +54,15 @@ public class SecurityConfiguration {
   }
 
   // Used by spring security if CORS is enabled.
-  @Bean
-  public CorsFilter corsFilter() {
-    var source = new UrlBasedCorsConfigurationSource();
-    var config = new CorsConfiguration();
-    config.setAllowCredentials(true);
-    config.addAllowedOrigin("*");
-    config.addAllowedHeader("*");
-    config.addAllowedMethod("*");
-    source.registerCorsConfiguration("/**", config);
-    return new CorsFilter(source);
-  }
+//  @Bean
+//  public CorsFilter corsFilter() {
+//    var source = new UrlBasedCorsConfigurationSource();
+//    var config = new CorsConfiguration();
+//    config.setAllowCredentials(true);
+//    config.addAllowedOrigin("*");
+//    config.addAllowedHeader("*");
+//    config.addAllowedMethod("*");
+//    source.registerCorsConfiguration("/**", config);
+//    return new CorsFilter(source);
+//  }
 }

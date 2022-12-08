@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
@@ -38,7 +39,11 @@ public class ArticleService {
   public ResponseEntity<Article> save(Article article) {
     if (article.getId() != null) {
       article = fillWithPrev(article);
+    } else {
+      article.setCreated(LocalDateTime.now());
     }
+
+    article.setUpdated(LocalDateTime.now());
 
     logger.info("Trying to save article {}", article.getTitle());
 

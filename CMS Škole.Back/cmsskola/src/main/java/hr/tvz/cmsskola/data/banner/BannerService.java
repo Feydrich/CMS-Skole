@@ -4,6 +4,7 @@ import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class BannerService {
   public ResponseEntity<Banner> save(Banner banner) {
     if (banner.getId() != null) {
       banner = fillWithPrev(banner);
+    } else {
+      banner.setCreated(LocalDateTime.now());
     }
 
     logger.info("Trying to save banner {}", banner.getName());

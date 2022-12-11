@@ -44,10 +44,9 @@ function Login() {
             <div>Unesite vaše podatke za pristup web stranici</div>
 
             <TextField
-              required
               id="outlined-required"
-              label="Email"
-              placeholder="korisnik@domena.hr"
+              label="Korisničko ime"
+              placeholder="korisnik"
               value={localUser.username}
               onChange={(e) =>
                 setLocalUser({ ...localUser, username: e.target.value })
@@ -80,16 +79,17 @@ function Login() {
         <>
           <DialogTitle>Vaš profil:</DialogTitle>
           <DialogContent>
-            <hr />
-
-            {Object.keys(sharedStore.user)
-              .filter((x) => x !== "jwt" && x !== "password")
-              .map((x, index) => (
-                <span key={"attribute" + index}>
-                  <b>{x}: </b>
-                  {sharedStore.user![x as keyof User]}
-                </span>
-              ))}
+            <p>Korisničko ime: {sharedStore.user.username}</p>
+            <p>
+              Ime: {sharedStore.user.name} {sharedStore.user.surname}
+            </p>
+            <p>Mail: {sharedStore.user.mail}</p>
+            <p>
+              Uloge:{" "}
+              {sharedStore.user.roles?.map((x, index) =>
+                index ? " " : "| " + x.name
+              )}
+            </p>
           </DialogContent>
 
           <DialogActions>

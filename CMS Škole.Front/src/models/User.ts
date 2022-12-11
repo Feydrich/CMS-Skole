@@ -5,7 +5,7 @@ export interface User {
   username?: string;
   mail?: string;
   jwt?: string;
-  roles?: string[];
+  roles?: { id: number; name: string }[];
 
   /* DELETE ME OVO JE SAMO ZA DEV */
   password?: string;

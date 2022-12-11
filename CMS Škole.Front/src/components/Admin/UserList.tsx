@@ -1,24 +1,20 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Category } from "../../models/Category";
+import { useEffect, useRef, useState } from "react";
 import { User } from "../../models/User";
 import { useStore } from "../../stores/StoreManager";
-import ArticleCard from "../Articles/ArticleCard";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   MenuItem,
   OutlinedInput,
   Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { toJS } from "mobx";
+import RoleList from "./RoleList";
 
 const CreateOrEditForm = (props: any) => {
   const {
@@ -29,6 +25,7 @@ const CreateOrEditForm = (props: any) => {
     handleChange,
     handleSubmit,
   } = props;
+  const { sharedStore } = useStore();
   return (
     <Dialog
       open={editFlag}
@@ -65,7 +62,7 @@ const CreateOrEditForm = (props: any) => {
           id="demo-multiple-name"
           label="roles"
           multiple
-          value={userForCrud?.roles ?? []}
+          value={userForCrud?.role ?? []}
           onChange={(e) => handleChange(e.target.value)}
           input={<OutlinedInput label="Name" />}
           MenuProps={{
@@ -75,16 +72,11 @@ const CreateOrEditForm = (props: any) => {
             },
           }}
         >
-          {/* Treba zamijeniti sa podatcima dohvacenim iz baze */}
-          <MenuItem value="Admin" key="Admin">
-            Admin
-          </MenuItem>
-          <MenuItem value="Regular user" key="Regular user">
-            Regular user
-          </MenuItem>
-          <MenuItem value="Guest" key="Guest">
-            Guest
-          </MenuItem>
+          {sharedStore.roleList.map((x, index) => (
+            <MenuItem value={x.id} key={x.name + index + 2}>
+              {x.name}
+            </MenuItem>
+          ))}
         </Select>
       </DialogContent>
       <DialogActions>
@@ -159,27 +151,31 @@ function UserList() {
   useEffect(() => {
     if (authorListPreflight.current) {
       authorListPreflight.current = false;
-      /* DELETE */
-      !sharedStore.userList && sharedStore.getUsers();
+
+      sharedStore.getUsers();
     }
   }, []);
-  useEffect(() => {
-    console.log(toJS(sharedStore.userList));
-  }, [sharedStore.userList]);
 
   const [editFlag, setEditFlag] = useState(false);
   const [deleteFlag, setDeleteFlag] = useState(false);
   const [userForCrud, setUserForCrud] = useState<User | null>(null);
 
-  const handleChange = (value: string | string[]) => {
-    setUserForCrud({
+  const handleChange = (value: number[]) => {
+    let roles: { id: number; name: string }[] = [];
+    sharedStore.roleList.forEach(
+      (x) => value.includes(x.id) && roles.push(toJS(x))
+    );
+    let item = {
       ...userForCrud,
-      roles: typeof value === "string" ? value.split(",") : value,
-    } as User);
+      role: roles,
+    };
+    console.log(item);
+    setUserForCrud(item as User);
   };
 
   return (
     <main>
+      <RoleList />
       <h1>Popis korisnika</h1>
       <Button
         onClick={() => {
@@ -195,9 +191,7 @@ function UserList() {
         setUserForCrud={setUserForCrud}
         userForCrud={userForCrud}
         handleChange={handleChange}
-        handleSubmit={
-          userForCrud?.id ? sharedStore.editUser : sharedStore.createUser
-        }
+        handleSubmit={sharedStore.createOrEditUser}
       />
       <DeleteForm
         userForCrud={userForCrud}

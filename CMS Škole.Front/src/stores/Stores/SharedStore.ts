@@ -5,7 +5,20 @@ import { SiteInfo } from "../../models/SiteInfo";
 import { User } from "../../models/User";
 import { requests } from "../agent";
 
-const apiActions = {};
+const apiActions = {
+  login: (username: string, password: string) => {
+    return requests.post(`login`, { password: password, username: username });
+  },
+  createOrEditUser: (user: User) => {
+    return requests.post(`user/save`, user);
+  },
+  getUsers: () => {
+    return requests.get("user/all?size=100000000");
+  },
+  getRoles: () => {
+    return requests.get("role?size=100000000");
+  },
+};
 
 export default class SharedStore {
   isLoading: boolean = false;
@@ -25,8 +38,9 @@ export default class SharedStore {
       fontColor: "#000000",
     },
   };
-  user: User | null = { name: "fip" };
+  user: User | null = null;
   userList: User[] | null = null;
+  roleList: { id: number; name: string }[] = [];
   loginIsOpen: boolean = false;
 
   constructor() {
@@ -36,6 +50,7 @@ export default class SharedStore {
       siteSettings: observable,
       user: observable,
       userList: observable,
+      roleList: observable,
       loginIsOpen: observable,
 
       //Methods: action
@@ -45,11 +60,11 @@ export default class SharedStore {
       //dataQueries
       getImagesForCarousel: action,
       getUsers: action,
+      getRoles: action,
       setUser: action,
       setLoginIsOpen: action,
       tryLogin: action,
-      createUser: action,
-      editUser: action,
+      createOrEditUser: action,
       deleteUser: action,
 
       //Calculated values: computed
@@ -79,26 +94,38 @@ export default class SharedStore {
     };
   };
 
-  getUsers = () => {
-    console.log("get users");
+  getUsers = async () => {
+    try {
+      const users = await apiActions.getUsers();
+      this.userList = users.content;
+    } catch (error) {
+      toast("Došlo je do greške pri dohvatu korisnika.");
+    }
+  };
+
+  getRoles = async () => {
+    try {
+      const roles = await apiActions.getRoles();
+      this.roleList = roles.content;
+    } catch (error) {
+      toast("Došlo je do greške pri dohvatu uloga.");
+    }
   };
 
   /* FIX */
-  createUser = (data: User) => {
-    this.userList?.push({ ...data, id: new Date().toISOString() });
-    toast('"' + data.name + '"je bio uspješno stvoren');
-  };
-  editUser = (data: User) => {
-    if (this.userList) {
-      let local = this.userList.map((x) => {
-        if (x.id === data.id) {
-          return data;
-        } else return x;
-      });
-      this.userList = local;
-      toast('"' + data.name + '"je bio uspješno izmijenjen');
+  createOrEditUser = async (data: User) => {
+    try {
+      const item = apiActions.createOrEditUser(data);
+      console.log(item);
+    } catch (error) {
+      toast(
+        "Došlo je do greške pri" + data.id
+          ? " mijenjanju "
+          : " stvaranju " + "korisnika."
+      );
     }
   };
+
   deleteUser = (data: User) => {
     if (this.userList) {
       let local = this.userList.filter((x) => {
@@ -110,15 +137,24 @@ export default class SharedStore {
     }
   };
 
-  tryLogin = (mail: string, password: string) => {
+  tryLogin = async (username: string, password: string) => {
+    try {
+      let item: { token: string; user: User } = await apiActions.login(
+        username,
+        password
+      );
+      toast("Welcome: " + item.user.name);
+      this.setUser(item.user);
+    } catch (error) {
+      toast("Greška prilikom unosa");
+    }
+
     // let found = null
     // if (found && found.password === password) {
-    //   this.setUser(found);
     //   toast("Welcome: " + found.name);
     // } else {
     //   toast("Greška prilikom unosa");
     // }
-    console.log("try login");
   };
 
   changeStyles = (colors: {

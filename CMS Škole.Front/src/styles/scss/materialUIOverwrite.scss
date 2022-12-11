@@ -17,7 +17,7 @@ $background: var(--background);
 }
 
 .CRUDCardHeader .MuiButton-root {
-  background-color:$primary-color-dark !important;
+  background-color: $primary-color-dark !important;
   color: white;
 }
 
@@ -27,10 +27,15 @@ $background: var(--background);
   height: 50px !important;
 }
 
-.headerCRUD{
-  #filled-multiline-flexible, .MuiInputBase-multiline, .MuiButtonBase-root{
+.headerCRUD {
+  #filled-multiline-flexible,
+  .MuiInputBase-multiline,
+  .MuiButtonBase-root {
     background-color: $background;
     border-radius: 5px;
   }
 }
 
+input {
+  box-sizing: content-box !important;
+}

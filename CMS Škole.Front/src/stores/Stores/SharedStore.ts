@@ -1,6 +1,5 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 import { toast } from "react-toastify";
-import { fakeCategories, fakeUsers } from "../../helper/dummyData";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
 import { User } from "../../models/User";
@@ -12,7 +11,8 @@ export default class SharedStore {
   isLoading: boolean = false;
   siteSettings: SiteInfo = {
     name: "Osnovna škola Sesvetska Sela",
-    description: "OŠ Sesvetska Sela započela je s radom 03. rujna 2007. godine. Nalazi se u Letničkoj ulici u Sesvetskim Selima, koja su dio Gradske četvrti Sesvete. Ponosni smo na naziv škole i na okoliš koji stvara jedan lijep ugođaj: spaja seoski mir i ljepotu prirode s gradskom organizacijom i uređenjem života.",
+    description:
+      "OŠ Sesvetska Sela započela je s radom 03. rujna 2007. godine. Nalazi se u Letničkoj ulici u Sesvetskim Selima, koja su dio Gradske četvrti Sesvete. Ponosni smo na naziv škole i na okoliš koji stvara jedan lijep ugođaj: spaja seoski mir i ljepotu prirode s gradskom organizacijom i uređenjem života.",
     images: [],
     colorSchemes: {
       primaryColor: "#cbe4f294",
@@ -22,10 +22,10 @@ export default class SharedStore {
       secondaryColorDark: "#3d8141",
       background: "#f5f5f5",
       legend: "#ffffff",
-      fontColor: "#000000"
+      fontColor: "#000000",
     },
   };
-  user: User | null = null;
+  user: User | null = { name: "fip" };
   userList: User[] | null = null;
   loginIsOpen: boolean = false;
 
@@ -80,7 +80,7 @@ export default class SharedStore {
   };
 
   getUsers = () => {
-    this.userList = fakeUsers;
+    console.log("get users");
   };
 
   /* FIX */
@@ -111,13 +111,14 @@ export default class SharedStore {
   };
 
   tryLogin = (mail: string, password: string) => {
-    let found = fakeUsers.find((x) => x.mail === mail);
-    if (found && found.password === password) {
-      this.setUser(found);
-      toast("Welcome: " + found.name);
-    } else {
-      toast("Greška prilikom unosa");
-    }
+    // let found = null
+    // if (found && found.password === password) {
+    //   this.setUser(found);
+    //   toast("Welcome: " + found.name);
+    // } else {
+    //   toast("Greška prilikom unosa");
+    // }
+    console.log("try login");
   };
 
   changeStyles = (colors: {
@@ -128,7 +129,7 @@ export default class SharedStore {
     secondaryColorDark: string;
     background: string;
     legend: string;
-    fontColor:string;
+    fontColor: string;
   }) => {
     this.siteSettings.colorSchemes = colors;
   };

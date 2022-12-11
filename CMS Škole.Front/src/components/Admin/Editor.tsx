@@ -15,6 +15,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import axios from "axios";
 
 function Editor() {
   const EditorPreflight = useRef(true);
@@ -27,6 +28,20 @@ function Editor() {
       EditorPreflight.current = false;
     }
   }, []);
+
+  const request = async (file: any) => {
+    const formData = new FormData();
+
+    formData.append("File", file.image);
+    return await fetch("http://localhost:8081/api/image/save", {
+      method: "POST",
+      body: { file: "", image: formData } as any,
+    });
+    return await axios.post("image/save", {
+      file: file.file,
+      image: formData,
+    });
+  };
 
   const [confirmFlag, setConfirmFlag] = useState(false);
 
@@ -94,7 +109,13 @@ function Editor() {
             required
             name="myImage"
             onChange={(event) => {
-              toast(event.target.value);
+              if (event.target.files) {
+                console.log(event.target.files[0]);
+                request({
+                  file: JSON.stringify(event.target.files[0]),
+                  image: event.target.files[0],
+                });
+              }
             }}
           />
         </span>

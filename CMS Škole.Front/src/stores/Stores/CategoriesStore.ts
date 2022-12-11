@@ -1,6 +1,5 @@
 import { action, makeObservable, observable, runInAction, toJS } from "mobx";
 import { toast } from "react-toastify";
-import { fakeArticles, fakeCategories } from "../../helper/dummyData";
 import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
@@ -36,12 +35,10 @@ export default class CategoriesStore {
   }
 
   getCategories = () => {
-    this.categories = fakeCategories;
+    console.log("get Categories");
   };
-  latestArticles = () => {
-    /* DELETE ME */
-    this.articleList = fakeArticles;
-  };
+
+  latestArticles = () => {};
   getArticles = (Category?: Category, User?: User) => {
     /* DELETE ME */
     if (User && this.articleList) {
@@ -62,7 +59,7 @@ export default class CategoriesStore {
       });
       this.articleList = local;
     }
-    console.log(data.content)
+    console.log(data.content);
     toast('"' + data.name + '"je bio uspješno izmijenjen');
   };
   createArticle = (data: Article) => {
@@ -78,7 +75,7 @@ export default class CategoriesStore {
       });
 
       this.articleList = local;
-      toast('Objava uspješno obrisana!');
+      toast("Objava uspješno obrisana!");
     }
   };
 }

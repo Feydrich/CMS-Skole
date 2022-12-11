@@ -35,6 +35,7 @@ public class Banner {
   private LocalDateTime created;
   private Boolean archive;
   private Integer order;
+  private String url;
 
   @OneToOne
   @JoinColumn(name = "id")

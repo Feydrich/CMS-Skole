@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -66,10 +67,17 @@ public class TokenProvider {
   public Authentication getAuthentication(String token) {
     Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
 
-    Collection<? extends GrantedAuthority> authorities =
-        Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+    Collection<? extends GrantedAuthority> authorities;
+
+    String auth = claims.get(AUTHORITIES_KEY).toString();
+    if (auth.isEmpty()) {
+      authorities = new ArrayList<>();
+    } else {
+      authorities =
+          Arrays.stream(auth.split(","))
+              .map(SimpleGrantedAuthority::new)
+              .collect(Collectors.toList());
+    }
 
     User principal = new User(claims.getSubject(), "", authorities);
 

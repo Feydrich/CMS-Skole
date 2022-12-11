@@ -5,11 +5,11 @@ import hr.tvz.cmsskola.config.security.jwt.TokenProvider;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.User;
 import hr.tvz.cmsskola.data.user.UserRepository;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.flywaydb.core.internal.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +31,7 @@ public class LoginService {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final LoggingService loggingService;
 
-  public ResponseEntity<Pair<JWTToken, User>> login(LoginDTO login) {
+  public ResponseEntity<UserToken> login(LoginDTO login) {
     logger.debug("attempting to login {}", login.username);
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
@@ -52,25 +52,23 @@ public class LoginService {
       loggingService.log(logger, "logged in", user.getId());
     }
 
-    return new ResponseEntity<>(Pair.of(new JWTToken(jwt), user), httpHeaders, HttpStatus.OK);
+    return new ResponseEntity<>(new UserToken(jwt, user), httpHeaders, HttpStatus.OK);
   }
 
   public void logout() {
     loggingService.log(logger, "logged out");
   }
 
-  /**
-   * Return jwt token in body because Angular has problems with parsing plain string response entity
-   */
-  @Data
-  @AllArgsConstructor
-  static class JWTToken {
-    private String token;
-  }
-
   @Data
   static class LoginDTO {
     @NotNull private String username;
     @NotNull private String password;
+  }
+
+  @Data
+  @AllArgsConstructor
+  static class UserToken implements Serializable {
+    private String token;
+    private User user;
   }
 }

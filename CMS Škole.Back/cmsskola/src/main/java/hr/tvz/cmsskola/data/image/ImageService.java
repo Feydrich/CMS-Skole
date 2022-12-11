@@ -1,16 +1,19 @@
 package hr.tvz.cmsskola.data.image;
 
+import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.webpage.WebPage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.nio.file.Path;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,36 +27,47 @@ public class ImageService {
 
   private final ImageRepository imageRepository;
   private final LoggingService loggingService;
-  private final ModelMapper modelMapper;
 
   private static final String PATH = "public/images";
+  private static final String JPG = ".jpg";
 
-  public ResponseEntity<byte[]> getById(Long id) {
+  public ResponseEntity<Resource> getById(Long id) {
     var image = imageRepository.findById(id).orElse(null);
     if (image == null) return ResponseEntity.notFound().build();
 
-    try (InputStream in = getClass().getResourceAsStream(image.getImageUri())) {
-      if (in == null) return null;
-      var mediaType = URLConnection.guessContentTypeFromName(image.getImageUri());
-      return ResponseEntity.ok()
-          .contentType(MediaType.parseMediaType(mediaType))
-          .body(in.readAllBytes());
-    } catch (IOException e) {
-      return ResponseEntity.internalServerError().build();
+    try {
+      Path file = Path.of(image.getImageUri());
+      Resource resource = new UrlResource(file.toUri());
+
+      if (resource.exists() || resource.isReadable()) {
+        var mediaType = URLConnection.guessContentTypeFromName(image.getImageUri());
+        return ResponseEntity.ok()
+            .contentType(MediaType.parseMediaType(mediaType))
+            .body(resource);
+      } else {
+        throw new RuntimeException("Could not read the file!");
+      }
+    } catch (MalformedURLException e) {
+      throw new RuntimeException("Error: " + e.getMessage());
     }
   }
 
-  public ResponseEntity<Image> save(Image image, MultipartFile file) {
-    if (image.getId() != null) {
-      image = fillWithPrev(image);
+  public ResponseEntity<Image> save(Long article, Long webPage, MultipartFile file) {
+    Image image = new Image();
+
+    if (article != null) {
+      image.setArticle(Article.builder().id(article).build());
+    } else if (webPage != null){
+      image.setWebPage(WebPage.builder().id(article).build());
     }
 
-    logger.info("Trying to save image {}", image.getImageUri());
+    logger.info("Trying to save image {}", file.getOriginalFilename());
 
     String url;
     try {
       url = saveFile(file);
     } catch (IOException e) {
+      logger.error(e.getMessage());
       return ResponseEntity.internalServerError().build();
     }
     image.setImageUri(url);
@@ -91,32 +105,49 @@ public class ImageService {
     }
   }
 
-  private Image fillWithPrev(Image entity) {
-    var optPrev = imageRepository.findById(entity.getId());
-    if (optPrev.isPresent()) {
-      var prev = optPrev.get();
-      modelMapper.map(entity, prev);
-      entity = prev;
-    }
-    return entity;
-  }
-
   private String saveFile(MultipartFile image) throws IOException {
-    String name = image.getOriginalFilename() + RandomString.make(8) + "." + image.getContentType();
-    Path path = Path.of(PATH, name);
-
     makeDir();
-    if (!path.toFile().createNewFile()) {
-      throw new IOException("unable to create file");
-    }
-    File newFile = path.toFile();
-    image.transferTo(newFile);
+    String extention = getExtention(image);
+    String rootName = getRootName(image);
 
-    if (!newFile.createNewFile()) {
-      throw new IOException("unable to create file");
-    }
+    Path path = createNewFile(extention, rootName);
+    image.transferTo(path);
 
     return path.toString();
+  }
+
+  private Path createNewFile(String extention, String rootName) throws IOException {
+    File newFile;
+    Path path;
+    do {
+      String name = rootName + RandomString.make(8) + "." + extention;
+      path = Path.of(PATH, name);
+
+      newFile = path.toFile();
+    } while (!newFile.createNewFile());
+    return path;
+  }
+
+  private String getRootName(MultipartFile image) {
+    String rootName;
+    if (image.getOriginalFilename() != null) {
+      String[] stringParts = image.getOriginalFilename().split("\\.");
+      rootName = stringParts[0];
+    } else {
+      rootName = image.getName();
+    }
+    return rootName;
+  }
+
+  private String getExtention(MultipartFile image) {
+    String extention;
+    if (image.getOriginalFilename() != null) {
+      String[] stringParts = image.getOriginalFilename().split("\\.");
+      extention = stringParts[stringParts.length - 1];
+    } else {
+      extention = JPG;
+    }
+    return extention;
   }
 
   private void makeDir() {

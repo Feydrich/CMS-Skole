@@ -61,7 +61,6 @@ const CreateOrEditForm = (props: any) => {
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           label="roles"
-          multiple
           value={userForCrud?.role ?? []}
           onChange={(e) => handleChange(e.target.value)}
           input={<OutlinedInput label="Name" />}
@@ -161,16 +160,16 @@ function UserList() {
   const [userForCrud, setUserForCrud] = useState<User | null>(null);
 
   const handleChange = (value: number[]) => {
-    let roles: { id: number; name: string }[] = [];
-    sharedStore.roleList.forEach(
-      (x) => value.includes(x.id) && roles.push(toJS(x))
-    );
-    let item = {
-      ...userForCrud,
-      role: roles,
-    };
-    console.log(item);
-    setUserForCrud(item as User);
+    // let roles: { id: number; name: string }[] = [];
+    // sharedStore.roleList.forEach(
+    //   (x) => value.includes(x.id) && roles.push(toJS(x))
+    // );
+    // let item = {
+    //   ...userForCrud,
+    //   role: roles,
+    // };
+    // console.log(item);
+    // setUserForCrud(item as User);
   };
 
   return (

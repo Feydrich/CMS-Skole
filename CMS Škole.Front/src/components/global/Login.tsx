@@ -84,12 +84,7 @@ function Login() {
               Ime: {sharedStore.user.name} {sharedStore.user.surname}
             </p>
             <p>Mail: {sharedStore.user.mail}</p>
-            <p>
-              Uloge:{" "}
-              {sharedStore.user.roles?.map((x, index) =>
-                index ? " " : "| " + x.name
-              )}
-            </p>
+            <p>Uloge: {sharedStore.user.role?.name}</p>
           </DialogContent>
 
           <DialogActions>

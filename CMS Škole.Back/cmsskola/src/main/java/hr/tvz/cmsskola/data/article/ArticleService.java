@@ -38,7 +38,7 @@ public class ArticleService {
   }
 
   public List<Article> getByAuthor(Long id) {
-    return articleRepository.findByAthor(id);
+    return articleRepository.findByAuthor(id);
   }
 
   public ResponseEntity<Article> save(Article article) {

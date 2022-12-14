@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ArticleRepository extends PagingAndSortingRepository<Article, Long> {
 
   @Query("SELECT a FROM Article a WHERE a.author.id = :id")
-  List<Article> findByAthor(Long id);
+  List<Article> findByAuthor(Long id);
 }

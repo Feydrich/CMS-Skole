@@ -6,6 +6,7 @@ import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -28,11 +29,34 @@ public class CategoryService {
   private final ModelMapper modelMapper;
 
   public Category getById(Long id) {
-    return categoryRepository.findById(id).orElse(null);
+    Category category = categoryRepository.findById(id).orElse(null);
+    if (category != null) {
+      setTransient(category);
+    }
+
+    return category;
+  }
+
+  private void setTransient(Category category) {
+    category.setArticles(
+        category.getCategoryArticles().stream()
+            .peek(article -> article.setCategory(null))
+            .toList());
+    Category superCategory = category.getSuperCategory();
+    if (superCategory != null) {
+      category.setSuperCategory(
+          Category.builder().id(superCategory.getId()).name(superCategory.getName()).build());
+    }
+    if (category.getSubcategories() == null) {
+      category.setSubcategories(Collections.EMPTY_LIST);
+    }
   }
 
   public Collection<Category> getBySuperCategory(Long superCategoryId) {
-    return categoryRepository.findAllBySuperCategory(superCategoryId);
+    Collection<Category> categories = categoryRepository.findAllBySuperCategory(superCategoryId);
+    categories.forEach(this::setTransient);
+
+    return categories;
   }
 
   public ResponseEntity<Category> save(Category category) {
@@ -73,7 +97,9 @@ public class CategoryService {
   }
 
   public Page<Category> get(Pageable pageable) {
-    return categoryRepository.findAll(pageable);
+    Page<Category> page = categoryRepository.findAll(pageable);
+    page.getContent().forEach(this::setTransient);
+    return page;
   }
 
   private void deleteForeignKeys(Category category) throws IOException {
@@ -94,5 +120,15 @@ public class CategoryService {
       entity = prev;
     }
     return entity;
+  }
+
+  public Collection<Category> getSuperCategories() {
+    Collection<Category> categories = categoryRepository.findSuperCategories();
+    categories.forEach(
+        cat -> {
+          cat.setSubcategories(getBySuperCategory(cat.getId()));
+          setTransient(cat);
+        });
+    return categories;
   }
 }

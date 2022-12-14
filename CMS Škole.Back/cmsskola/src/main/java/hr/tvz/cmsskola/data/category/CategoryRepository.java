@@ -10,4 +10,7 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 
   @Query("select c from Category c where c.superCategory.id = :superCategoryId")
   Collection<Category> findAllBySuperCategory(Long superCategoryId);
+
+  @Query("select c from Category c where c.superCategory is null")
+  Collection<Category> findSuperCategories();
 }

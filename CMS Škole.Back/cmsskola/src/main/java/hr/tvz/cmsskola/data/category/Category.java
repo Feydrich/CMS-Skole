@@ -45,7 +45,7 @@ public class Category {
   private Category superCategory;
 
   @Transient
-  private List<Category> subcategories;
+  private Collection<Category> subCategories;
 
   @OneToMany
   @JoinColumn(name = "category")
@@ -53,9 +53,12 @@ public class Category {
   @Exclude
   private Collection<Claim> claims;
 
+  @Transient
+  private Collection<Article> articles;
+
   @OneToMany
   @JoinColumn(name = "category")
   @JsonIgnore
   @Exclude
-  private Collection<Article> articles;
+  private Collection<Article> categoryArticles;
 }

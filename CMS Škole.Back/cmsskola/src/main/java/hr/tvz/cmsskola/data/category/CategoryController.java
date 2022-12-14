@@ -36,6 +36,11 @@ public class CategoryController {
     return categoryService.getBySuperCategory(superCategoryId);
   }
 
+  @GetMapping(path = "getSuperCategories")
+  public Collection<Category> getSuperCategories() {
+    return categoryService.getSuperCategories();
+  }
+
   @GetMapping(path = "")
   @ApiImplicitParams({
     @ApiImplicitParam(

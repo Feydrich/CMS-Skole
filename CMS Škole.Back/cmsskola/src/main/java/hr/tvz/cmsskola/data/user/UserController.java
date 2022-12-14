@@ -2,6 +2,7 @@ package hr.tvz.cmsskola.data.user;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import java.io.IOException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -66,7 +67,11 @@ public class UserController {
   // todo preautorize admin
   @DeleteMapping(path = "")
   public ResponseEntity<String> delete(@RequestParam Long id) {
-    userService.delete(id);
+    try {
+      userService.delete(id);
+    } catch (IOException e) {
+      return ResponseEntity.internalServerError().build();
+    }
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

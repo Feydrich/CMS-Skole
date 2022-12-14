@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
@@ -34,6 +35,10 @@ public class ArticleService {
     Article article = articleRepository.findById(id).orElse(null);
     readHtml(article);
     return article;
+  }
+
+  public List<Article> getByAuthor(Long id) {
+    return articleRepository.findByAthor(id);
   }
 
   public ResponseEntity<Article> save(Article article) {

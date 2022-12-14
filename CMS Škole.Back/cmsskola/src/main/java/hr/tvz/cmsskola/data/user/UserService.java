@@ -1,7 +1,10 @@
 package hr.tvz.cmsskola.data.user;
 
+import hr.tvz.cmsskola.data.article.Article;
+import hr.tvz.cmsskola.data.article.ArticleService;
 import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ public class UserService {
   private final LoggingService loggingService;
   private final PasswordEncoder passwordEncoder;
   private final ModelMapper modelMapper;
+  private final ArticleService articleService;
 
   public Page<User> getAll(Pageable pageable) {
     return userRepository.findAll(pageable);
@@ -60,18 +64,19 @@ public class UserService {
     return new ResponseEntity<>(user, httpStatus);
   }
 
-  public void delete(Long userId) {
+  public void delete(Long userId) throws IOException {
     logger.info("Trying to delete user id {}", userId);
 
     var optionalUser = userRepository.findById(userId);
-    optionalUser.ifPresent(
-        user -> {
-          deleteForeignKeys(user);
 
-          userRepository.deleteById(user.getId());
-          String logText = "deleted user " + user.getUsername() + " id= " + user.getId();
-          loggingService.log(logger, logText);
-        });
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      deleteForeignKeys(user);
+
+      userRepository.deleteById(user.getId());
+      String logText = "deleted user " + user.getUsername() + " id= " + user.getId();
+      loggingService.log(logger, logText);
+    }
   }
 
   private void encryptPassword(User user) {
@@ -80,8 +85,12 @@ public class UserService {
     }
   }
 
-  private void deleteForeignKeys(User user) {
+  private void deleteForeignKeys(User user) throws IOException {
     user.getClaims().forEach(claim -> claimService.delete(claim.getId()));
+    for (Article article : articleService.getByAuthor(user.getId())) {
+      articleService.delete(article.getId());
+    }
+    loggingService.deleteByUser(user.getId());
   }
 
   private User fillWithPrev(User entity) {

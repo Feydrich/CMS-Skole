@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,10 @@ public class LoggingService {
           var optinalUser = userRepository.findByUsername(username);
           optinalUser.ifPresent(user -> log(logger, text, user.getId()));
         });
+  }
+
+  @Transactional
+  public void deleteByUser(Long userId) {
+    loggingRepository.deleteByUserId(userId);
   }
 }

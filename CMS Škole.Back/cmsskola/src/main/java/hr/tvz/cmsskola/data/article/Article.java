@@ -39,7 +39,7 @@ public class Article {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "web_page")
+  @JoinColumn(name = "category")
   private Category category;
 
   @ManyToOne

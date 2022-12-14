@@ -18,4 +18,4 @@ VALUES ( 'name', 'Osnovna škola Sesvetska Sela' ),
       background: "#f5f5f5",
       legend: "#ffffff",
       fontColor: "#000000",
-    }' )
+    }' );

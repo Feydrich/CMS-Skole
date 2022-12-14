@@ -1,6 +1,5 @@
 package hr.tvz.cmsskola.data.category;
 
-import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.article.ArticleService;
 import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
@@ -38,10 +37,6 @@ public class CategoryService {
   }
 
   private void setTransient(Category category) {
-    category.setArticles(
-        category.getCategoryArticles().stream()
-            .peek(article -> article.setCategory(null))
-            .toList());
     Category superCategory = category.getSuperCategory();
     if (superCategory != null) {
       category.setSuperCategory(
@@ -104,9 +99,6 @@ public class CategoryService {
 
   private void deleteForeignKeys(Category category) throws IOException {
     category.getClaims().forEach(claim -> claimService.delete(claim.getId()));
-    for (Article article : category.getArticles()) {
-      articleService.delete(article.getId());
-    }
     for (Category subCategory : getBySuperCategory(category.getId())) {
       delete(subCategory.getId());
     }

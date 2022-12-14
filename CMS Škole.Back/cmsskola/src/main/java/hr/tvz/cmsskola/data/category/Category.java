@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.claim.Claim;
 import java.util.Collection;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,9 +51,6 @@ public class Category {
   @JsonIgnore
   @Exclude
   private Collection<Claim> claims;
-
-  @Transient
-  private Collection<Article> articles;
 
   @OneToMany
   @JoinColumn(name = "category")

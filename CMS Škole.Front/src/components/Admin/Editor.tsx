@@ -33,14 +33,6 @@ function Editor() {
     const formData = new FormData();
 
     formData.append("File", file.image);
-    return await fetch("http://localhost:8081/api/image/save", {
-      method: "POST",
-      body: { file: "", image: formData } as any,
-    });
-    return await axios.post("image/save", {
-      file: file.file,
-      image: formData,
-    });
   };
 
   const [confirmFlag, setConfirmFlag] = useState(false);
@@ -58,7 +50,7 @@ function Editor() {
       >
         <DialogTitle>
           Je ste li sigurni da želite izbrisati "
-          {articleStore.articleForEdit?.name}"?
+          {articleStore.articleForEdit?.title}"?
         </DialogTitle>
 
         <DialogActions>
@@ -85,9 +77,9 @@ function Editor() {
           id="filled-multiline-flexible"
           label="Naslov"
           required
-          value={localArticle.name ?? ""}
+          value={localArticle.title ?? ""}
           onChange={(e) => {
-            setLocalArticle({ ...localArticle, name: e.target.value });
+            setLocalArticle({ ...localArticle, title: e.target.value });
           }}
         />
         <TextField
@@ -123,21 +115,20 @@ function Editor() {
           <Button
             onClick={() => {
               if (
-                localArticle.name &&
+                localArticle.title &&
                 localArticle.description &&
-                localArticle.content
+                localArticle.html
               ) {
                 if (articleStore.articleForEdit?.id) {
                   categoriesStore.editArticle(localArticle);
                 } else {
                   categoriesStore.createArticle({
                     ...localArticle,
-                    id: new Date().toISOString(),
                     author: sharedStore.user!,
-                    creationDate: new Date(),
+                    created: new Date(),
                   });
                 }
-                navigate("/Home");
+                //navigate("/Home");
               } else {
                 toast("Jedno od obaveznih polja je ostavljeno prazno");
               }
@@ -159,16 +150,16 @@ function Editor() {
       <ReactQuill
         className="editorBox"
         theme="snow"
-        value={localArticle.content}
+        value={localArticle.html}
         onChange={(e) => {
-          setLocalArticle({ ...localArticle, content: e });
+          setLocalArticle({ ...localArticle, html: e });
         }}
       />
       <div className="previewBox">
         <h1>PREVIEW:</h1>
         <hr />
         <br />
-        <Markup content={localArticle.content} />
+        <Markup content={localArticle.html} />
       </div>
     </main>
   );

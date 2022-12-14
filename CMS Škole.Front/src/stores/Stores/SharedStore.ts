@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction, toJS } from "mobx";
 import { toast } from "react-toastify";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
@@ -17,6 +17,9 @@ const apiActions = {
   },
   getRoles: () => {
     return requests.get("role?size=100000000");
+  },
+  deleteUser: (id: number) => {
+    return requests.delete("user?id=" + id);
   },
 };
 
@@ -115,8 +118,11 @@ export default class SharedStore {
   /* FIX */
   createOrEditUser = async (data: User) => {
     try {
-      const item = apiActions.createOrEditUser(data);
-      console.log(item);
+      let localUser = { ...data };
+      if (localUser.id) {
+        delete localUser.password;
+      }
+      const item = await apiActions.createOrEditUser(localUser);
     } catch (error) {
       toast(
         "Došlo je do greške pri" + data.id
@@ -126,14 +132,12 @@ export default class SharedStore {
     }
   };
 
-  deleteUser = (data: User) => {
-    if (this.userList) {
-      let local = this.userList.filter((x) => {
-        return x.id !== data.id;
-      });
-
-      this.userList = local;
-      toast('"' + data.name + '"je bio uspješno izbrisan');
+  deleteUser = async (data: number) => {
+    try {
+      await apiActions.deleteUser(data);
+      toast("Korisnik izbrisan");
+    } catch (error) {
+      toast("Greška prilikom brisanja");
     }
   };
 

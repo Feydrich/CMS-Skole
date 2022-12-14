@@ -8,7 +8,7 @@ import CategoriesStore from "./CategoriesStore";
 
 const apiActions = {
   testAxios: () => {
-    return requests.get(`category`);
+    // return requests.get(`category`);
   },
 };
 

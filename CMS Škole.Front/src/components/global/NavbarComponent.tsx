@@ -93,18 +93,16 @@ function NavbarComponent() {
             openFlag ? { opacity: 1 } : { opacity: 0, pointerEvents: "none" }
           }
         >
-          {(() => {
-            return openFlag?.subCategories?.map((x, index) => (
-              <Link
-                className="subCategoryItem"
-                key={"subCategory" + index + x.name}
-                to="/Category"
-                onClick={() => categoriesStore.setSelectedCategory(x)}
-              >
-                <span>{x.name}</span>
-              </Link>
-            ));
-          })()}
+          {openFlag?.subCategories?.map((x, index) => (
+            <Link
+              className="subCategoryItem"
+              key={"subCategory" + index + x.name}
+              to="/Category"
+              onClick={() => categoriesStore.setSelectedCategory(x)}
+            >
+              <span>{x.name}</span>
+            </Link>
+          ))}
         </section>
       </nav>
       <nav className="navBarWrapper MobileView">

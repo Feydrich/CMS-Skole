@@ -11,10 +11,12 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { toJS } from "mobx";
 import RoleList from "./RoleList";
+import { finished } from "stream/promises";
 
 const CreateOrEditForm = (props: any) => {
   const {
@@ -26,6 +28,12 @@ const CreateOrEditForm = (props: any) => {
     handleSubmit,
   } = props;
   const { sharedStore } = useStore();
+
+  const [age, setAge] = useState("");
+
+  const handleChange2 = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
   return (
     <Dialog
       open={editFlag}
@@ -38,6 +46,39 @@ const CreateOrEditForm = (props: any) => {
       <DialogContent>
         <TextField
           autoFocus
+          id="mail"
+          label="Email"
+          value={userForCrud?.mail ?? ""}
+          onChange={(e) => {
+            setUserForCrud({ ...userForCrud, mail: e.target.value });
+          }}
+          variant="standard"
+        />
+        <TextField
+          autoFocus
+          id="username"
+          label="Korisničko ime"
+          value={userForCrud?.username ?? ""}
+          onChange={(e) => {
+            setUserForCrud({ ...userForCrud, username: e.target.value });
+          }}
+          variant="standard"
+        />
+        {userForCrud && !userForCrud.id && (
+          <TextField
+            autoFocus
+            id="password"
+            label="Lozinka"
+            value={userForCrud?.password ?? ""}
+            onChange={(e) => {
+              setUserForCrud({ ...userForCrud, password: e.target.value });
+            }}
+            variant="standard"
+          />
+        )}
+
+        <TextField
+          autoFocus
           id="name"
           label="Ime"
           value={userForCrud?.name ?? ""}
@@ -48,22 +89,19 @@ const CreateOrEditForm = (props: any) => {
         />
         <TextField
           autoFocus
-          id="email"
-          type="email"
-          label="email"
-          value={userForCrud?.mail ?? ""}
+          id="surname"
+          label="Prezime"
+          value={userForCrud?.surname ?? ""}
           onChange={(e) => {
-            setUserForCrud({ ...userForCrud, mail: e.target.value });
+            setUserForCrud({ ...userForCrud, surname: e.target.value });
           }}
           variant="standard"
         />
+
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          label="roles"
-          value={userForCrud?.role ?? []}
+          id="simple-select"
+          value={userForCrud?.role?.id ?? ""}
           onChange={(e) => handleChange(e.target.value)}
-          input={<OutlinedInput label="Name" />}
           MenuProps={{
             style: {
               maxHeight: 48 * 4.5 + 8,
@@ -72,7 +110,7 @@ const CreateOrEditForm = (props: any) => {
           }}
         >
           {sharedStore.roleList.map((x, index) => (
-            <MenuItem value={x.id} key={x.name + index + 2}>
+            <MenuItem value={x.id} key={x.name + index + 25478}>
               {x.name}
             </MenuItem>
           ))}
@@ -119,13 +157,23 @@ const DeleteForm = (props: any) => {
       <DialogTitle>
         Da li ste sigurni da želite izbrisati ovog korisnika?
       </DialogTitle>
+      <DialogContent>
+        {userForCrud && (
+          <>
+            <b>{userForCrud.username ?? ""}: </b>{" "}
+            <span>
+              {userForCrud.name ?? ""} {userForCrud.surname ?? ""}
+            </span>
+          </>
+        )}
+      </DialogContent>
 
       <DialogActions>
         <Button
           onClick={() => {
             setDeleteFlag(false);
             setUserForCrud(null);
-            deleteAction(userForCrud);
+            deleteAction(userForCrud.id);
           }}
         >
           Da
@@ -159,17 +207,21 @@ function UserList() {
   const [deleteFlag, setDeleteFlag] = useState(false);
   const [userForCrud, setUserForCrud] = useState<User | null>(null);
 
-  const handleChange = (value: number[]) => {
-    // let roles: { id: number; name: string }[] = [];
-    // sharedStore.roleList.forEach(
-    //   (x) => value.includes(x.id) && roles.push(toJS(x))
-    // );
-    // let item = {
-    //   ...userForCrud,
-    //   role: roles,
-    // };
-    // console.log(item);
-    // setUserForCrud(item as User);
+  useEffect(() => {
+    console.log(userForCrud);
+  }, [userForCrud]);
+
+  const handleChange = (value: number) => {
+    let role: { id: number; name: string } = {
+      id: -100,
+      name: "Please select a valid role",
+    };
+    const find = sharedStore.roleList.find((x) => x.id === value);
+    find && (role = toJS(find));
+    setUserForCrud({
+      ...userForCrud,
+      role: role,
+    } as User);
   };
 
   return (
@@ -212,24 +264,28 @@ function UserList() {
           <span>
             {x.name} {x.surname} - {x.mail}
           </span>
-          <span>
-            <Button
-              onClick={() => {
-                setUserForCrud(x);
-                setEditFlag(true);
-              }}
-            >
-              EDIT
-            </Button>
-            <Button
-              onClick={() => {
-                setUserForCrud(x);
-                setDeleteFlag(true);
-              }}
-            >
-              DELETE
-            </Button>
-          </span>
+          {sharedStore.user && sharedStore.user.role?.name === "superadmin" && (
+            <span>
+              <Button
+                onClick={() => {
+                  setUserForCrud(x);
+                  setEditFlag(true);
+                }}
+              >
+                EDIT
+              </Button>
+              {sharedStore.user && x.id !== sharedStore.user.id && (
+                <Button
+                  onClick={() => {
+                    setUserForCrud(x);
+                    setDeleteFlag(true);
+                  }}
+                >
+                  DELETE
+                </Button>
+              )}
+            </span>
+          )}
         </div>
       ))}
     </main>

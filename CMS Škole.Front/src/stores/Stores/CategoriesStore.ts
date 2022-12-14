@@ -6,7 +6,11 @@ import { SiteInfo } from "../../models/SiteInfo";
 import { User } from "../../models/User";
 import { requests } from "../agent";
 
-const apiActions = {};
+const apiActions = {
+  createOrEditArticle: (article: Article) => {
+    return requests.post(`article/save`, article);
+  },
+};
 
 export default class CategoriesStore {
   categories: Category[] | null = null;
@@ -59,13 +63,13 @@ export default class CategoriesStore {
       });
       this.articleList = local;
     }
-    console.log(data.content);
-    toast('"' + data.name + '"je bio uspješno izmijenjen');
+    console.log(data.html);
+    toast('"' + data.title + '"je bio uspješno izmijenjen');
   };
-  createArticle = (data: Article) => {
-    /* DELETE */
-    this.articleList?.push(data);
-    toast('"' + data.name + '" je bio uspješno stvoren');
+  createArticle = async (data: Article) => {
+    try {
+      toast(await apiActions.createOrEditArticle(data));
+    } catch (error) {}
   };
   deleteArticle = (data: string) => {
     /* DELETE */

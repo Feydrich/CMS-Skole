@@ -47,8 +47,8 @@ public class CategoryService {
       category.setSuperCategory(
           Category.builder().id(superCategory.getId()).name(superCategory.getName()).build());
     }
-    if (category.getSubcategories() == null) {
-      category.setSubcategories(Collections.EMPTY_LIST);
+    if (category.getSubCategories() == null) {
+      category.setSubCategories(Collections.EMPTY_LIST);
     }
   }
 
@@ -126,7 +126,7 @@ public class CategoryService {
     Collection<Category> categories = categoryRepository.findSuperCategories();
     categories.forEach(
         cat -> {
-          cat.setSubcategories(getBySuperCategory(cat.getId()));
+          cat.setSubCategories(getBySuperCategory(cat.getId()));
           setTransient(cat);
         });
     return categories;

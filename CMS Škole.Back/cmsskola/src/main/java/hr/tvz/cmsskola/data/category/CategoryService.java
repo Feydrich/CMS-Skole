@@ -1,7 +1,10 @@
 package hr.tvz.cmsskola.data.category;
 
+import hr.tvz.cmsskola.data.article.Article;
+import hr.tvz.cmsskola.data.article.ArticleService;
 import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import java.io.IOException;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,6 +23,7 @@ public class CategoryService {
 
   private final CategoryRepository categoryRepository;
   private final ClaimService claimService;
+  private final ArticleService articleService;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
 
@@ -54,28 +58,32 @@ public class CategoryService {
     return new ResponseEntity<>(category, httpStatus);
   }
 
-  public void delete(Long id) {
+  public void delete(Long id) throws IOException {
     logger.info("Trying to delete category id {}", id);
 
     var optionalCategory = categoryRepository.findById(id);
-    optionalCategory.ifPresent(
-        category -> {
-          deleteForeignKeys(category);
+    if (optionalCategory.isPresent()) {
+      Category category = optionalCategory.get();
+      deleteForeignKeys(category);
 
-          categoryRepository.deleteById(category.getId());
-          String logText = "deleted category " + category.getName() + " id= " + category.getId();
-          loggingService.log(logger, logText);
-        });
+      categoryRepository.deleteById(category.getId());
+      String logText = "deleted category " + category.getName() + " id= " + category.getId();
+      loggingService.log(logger, logText);
+    }
   }
 
   public Page<Category> get(Pageable pageable) {
     return categoryRepository.findAll(pageable);
   }
 
-  private void deleteForeignKeys(Category category) {
+  private void deleteForeignKeys(Category category) throws IOException {
     category.getClaims().forEach(claim -> claimService.delete(claim.getId()));
-    category.getWebPages().forEach(webpage -> claimService.delete(webpage.getId()));
-    getBySuperCategory(category.getId()).forEach(subCategory -> delete(subCategory.getId()));
+    for (Article article : category.getArticles()) {
+      articleService.delete(article.getId());
+    }
+    for (Category subCategory : getBySuperCategory(category.getId())) {
+      delete(subCategory.getId());
+    }
   }
 
   private Category fillWithPrev(Category entity) {

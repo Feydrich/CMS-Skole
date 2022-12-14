@@ -2,7 +2,6 @@ package hr.tvz.cmsskola.data.image;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.article.Article;
-import hr.tvz.cmsskola.data.webpage.WebPage;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,11 +35,6 @@ public class Image {
   @Column(name = "image_uri")
   @JsonIgnore
   private String imageUri;
-
-  @ManyToOne
-  @JoinColumn(name = "web_page")
-  @Exclude
-  private WebPage webPage;
 
   @ManyToOne
   @JoinColumn(name = "article")

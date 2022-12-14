@@ -35,6 +35,7 @@ public class Log implements Serializable {
   private String text;
   private LocalDateTime tstamp;
 
+
   @ManyToOne
   @JoinColumn(name = "user")
   private User user;

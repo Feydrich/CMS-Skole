@@ -5,7 +5,6 @@ import hr.tvz.cmsskola.data.claim.ClaimUtils.Action;
 import hr.tvz.cmsskola.data.claim.ClaimUtils.Level;
 import hr.tvz.cmsskola.data.role.Role;
 import hr.tvz.cmsskola.data.user.User;
-import hr.tvz.cmsskola.data.webpage.WebPage;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,10 +46,6 @@ public class Claim implements GrantedAuthority {
   @ManyToOne
   @JoinColumn(name = "category")
   private Category category;
-
-  @ManyToOne
-  @JoinColumn(name = "web_page")
-  private WebPage webPage;
 
   private String operation;
 

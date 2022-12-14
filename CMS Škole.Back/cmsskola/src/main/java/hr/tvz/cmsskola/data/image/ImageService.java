@@ -2,7 +2,6 @@ package hr.tvz.cmsskola.data.image;
 
 import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.logging.LoggingService;
-import hr.tvz.cmsskola.data.webpage.WebPage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,9 +40,7 @@ public class ImageService {
 
       if (resource.exists() || resource.isReadable()) {
         var mediaType = URLConnection.guessContentTypeFromName(image.getImageUri());
-        return ResponseEntity.ok()
-            .contentType(MediaType.parseMediaType(mediaType))
-            .body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(mediaType)).body(resource);
       } else {
         throw new RuntimeException("Could not read the file!");
       }
@@ -57,8 +54,6 @@ public class ImageService {
 
     if (article != null) {
       image.setArticle(Article.builder().id(article).build());
-    } else if (webPage != null){
-      image.setWebPage(WebPage.builder().id(article).build());
     }
 
     logger.info("Trying to save image {}", file.getOriginalFilename());

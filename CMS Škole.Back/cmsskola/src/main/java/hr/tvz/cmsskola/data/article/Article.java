@@ -1,9 +1,9 @@
 package hr.tvz.cmsskola.data.article;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hr.tvz.cmsskola.data.category.Category;
 import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.user.User;
-import hr.tvz.cmsskola.data.webpage.WebPage;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public class Article {
 
   @ManyToOne
   @JoinColumn(name = "web_page")
-  private WebPage webPage;
+  private Category category;
 
   @ManyToOne
   @JoinColumn(name = "author")

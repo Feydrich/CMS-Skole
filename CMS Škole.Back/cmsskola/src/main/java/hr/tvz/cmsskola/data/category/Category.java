@@ -1,9 +1,10 @@
 package hr.tvz.cmsskola.data.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.claim.Claim;
-import hr.tvz.cmsskola.data.webpage.WebPage;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +44,9 @@ public class Category {
   @JoinColumn(name = "supercategory")
   private Category superCategory;
 
+  @Transient
+  private List<Category> subcategories;
+
   @OneToMany
   @JoinColumn(name = "category")
   @JsonIgnore
@@ -52,5 +57,5 @@ public class Category {
   @JoinColumn(name = "category")
   @JsonIgnore
   @Exclude
-  private Collection<WebPage> webPages;
+  private Collection<Article> articles;
 }

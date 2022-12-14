@@ -2,6 +2,7 @@ package hr.tvz.cmsskola.data.category;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import java.io.IOException;
 import java.util.Collection;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +68,11 @@ public class CategoryController {
   // todo preautorize admin
   @DeleteMapping(path = "")
   public ResponseEntity<Category> delete(@RequestParam Long id) {
-    categoryService.delete(id);
+    try {
+      categoryService.delete(id);
+    } catch (IOException e) {
+      return ResponseEntity.internalServerError().build();
+    }
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

@@ -2,6 +2,7 @@ package hr.tvz.cmsskola.data.role;
 
 import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.user.UserRepository;
 import hr.tvz.cmsskola.data.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,7 +21,7 @@ public class RoleService {
 
   private final RoleRepository roleRepository;
   private final ClaimService claimService;
-  private final UserService userService;
+  private final UserRepository userRepository;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
 
@@ -75,8 +76,7 @@ public class RoleService {
         .forEach(
             user -> {
               user.setRole(null);
-              user.setPassword(null);
-              userService.save(user);
+              userRepository.save(user);
             });
   }
 

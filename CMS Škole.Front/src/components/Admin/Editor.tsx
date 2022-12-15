@@ -48,12 +48,6 @@ function Editor() {
     }
   }, [categoriesStore.categories]);
 
-  const request = async (file: any) => {
-    const formData = new FormData();
-
-    formData.append("File", file.image);
-  };
-
   const [confirmFlag, setConfirmFlag] = useState(false);
 
   const [localArticle, setLocalArticle] = useState<Article>(
@@ -140,20 +134,7 @@ function Editor() {
         <span>
           <label>Unos slike</label>
           <br />
-          <input
-            type="file"
-            required
-            name="myImage"
-            onChange={(event) => {
-              if (event.target.files) {
-                console.log(event.target.files[0]);
-                request({
-                  file: JSON.stringify(event.target.files[0]),
-                  image: event.target.files[0],
-                });
-              }
-            }}
-          />
+          <input type="file" required name="myImage" onChange={(event) => {}} />
         </span>
         <span>
           <Button

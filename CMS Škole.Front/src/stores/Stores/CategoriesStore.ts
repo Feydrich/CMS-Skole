@@ -16,6 +16,9 @@ const apiActions = {
   getArticlesForId: (id: number) => {
     return requests.get("article/getByCategory/" + id);
   },
+  getArticlesForUserId: (id: number) => {
+    return requests.get("article/getByAuthorId/" + id);
+  },
   getLatestArticles: () => {
     return requests.get("article?size=10");
   },
@@ -36,6 +39,7 @@ export default class CategoriesStore {
       //Methods: action
       setSelectedCategory: action,
       getArticlesForId: action,
+      getArticlesForUserId: action,
       latestArticles: action,
       //dataQueries
       getCategories: action,
@@ -64,9 +68,19 @@ export default class CategoriesStore {
     }
   };
 
+  appendImages = (items: Article[]) => {};
+
   getArticlesForId = async (id: number) => {
     try {
       const response = await apiActions.getArticlesForId(id);
+      this.articleList = response.content;
+    } catch (error) {
+      toast("Došlo je do greške prilikom dohvaćanja članaka");
+    }
+  };
+  getArticlesForUserId = async (id: number) => {
+    try {
+      const response = await apiActions.getArticlesForUserId(id);
       this.articleList = response.content;
     } catch (error) {
       toast("Došlo je do greške prilikom dohvaćanja članaka");

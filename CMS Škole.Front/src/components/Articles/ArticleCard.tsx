@@ -19,17 +19,19 @@ function ArticleCard({ article }: IArticleCardProps) {
   return (
     <>
       <div className="articleCard" key={"article" + article.id}>
-        {/* {article.author.name === sharedStore.user?.name && (
-          <span
-            className="CRUDCardButton"
-            onClick={() => {
-              articleStore.setArticleForEdit(article.id);
-              navigate("/Editor");
-            }}
-          >
-            <FontAwesomeIcon icon={faEdit} />
-          </span>
-        )} */}
+        {/* {article.author && */}
+        {article.author?.id === sharedStore.user?.id ||
+          (sharedStore.user?.role?.name === "superAdmin" && (
+            <span
+              className="CRUDCardButton"
+              onClick={() => {
+                articleStore.setArticleForEdit(article.id);
+                navigate("/Editor");
+              }}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </span>
+          ))}
         <div
           onClick={() => {
             articleStore.getSelectedArticle(article.id);

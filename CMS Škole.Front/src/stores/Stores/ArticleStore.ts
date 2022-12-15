@@ -1,4 +1,5 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
+import { toast } from "react-toastify";
 import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
 import { SiteInfo } from "../../models/SiteInfo";
@@ -26,7 +27,7 @@ export default class ArticleStore {
 
       //Methods: action
       setArticleForCreation: action,
-      // setArticleForEdit: action,
+      setArticleForEdit: action,
 
       //dataQueries
       getSelectedArticle: action,
@@ -35,18 +36,19 @@ export default class ArticleStore {
     });
   }
 
-  /* FIX */
   getSelectedArticle = async (id: number) => {
     try {
       this.selectedArticle = await apiActions.getArticleById(id);
     } catch (error) {}
   };
-  // setArticleForEdit = (id: string) => {
-  //   this.categoryStore.articleList &&
-  //     (this.articleForEdit = this.categoryStore.articleList.find(
-  //       (x) => x.id === id
-  //     ));
-  // };
+  setArticleForEdit = async (id: number) => {
+    try {
+      const article = await apiActions.getArticleById(id);
+      this.articleForEdit = article;
+    } catch (error) {
+      toast("Došlo je do greške prilikom dohvata podataka za editiranje");
+    }
+  };
   setArticleForCreation = (data: Article) => {
     this.articleForEdit = data;
   };

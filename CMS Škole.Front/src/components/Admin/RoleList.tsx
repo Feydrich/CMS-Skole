@@ -32,9 +32,6 @@ function RoleList() {
       sharedStore.getRoles();
     }
   }, []);
-  useEffect(() => {
-    console.log(toJS(sharedStore.userList));
-  }, [sharedStore.userList]);
 
   return (
     <>

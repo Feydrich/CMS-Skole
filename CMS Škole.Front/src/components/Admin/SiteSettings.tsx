@@ -181,7 +181,7 @@ function SiteSettings() {
           <div className="cardContent" style={{ color: localColors.fontColor }}>
             <h2>{article.title}</h2>
 
-            <h3>{article.author.name}</h3>
+            {/* <h3>{article.author.name}</h3> */}
             <hr />
             <p>{article.description}</p>
           </div>

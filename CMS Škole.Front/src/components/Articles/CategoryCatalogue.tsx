@@ -13,10 +13,13 @@ function CategoryCatalogue() {
   useEffect(() => {
     if (categoryCataloguePreflight.current) {
       categoryCataloguePreflight.current = false;
-      !categoriesStore.articleList &&
-        categoriesStore.getArticles({} as Category);
     }
   }, []);
+
+  useEffect(() => {
+    categoriesStore.selectedCategory &&
+      categoriesStore.getArticlesForId(categoriesStore.selectedCategory.id);
+  }, [categoriesStore.selectedCategory]);
 
   return (
     <main>

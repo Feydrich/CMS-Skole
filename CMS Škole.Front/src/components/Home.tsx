@@ -18,8 +18,7 @@ function Home() {
   useEffect(() => {
     if (homePreflight.current) {
       homePreflight.current = false;
-      /* DELETE */
-      !categoriesStore.articleList && categoriesStore.latestArticles();
+      categoriesStore.latestArticles();
     }
   }, []);
 
@@ -54,10 +53,24 @@ function Home() {
       </div>
 
       <div className="homeContainer">
-        {categoriesStore.articleList?.map(
-          (x, index) =>
-            index < 5 && <ArticleCard key={"articleCard" + index} article={x} />
-        )}
+        {categoriesStore.articleList &&
+          (categoriesStore.articleList.length > 5
+            ? categoriesStore.articleList
+                .slice(0, 4)
+                .map(
+                  (x, index) =>
+                    index < 5 && (
+                      <ArticleCard key={"articleCard" + index} article={x} />
+                    )
+                )
+            : categoriesStore.articleList
+                .slice(0, categoriesStore.articleList.length)
+                .map(
+                  (x, index) =>
+                    index < 5 && (
+                      <ArticleCard key={"articleCard" + index} article={x} />
+                    )
+                ))}
       </div>
 
       <div className="dividerContainerImages">
@@ -76,14 +89,25 @@ function Home() {
       </div>
 
       <div className="homeContainer">
-        {categoriesStore.articleList
-          ?.map(
-            (x, index) =>
-              index < 5 && (
-                <ArticleCard key={"articleCard" + index} article={x} />
-              )
-          )
-          .reverse()}
+        {categoriesStore.articleList &&
+          categoriesStore.articleList.length > 5 &&
+          (categoriesStore.articleList.length < 10
+            ? categoriesStore.articleList
+                .slice(5, categoriesStore.articleList.length)
+                .map(
+                  (x, index) =>
+                    index < 5 && (
+                      <ArticleCard key={"articleCard" + index} article={x} />
+                    )
+                )
+            : categoriesStore.articleList
+                .slice(5, 10)
+                .map(
+                  (x, index) =>
+                    index < 5 && (
+                      <ArticleCard key={"articleCard" + index} article={x} />
+                    )
+                ))}
       </div>
     </main>
   );

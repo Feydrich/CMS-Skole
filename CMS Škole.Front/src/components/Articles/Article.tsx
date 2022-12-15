@@ -10,28 +10,26 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 function ArticlePage() {
   const articlereflight = useRef(true);
   const { articleStore, sharedStore } = useStore();
-  const { categoriesStore } = useStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (articlereflight.current) {
       articlereflight.current = false;
-      categoriesStore.getArticles({} as Category);
     }
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!articleStore.selectedArticle) {
-      navigate("Home");
-    }
+    // if (!articleStore.selectedArticle) {
+    //   navigate("Home");
+    // }
   }, [articleStore]);
 
   return (
     <main>
       <div className="singleItemContent">
-        {articleStore.selectedArticle?.author.name ===
+        {/* {articleStore.selectedArticle?.author.name ===
           sharedStore.user?.name && (
           <span
             className="CRUDCardButton"
@@ -43,13 +41,13 @@ function ArticlePage() {
           >
             <FontAwesomeIcon icon={faEdit} />
           </span>
-        )}
+        )} */}
         <h1>{articleStore.selectedArticle?.title}</h1>
-        <h3>Autor: {articleStore.selectedArticle?.author.name}</h3>
+        {/* <h3>Autor: {articleStore.selectedArticle?.author.name}</h3> */}
         <hr />
         <b>
           Objavljeno:
-          {articleStore.selectedArticle?.created.toDateString()}
+          {/* {articleStore.selectedArticle?.created.toDateString()} */}
         </b>
         <img
           className="articleImage"

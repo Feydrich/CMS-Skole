@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useStore } from "../stores/StoreManager";
 import ArticleCard from "./Articles/ArticleCard";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -9,6 +9,8 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleRoof } from "@fortawesome/free-solid-svg-icons";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import Carousel from "./global/Carousel";
+import { Button } from "react-bootstrap";
+import { requests } from "../stores/agent";
 
 function Home() {
   const homePreflight = useRef(true);
@@ -19,11 +21,49 @@ function Home() {
     if (homePreflight.current) {
       homePreflight.current = false;
       categoriesStore.latestArticles();
+      console.log(test2());
     }
   }, []);
 
+  const [image, setImage] = useState<any>();
+
+  const test = async (id: number, file: any, id2: number) => {
+    let item = await requests.post(
+      "image/save?article=" + id + "&webPage=" + id2,
+      file
+    );
+    return item;
+  };
+  const test2 = async () => {
+    let item = await requests.get("http://localhost:8081/api/image/1");
+    return item;
+  };
+
   return (
     <main>
+      {/* <div className="debug">
+        <input
+          type="file"
+          required
+          name="myImage"
+          onChange={(event) => {
+            if (event && event.target && event.target.files) {
+              // setImage(event.target.files[0]);
+              let formData = new FormData();
+
+              formData.append("file", event.target.files[0]);
+              console.log(test(4, formData, 3));
+            }
+          }}
+        />
+        <Button
+          onClick={() => {
+            console.log(image);
+          }}
+        >
+          Test
+        </Button>
+      </div> */}
       <Carousel />
       <div className="dividerContainerIcons">
         <div className="dividerContent">

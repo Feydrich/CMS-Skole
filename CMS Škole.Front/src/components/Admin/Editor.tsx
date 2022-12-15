@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { Category } from "../../models/Category";
 import axios from "axios";
+import { toJS } from "mobx";
 
 function Editor() {
   const EditorPreflight = useRef(true);
@@ -48,12 +49,6 @@ function Editor() {
     }
   }, [categoriesStore.categories]);
 
-  const request = async (file: any) => {
-    const formData = new FormData();
-
-    formData.append("File", file.image);
-  };
-
   const [confirmFlag, setConfirmFlag] = useState(false);
 
   const [localArticle, setLocalArticle] = useState<Article>(
@@ -66,6 +61,19 @@ function Editor() {
       category: { id: value },
     } as Article);
   };
+
+  const [localImagePreview, setLocalImagePreview] = useState<{
+    blob: any;
+    package: any;
+  } | null>(null);
+  useMemo(() => {
+    if (!Array.isArray(articleStore.articleForEdit?.images)) {
+      setLocalImagePreview({
+        blob: articleStore.articleForEdit!.images,
+        package: null,
+      });
+    }
+  }, [articleStore.articleForEdit]);
 
   return (
     <main>
@@ -146,10 +154,9 @@ function Editor() {
             name="myImage"
             onChange={(event) => {
               if (event.target.files) {
-                console.log(event.target.files[0]);
-                request({
-                  file: JSON.stringify(event.target.files[0]),
-                  image: event.target.files[0],
+                setLocalImagePreview({
+                  blob: URL.createObjectURL(event.target.files[0]),
+                  package: event.target.files[0],
                 });
               }
             }}
@@ -165,10 +172,15 @@ function Editor() {
                 localArticle.html &&
                 localArticle.category
               ) {
-                categoriesStore.createOrEditArticle({
-                  ...localArticle,
-                  author: sharedStore.user,
-                });
+                categoriesStore.createOrEditArticle(
+                  {
+                    ...localArticle,
+                    author: sharedStore.user,
+                  },
+                  localImagePreview &&
+                    localImagePreview?.package &&
+                    localImagePreview.package
+                );
 
                 //navigate("/Home");
               } else {
@@ -199,6 +211,7 @@ function Editor() {
       />
       <div className="previewBox">
         <h1>PREVIEW:</h1>
+        <img className="editorImage" src={localImagePreview?.blob} />
         <hr />
         <br />
         <Markup content={localArticle.html} />

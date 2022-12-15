@@ -207,10 +207,6 @@ function UserList() {
   const [deleteFlag, setDeleteFlag] = useState(false);
   const [userForCrud, setUserForCrud] = useState<User | null>(null);
 
-  useEffect(() => {
-    console.log(userForCrud);
-  }, [userForCrud]);
-
   const handleChange = (value: number) => {
     let role: { id: number; name: string } = {
       id: -100,

@@ -49,10 +49,12 @@ function ArticlePage() {
           Objavljeno:
           {/* {articleStore.selectedArticle?.created.toDateString()} */}
         </b>
-        <img
-          className="articleImage"
-          src={articleStore.selectedArticle?.image}
-        />
+        {!Array.isArray(articleStore.selectedArticle?.images) && (
+          <img
+            className="articleImage"
+            src={articleStore.selectedArticle?.images}
+          />
+        )}
 
         <Markup content={articleStore.selectedArticle?.html} />
       </div>

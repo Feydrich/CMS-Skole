@@ -19,25 +19,27 @@ function ArticleCard({ article }: IArticleCardProps) {
   return (
     <>
       <div className="articleCard" key={"article" + article.id}>
-        {/* {article.author.name === sharedStore.user?.name && (
+        {(article.author?.id == sharedStore.user?.id ||
+          sharedStore.user?.role?.name == "superAdmin") && (
           <span
             className="CRUDCardButton"
             onClick={() => {
-              articleStore.setArticleForEdit(article.id);
+              articleStore.setArticleForEdit(article.id, article.images);
               navigate("/Editor");
             }}
           >
             <FontAwesomeIcon icon={faEdit} />
           </span>
-        )} */}
+        )}
+
         <div
           onClick={() => {
-            articleStore.getSelectedArticle(article.id);
+            articleStore.getSelectedArticle(article.id, article.images);
             navigate("/Article");
           }}
           style={{ width: "100%", height: "100%" }}
         >
-          <img src={article.image} />
+          {!Array.isArray(article.images) && <img src={article.images} />}
           <div className="cardContent">
             <div id="title">
               <h2>{article.title}</h2>

@@ -27,7 +27,7 @@ function SiteSettings() {
   const [hoverFlag, setHoverFlag] = useState(false);
 
   const article = {
-    image: require("../../styles/images/placeholder.jpg"),
+    images: require("../../styles/images/placeholder.jpg"),
     title: "placeholder",
     author: { name: "placeholder" },
     description:
@@ -177,7 +177,7 @@ function SiteSettings() {
             className="headerExample"
             style={{ backgroundColor: localColors.primaryColorDark }}
           ></div>
-          <img src={article.image} />
+          {/* <img src={article.images} /> */}
           <div className="cardContent" style={{ color: localColors.fontColor }}>
             <h2>{article.title}</h2>
 

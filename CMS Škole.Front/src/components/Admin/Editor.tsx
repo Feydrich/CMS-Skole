@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { Category } from "../../models/Category";
 import axios from "axios";
+import { toJS } from "mobx";
 
 function Editor() {
   const EditorPreflight = useRef(true);
@@ -60,6 +61,19 @@ function Editor() {
       category: { id: value },
     } as Article);
   };
+
+  const [localImagePreview, setLocalImagePreview] = useState<{
+    blob: any;
+    package: any;
+  } | null>(null);
+  useMemo(() => {
+    if (!Array.isArray(articleStore.articleForEdit?.images)) {
+      setLocalImagePreview({
+        blob: articleStore.articleForEdit!.images,
+        package: null,
+      });
+    }
+  }, [articleStore.articleForEdit]);
 
   return (
     <main>
@@ -134,7 +148,19 @@ function Editor() {
         <span>
           <label>Unos slike</label>
           <br />
-          <input type="file" required name="myImage" onChange={(event) => {}} />
+          <input
+            type="file"
+            required
+            name="myImage"
+            onChange={(event) => {
+              if (event.target.files) {
+                setLocalImagePreview({
+                  blob: URL.createObjectURL(event.target.files[0]),
+                  package: event.target.files[0],
+                });
+              }
+            }}
+          />
         </span>
         <span>
           <Button
@@ -146,10 +172,15 @@ function Editor() {
                 localArticle.html &&
                 localArticle.category
               ) {
-                categoriesStore.createOrEditArticle({
-                  ...localArticle,
-                  author: sharedStore.user,
-                });
+                categoriesStore.createOrEditArticle(
+                  {
+                    ...localArticle,
+                    author: sharedStore.user,
+                  },
+                  localImagePreview &&
+                    localImagePreview?.package &&
+                    localImagePreview.package
+                );
 
                 //navigate("/Home");
               } else {
@@ -180,6 +211,7 @@ function Editor() {
       />
       <div className="previewBox">
         <h1>PREVIEW:</h1>
+        <img className="editorImage" src={localImagePreview?.blob} />
         <hr />
         <br />
         <Markup content={localArticle.html} />

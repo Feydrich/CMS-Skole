@@ -8,6 +8,6 @@ export interface Article {
   html?: string;
   description?: string;
   author?: User;
-  image?: any;
+  images?: any;
   category?: Category;
 }

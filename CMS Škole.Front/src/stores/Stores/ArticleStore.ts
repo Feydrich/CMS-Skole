@@ -36,15 +36,18 @@ export default class ArticleStore {
     });
   }
 
-  getSelectedArticle = async (id: number) => {
+  getSelectedArticle = async (id: number, imageBlob: any) => {
     try {
-      this.selectedArticle = await apiActions.getArticleById(id);
+      this.selectedArticle = {
+        ...(await apiActions.getArticleById(id)),
+        images: imageBlob,
+      };
     } catch (error) {}
   };
-  setArticleForEdit = async (id: number) => {
+  setArticleForEdit = async (id: number, imageBlob: any) => {
     try {
       const article = await apiActions.getArticleById(id);
-      this.articleForEdit = article;
+      this.articleForEdit = { ...article, images: imageBlob };
     } catch (error) {
       toast("Došlo je do greške prilikom dohvata podataka za editiranje");
     }

@@ -90,9 +90,6 @@ public class ImageService {
     if (optionalImage.isPresent()) {
       Image image = optionalImage.get();
       File file = new File(image.getImageUri());
-      if (!file.delete()) {
-        throw new IOException("unable to delete file");
-      }
 
       imageRepository.deleteById(image.getId());
       String logText = "deleted image " + image.getImageUri() + " id= " + image.getId();

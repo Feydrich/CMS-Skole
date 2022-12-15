@@ -1,5 +1,6 @@
 package hr.tvz.cmsskola.data.article;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.category.Category;
 import hr.tvz.cmsskola.data.image.Image;
@@ -58,11 +59,17 @@ public class Article {
   @Column(name = "html_uri")
   @JsonIgnore
   private String htmlUri;
+
+  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime created;
+
+  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime updated;
 
   @Column(name = "lasts_until")
+  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime lastsUnitl;
+
   private boolean archived;
   private boolean priority;
 }

@@ -1,5 +1,6 @@
 package hr.tvz.cmsskola.data.sitesettings;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.category.Category;
 import hr.tvz.cmsskola.data.image.Image;
@@ -40,5 +41,7 @@ public class SiteSetting {
 
   private String property;
   private String value;
+
+  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime updated;
 }

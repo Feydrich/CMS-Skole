@@ -21,7 +21,6 @@ function Home() {
     if (homePreflight.current) {
       homePreflight.current = false;
       categoriesStore.latestArticles();
-      console.log(test2());
     }
   }, []);
 
@@ -41,29 +40,6 @@ function Home() {
 
   return (
     <main>
-      {/* <div className="debug">
-        <input
-          type="file"
-          required
-          name="myImage"
-          onChange={(event) => {
-            if (event && event.target && event.target.files) {
-              // setImage(event.target.files[0]);
-              let formData = new FormData();
-
-              formData.append("file", event.target.files[0]);
-              console.log(test(4, formData, 3));
-            }
-          }}
-        />
-        <Button
-          onClick={() => {
-            console.log(image);
-          }}
-        >
-          Test
-        </Button>
-      </div> */}
       <Carousel />
       <div className="dividerContainerIcons">
         <div className="dividerContent">
@@ -96,7 +72,7 @@ function Home() {
         {categoriesStore.articleList &&
           (categoriesStore.articleList.length > 5
             ? categoriesStore.articleList
-                .slice(0, 4)
+                .slice(0, 5)
                 .map(
                   (x, index) =>
                     index < 5 && (

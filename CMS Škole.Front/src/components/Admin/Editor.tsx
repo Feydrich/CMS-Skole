@@ -55,6 +55,10 @@ function Editor() {
     articleStore.articleForEdit ?? ({} as Article)
   );
 
+  useEffect(() => {
+    articleStore.articleForEdit && setLocalArticle(articleStore.articleForEdit);
+  }, [articleStore.articleForEdit]);
+
   const handleChange = (value: number) => {
     setLocalArticle({
       ...localArticle,
@@ -67,11 +71,15 @@ function Editor() {
     package: any;
   } | null>(null);
   useMemo(() => {
-    if (!Array.isArray(articleStore.articleForEdit?.images)) {
+    if (!Array.isArray(localArticle.images)) {
       setLocalImagePreview({
-        blob: articleStore.articleForEdit!.images,
+        blob: localArticle.images,
         package: null,
       });
+    } else if (localArticle.images) {
+      let item = localArticle;
+      delete item.images;
+      setLocalArticle(item);
     }
   }, [articleStore.articleForEdit]);
 

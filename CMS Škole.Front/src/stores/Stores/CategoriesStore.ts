@@ -30,11 +30,12 @@ const apiActions = {
     return requests.get("image/" + id, { responseType: "blob" });
   },
   getLatestArticles: () => {
-    return requests.get("article?size=10");
+    return requests.get("article?size=10&sort=created%2CDESC");
   },
   uploadImage: (id: number, file: any, id2: number) => {
     return requests.post("image/save?article=" + id + "&webPage=" + id2, file);
   },
+  deleteArticle: (id: number) => {},
 };
 
 export default class CategoriesStore {
@@ -79,11 +80,9 @@ export default class CategoriesStore {
       if (Array.isArray(items)) {
         for (let i = 0; i < items.length; i++) {
           if (Array.isArray(items[i].images) && items[i].images.length > 0) {
-            if (items[i].images[items[i].images.length - 1].id) {
+            if (items[i].images[0].id) {
               items[i].images = URL.createObjectURL(
-                await apiActions.getImageById(
-                  items[i].images[items[i].images.length - 1].id
-                )
+                await apiActions.getImageById(items[i].images[0].id)
               );
             }
           }
@@ -95,9 +94,12 @@ export default class CategoriesStore {
     return items;
   };
 
-  uploadImage = async (id: number, file: any, id2: number) => {
+  uploadImage = async (id: number, data: any, id2: number) => {
     try {
-      await apiActions.uploadImage(id, file, id);
+      let file = new FormData();
+
+      file.append("file", data);
+      await apiActions.uploadImage(id, file, id2);
     } catch (error) {
       toast("Došlo je do greške prilikom učitavanja slike");
     }
@@ -134,7 +136,7 @@ export default class CategoriesStore {
 
   createOrEditArticle = async (data: Article, image?: any) => {
     try {
-      if (!image) {
+      if (!image || data.images) {
         delete data.images;
       }
       const response = await apiActions.createOrEditArticle(data);

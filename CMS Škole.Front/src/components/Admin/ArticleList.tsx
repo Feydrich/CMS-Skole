@@ -16,10 +16,10 @@ function ArticleList() {
   useEffect(() => {
     if (articleListPreflight.current) {
       articleListPreflight.current = false;
-      sharedStore.user &&
-        /* DELETE */
-        !categoriesStore.articleList &&
-        categoriesStore.getArticles({} as Category, sharedStore.user);
+      // sharedStore.user &&
+      //   /* DELETE */
+      //   !categoriesStore.articleList &&
+      //   categoriesStore.getArticles({} as Category, sharedStore.user);
     }
   }, []);
 
@@ -35,11 +35,11 @@ function ArticleList() {
           Dodaj novo
         </Button>
       </section>
-      {categoriesStore.articleList
+      {/* {categoriesStore.articleList
         ?.filter((x) => x.author.name === sharedStore.user?.name)
         .map((x, index) => (
           <ArticleCard key={"card" + index} article={x} />
-        ))}
+        ))} */}
     </main>
   );
 }

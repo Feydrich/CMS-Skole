@@ -7,8 +7,8 @@ import { requests } from "../agent";
 import CategoriesStore from "./CategoriesStore";
 
 const apiActions = {
-  testAxios: () => {
-    // return requests.get(`category`);
+  getArticleById: (id: number) => {
+    return requests.get("article/" + id);
   },
 };
 
@@ -26,28 +26,27 @@ export default class ArticleStore {
 
       //Methods: action
       setArticleForCreation: action,
-      setArticleForEdit: action,
+      // setArticleForEdit: action,
 
       //dataQueries
-      getSelectedArticles: action,
+      getSelectedArticle: action,
 
       //Calculated values: computed
     });
   }
 
   /* FIX */
-  getSelectedArticles = (id: string) => {
-    this.categoryStore.articleList &&
-      (this.selectedArticle = this.categoryStore.articleList.find(
-        (x) => x.id === id
-      ));
+  getSelectedArticle = async (id: number) => {
+    try {
+      this.selectedArticle = await apiActions.getArticleById(id);
+    } catch (error) {}
   };
-  setArticleForEdit = (id: string) => {
-    this.categoryStore.articleList &&
-      (this.articleForEdit = this.categoryStore.articleList.find(
-        (x) => x.id === id
-      ));
-  };
+  // setArticleForEdit = (id: string) => {
+  //   this.categoryStore.articleList &&
+  //     (this.articleForEdit = this.categoryStore.articleList.find(
+  //       (x) => x.id === id
+  //     ));
+  // };
   setArticleForCreation = (data: Article) => {
     this.articleForEdit = data;
   };

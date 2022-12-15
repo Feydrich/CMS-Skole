@@ -28,7 +28,7 @@ function SiteSettings() {
 
   const article = {
     image: require("../../styles/images/placeholder.jpg"),
-    name: "placeholder",
+    title: "placeholder",
     author: { name: "placeholder" },
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia pellentesque mi sed dignissim. Sed at erat imperdiet, viverra tortor quis, sollicitudin leo. Nam eu turpis cursus, porttitor ante non, fermentum nisi. Phasellus lorem erat, venenatis id posuere quis, venenatis quis justo. In molestie eleifend dapibus. Sed sed eros hendrerit, iaculis sapien nec, sagittis mauris. Integer malesuada ante eget bibendum imperdiet.",
@@ -178,11 +178,10 @@ function SiteSettings() {
             style={{ backgroundColor: localColors.primaryColorDark }}
           ></div>
           <img src={article.image} />
-          <div className="cardContent"
-          style={{ color: localColors.fontColor }}>
-            <h2>{article.name}</h2>
+          <div className="cardContent" style={{ color: localColors.fontColor }}>
+            <h2>{article.title}</h2>
 
-            <h3>{article.author.name}</h3>
+            {/* <h3>{article.author.name}</h3> */}
             <hr />
             <p>{article.description}</p>
           </div>

@@ -264,7 +264,7 @@ function UserList() {
           <span>
             {x.name} {x.surname} - {x.mail}
           </span>
-          {sharedStore.user && sharedStore.user.role?.name === "superadmin" && (
+          {sharedStore.user && sharedStore.user.role?.name === "superAdmin" && (
             <span>
               <Button
                 onClick={() => {

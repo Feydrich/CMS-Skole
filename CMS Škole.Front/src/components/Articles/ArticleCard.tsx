@@ -19,7 +19,7 @@ function ArticleCard({ article }: IArticleCardProps) {
   return (
     <>
       <div className="articleCard" key={"article" + article.id}>
-        {article.author.name === sharedStore.user?.name && (
+        {/* {article.author.name === sharedStore.user?.name && (
           <span
             className="CRUDCardButton"
             onClick={() => {
@@ -29,10 +29,10 @@ function ArticleCard({ article }: IArticleCardProps) {
           >
             <FontAwesomeIcon icon={faEdit} />
           </span>
-        )}
+        )} */}
         <div
           onClick={() => {
-            articleStore.getSelectedArticles(article.id);
+            articleStore.getSelectedArticle(article.id);
             navigate("/Article");
           }}
           style={{ width: "100%", height: "100%" }}
@@ -40,13 +40,11 @@ function ArticleCard({ article }: IArticleCardProps) {
           <img src={article.image} />
           <div className="cardContent">
             <div id="title">
-              <h2>{article.name}</h2>
+              <h2>{article.title}</h2>
             </div>
             <div id="content">
               <p>{article.description}</p>
             </div>
-
-            {/* <h3>{article.author.name}</h3> */}
           </div>
         </div>
       </div>

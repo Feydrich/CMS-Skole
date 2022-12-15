@@ -7,6 +7,5 @@ export interface User {
   jwt?: string;
   role?: { id: number; name: string };
 
-  /* DELETE ME OVO JE SAMO ZA DEV */
   password?: string;
 }

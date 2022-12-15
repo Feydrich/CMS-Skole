@@ -10,6 +10,15 @@ const apiActions = {
   createOrEditArticle: (article: Article) => {
     return requests.post(`article/save`, article);
   },
+  getCategories: () => {
+    return requests.get("category/getSuperCategories");
+  },
+  getArticlesForId: (id: number) => {
+    return requests.get("article/getByCategory/" + id);
+  },
+  getLatestArticles: () => {
+    return requests.get("article?size=10");
+  },
 };
 
 export default class CategoriesStore {
@@ -26,52 +35,53 @@ export default class CategoriesStore {
 
       //Methods: action
       setSelectedCategory: action,
-      getArticles: action,
+      getArticlesForId: action,
       latestArticles: action,
       //dataQueries
       getCategories: action,
-      createArticle: action,
-      editArticle: action,
+      createOrEditArticle: action,
+
       deleteArticle: action,
 
       //Calculated values: computed
     });
   }
 
-  getCategories = () => {
-    console.log("get Categories");
+  getCategories = async () => {
+    try {
+      this.categories = await apiActions.getCategories();
+    } catch {
+      toast("Došlo je do greške prilikom dohvata kategorija");
+    }
   };
 
-  latestArticles = () => {};
-  getArticles = (Category?: Category, User?: User) => {
-    /* DELETE ME */
-    if (User && this.articleList) {
-      let list = this.articleList.filter((x) => x.author.name === User.name);
-      this.articleList = list;
+  latestArticles = async () => {
+    try {
+      const response = await apiActions.getLatestArticles();
+      this.articleList = response.content;
+    } catch (error) {
+      toast("Došlo je do greške prilikom dohvaćanja članaka");
+    }
+  };
+
+  getArticlesForId = async (id: number) => {
+    try {
+      const response = await apiActions.getArticlesForId(id);
+      this.articleList = response.content;
+    } catch (error) {
+      toast("Došlo je do greške prilikom dohvaćanja članaka");
     }
   };
   setSelectedCategory = (x: Category | undefined) => {
     this.selectedCategory = x;
   };
-  editArticle = (data: Article) => {
-    /* DELETE */
-    if (this.articleList) {
-      let local = this.articleList.map((x) => {
-        if (x.id === data.id) {
-          return data;
-        } else return x;
-      });
-      this.articleList = local;
-    }
-    console.log(data.html);
-    toast('"' + data.title + '"je bio uspješno izmijenjen');
-  };
-  createArticle = async (data: Article) => {
+
+  createOrEditArticle = async (data: Article) => {
     try {
       toast(await apiActions.createOrEditArticle(data));
     } catch (error) {}
   };
-  deleteArticle = (data: string) => {
+  deleteArticle = (data: number) => {
     /* DELETE */
     if (this.articleList) {
       let local = this.articleList.filter((x) => {

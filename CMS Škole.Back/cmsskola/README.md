@@ -4,6 +4,7 @@
 
  - port: 8081
  - [Swagger](http://localhost:8081/api/swagger-ui/index.html#/)
+ - Super user: username=superadmin, password=superadmin
 
 ## Pokretanje aplikacije
 

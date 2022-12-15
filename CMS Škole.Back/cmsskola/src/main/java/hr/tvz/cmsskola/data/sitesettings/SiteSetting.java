@@ -1,8 +1,10 @@
-package hr.tvz.cmsskola.data.category;
+package hr.tvz.cmsskola.data.sitesettings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.tvz.cmsskola.data.article.Article;
-import hr.tvz.cmsskola.data.claim.Claim;
+import hr.tvz.cmsskola.data.category.Category;
+import hr.tvz.cmsskola.data.image.Image;
+import hr.tvz.cmsskola.data.user.User;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,32 +31,14 @@ import lombok.ToString.Exclude;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "category")
-public class Category {
-
+@Table(name = "site_settings")
+public class SiteSetting {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
-  private String name;
-
-  @ManyToOne
-  @JoinColumn(name = "supercategory")
-  private Category superCategory;
-
-  @Transient
-  private Collection<Category> subCategories;
-
-  @OneToMany
-  @JoinColumn(name = "category")
-  @JsonIgnore
-  @Exclude
-  private Collection<Claim> claims;
-
-  @OneToMany
-  @JoinColumn(name = "category")
-  @JsonIgnore
-  @Exclude
-  private Collection<Article> categoryArticles;
+  private String property;
+  private String value;
+  private LocalDateTime updated;
 }

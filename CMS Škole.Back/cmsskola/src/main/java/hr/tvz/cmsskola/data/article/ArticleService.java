@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
@@ -34,11 +35,23 @@ public class ArticleService {
   public Article getById(Long id) {
     Article article = articleRepository.findById(id).orElse(null);
     readHtml(article);
+    setImages(article);
     return article;
   }
 
-  public List<Article> getByAuthor(Long id) {
-    return articleRepository.findByAthor(id);
+  public Collection<Article> getByCategoryId(Long id) {
+    return articleRepository.findByCategory(id).stream().peek(article ->  {
+      article.setCategory(null);
+      article.setAuthor(null);
+      article.setCreated(null);
+      article.setUpdated(null);
+      article.setLastsUnitl(null);
+      setImages(article);
+    }).toList();
+  }
+
+  public Collection<Article> getByAuthor(Long id) {
+    return articleRepository.findByAuthor(id).stream().peek(this::setImages).toList();
   }
 
   public ResponseEntity<Article> save(Article article) {
@@ -141,5 +154,10 @@ public class ArticleService {
       } catch (IOException ignored) {
       }
     }
+  }
+
+  private void setImages(Article article) {
+    if (article == null) return;
+    article.getImages().forEach(img -> img.setArticle(null));
   }
 }

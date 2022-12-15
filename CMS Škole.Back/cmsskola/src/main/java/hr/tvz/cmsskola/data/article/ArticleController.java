@@ -1,6 +1,7 @@
 package hr.tvz.cmsskola.data.article;
 
 import java.io.IOException;
+import java.util.Collection;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,11 @@ public class ArticleController {
   @GetMapping(path = "{id}")
   public Article getById(@PathVariable Long id) {
     return articleService.getById(id);
+  }
+
+  @GetMapping(path = "getByCategory/{id}")
+  public Collection<Article> getByCategoryId(@PathVariable Long id) {
+    return articleService.getByCategoryId(id);
   }
 
   // todo preautorize admin, add image uppload

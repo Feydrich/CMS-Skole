@@ -105,9 +105,6 @@ public class ArticleService {
     if (optionalArticle.isPresent()) {
       Article article = optionalArticle.get();
       File file = new File(article.getHtmlUri());
-      if (!file.delete()) {
-        throw new IOException("unable to delete file");
-      }
 
       deleteForeignKeys(article);
 

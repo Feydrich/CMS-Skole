@@ -4,6 +4,7 @@ import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.User;
+import hr.tvz.cmsskola.data.user.UserService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,7 +38,7 @@ public class ArticleService {
   public Article getById(Long id) {
     Article article = articleRepository.findById(id).orElse(null);
     readHtml(article);
-    setImages(article);
+    setData(article);
     return article;
   }
 
@@ -56,11 +57,11 @@ public class ArticleService {
     article.setCreated(null);
     article.setUpdated(null);
     article.setLastsUnitl(null);
-    setImages(article);
+    setData(article);
   }
 
   public Collection<Article> getByAuthor(Long id) {
-    return articleRepository.findByAuthorForDelete(id).stream().peek(this::setImages).toList();
+    return articleRepository.findByAuthorForDelete(id).stream().peek(this::setData).toList();
   }
 
   public ResponseEntity<Article> save(Article article) {
@@ -107,7 +108,7 @@ public class ArticleService {
     }
     loggingService.log(logger, logText);
 
-    setImages(article);
+    setData(article);
 
     return new ResponseEntity<>(article, httpStatus);
   }
@@ -177,9 +178,13 @@ public class ArticleService {
     }
   }
 
-  private void setImages(Article article) {
+  private void setData(Article article) {
     if (article == null) return;
-    article.getImages().forEach(img -> img.setArticle(null));
+    if (article.getImages() != null) {
+      article.getImages().forEach(img -> img.setArticle(null));
+    }
+
+    UserService.setData(article.getAuthor());
   }
 
   public Page<Article> get(Pageable pageable) {

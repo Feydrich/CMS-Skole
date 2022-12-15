@@ -10,6 +10,9 @@ const apiActions = {
   createOrEditArticle: (article: Article) => {
     return requests.post(`article/save`, article);
   },
+  getCategories: () => {
+    return requests.get("category/getSuperCategories");
+  },
 };
 
 export default class CategoriesStore {
@@ -38,8 +41,12 @@ export default class CategoriesStore {
     });
   }
 
-  getCategories = () => {
-    console.log("get Categories");
+  getCategories = async () => {
+    try {
+      this.categories = await apiActions.getCategories();
+    } catch {
+      toast("Došlo je do greške prilikom dohvata kategorija");
+    }
   };
 
   latestArticles = () => {};

@@ -44,19 +44,19 @@ function ArticlePage() {
             <FontAwesomeIcon icon={faEdit} />
           </span>
         )}
-        <h1>{articleStore.selectedArticle?.name}</h1>
+        <h1>{articleStore.selectedArticle?.title}</h1>
         <h3>Autor: {articleStore.selectedArticle?.author.name}</h3>
         <hr />
         <b>
           Objavljeno:
-          {articleStore.selectedArticle?.creationDate.toDateString()}
+          {articleStore.selectedArticle?.created.toDateString()}
         </b>
         <img
           className="articleImage"
           src={articleStore.selectedArticle?.image}
         />
 
-        <Markup content={articleStore.selectedArticle?.content} />
+        <Markup content={articleStore.selectedArticle?.html} />
       </div>
     </main>
   );

@@ -40,7 +40,7 @@ function ArticleCard({ article }: IArticleCardProps) {
           <img src={article.image} />
           <div className="cardContent">
             <div id="title">
-              <h2>{article.name}</h2>
+              <h2>{article.title}</h2>
             </div>
             <div id="content">
               <p>{article.description}</p>

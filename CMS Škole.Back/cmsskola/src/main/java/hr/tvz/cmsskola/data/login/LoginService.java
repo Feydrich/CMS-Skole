@@ -5,6 +5,7 @@ import hr.tvz.cmsskola.config.security.jwt.TokenProvider;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.User;
 import hr.tvz.cmsskola.data.user.UserRepository;
+import hr.tvz.cmsskola.data.user.UserService;
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -52,6 +53,7 @@ public class LoginService {
       loggingService.log(logger, "logged in", user.getId());
     }
 
+    UserService.setData(user);
     return new ResponseEntity<>(new UserToken(jwt, user), httpHeaders, HttpStatus.OK);
   }
 

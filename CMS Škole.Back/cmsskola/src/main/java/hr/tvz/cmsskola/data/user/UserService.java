@@ -29,15 +29,25 @@ public class UserService {
   private final ArticleService articleService;
 
   public Page<User> getAll(Pageable pageable) {
-    return userRepository.findAll(pageable);
+    Page<User> page = userRepository.findAll(pageable);
+    page.getContent().forEach(UserService::setData);
+    return page;
   }
 
   public User getById(Long userId) {
-    return userRepository.findById(userId).orElse(null);
+    var user = userRepository.findById(userId).orElse(null);
+    if (user != null) {
+      setData(user);
+    }
+    return user;
   }
 
   public User getByUsername(String username) {
-    return userRepository.findByUsername(username).orElse(null);
+    var user = userRepository.findByUsername(username).orElse(null);
+    if (user != null) {
+      setData(user);
+    }
+    return user;
   }
 
   public ResponseEntity<User> save(User user) {
@@ -61,6 +71,7 @@ public class UserService {
     }
     loggingService.log(logger, logText);
 
+    setData(user);
     return new ResponseEntity<>(user, httpStatus);
   }
 
@@ -101,5 +112,9 @@ public class UserService {
       entity = prev;
     }
     return entity;
+  }
+
+  public static void setData(User user) {
+    user.setPassword(null);
   }
 }

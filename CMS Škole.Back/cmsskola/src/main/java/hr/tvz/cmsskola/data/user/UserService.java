@@ -115,6 +115,7 @@ public class UserService {
   }
 
   public static void setData(User user) {
+    if (user == null) return;
     user.setPassword(null);
   }
 }

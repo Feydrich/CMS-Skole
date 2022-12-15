@@ -74,13 +74,25 @@ public class ArticleService {
 
     logger.info("Trying to save article {}", article.getTitle());
 
-    String url;
-    try {
-      url = saveFile(article.getTitle(), article.getHtml());
-    } catch (IOException e) {
-      return ResponseEntity.internalServerError().build();
+    if (article.getHtml() != null) {
+      String oldUri = null;
+      if (article.getHtmlUri() != null) {
+        oldUri = article.getHtmlUri();
+      }
+
+      try {
+        var url = saveFile(article.getTitle(), article.getHtml());
+        article.setHtmlUri(url);
+      } catch (IOException e) {
+        return ResponseEntity.internalServerError().build();
+      }
+
+      if (oldUri != null) {
+        File file = new File(oldUri);
+        file.delete();
+      }
+
     }
-    article.setHtmlUri(url);
 
     article = articleRepository.save(article);
 
@@ -95,6 +107,8 @@ public class ArticleService {
     }
     loggingService.log(logger, logText);
 
+    setImages(article);
+
     return new ResponseEntity<>(article, httpStatus);
   }
 
@@ -105,6 +119,7 @@ public class ArticleService {
     if (optionalArticle.isPresent()) {
       Article article = optionalArticle.get();
       File file = new File(article.getHtmlUri());
+      file.delete();
 
       deleteForeignKeys(article);
 

@@ -75,6 +75,7 @@ public class RoleService {
         .forEach(
             user -> {
               user.setRole(null);
+              user.setPassword(null);
               userService.save(user);
             });
   }

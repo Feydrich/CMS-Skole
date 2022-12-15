@@ -3,6 +3,7 @@ package hr.tvz.cmsskola.data.article;
 import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.user.User;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -48,7 +49,10 @@ public class ArticleService {
 
   private void setPreview(Article article) {
     article.setCategory(null);
-    article.setAuthor(null);
+
+    if (article.getAuthor() != null) {
+      article.setAuthor(User.builder().id(article.getAuthor().getId()).build());
+    }
     article.setCreated(null);
     article.setUpdated(null);
     article.setLastsUnitl(null);

@@ -9,12 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,19 +40,23 @@ public class ArticleService {
     return article;
   }
 
-  public Collection<Article> getByCategoryId(Long id) {
-    return articleRepository.findByCategory(id).stream().peek(article ->  {
-      article.setCategory(null);
-      article.setAuthor(null);
-      article.setCreated(null);
-      article.setUpdated(null);
-      article.setLastsUnitl(null);
-      setImages(article);
-    }).toList();
+  public Page<Article> getByCategoryId(Pageable pageable, Long id) {
+    var page = articleRepository.findByCategory(id, pageable);
+    page.getContent().forEach(this::setPreview);
+    return page;
+  }
+
+  private void setPreview(Article article) {
+    article.setCategory(null);
+    article.setAuthor(null);
+    article.setCreated(null);
+    article.setUpdated(null);
+    article.setLastsUnitl(null);
+    setImages(article);
   }
 
   public Collection<Article> getByAuthor(Long id) {
-    return articleRepository.findByAuthor(id).stream().peek(this::setImages).toList();
+    return articleRepository.findByAuthorForDelete(id).stream().peek(this::setImages).toList();
   }
 
   public ResponseEntity<Article> save(Article article) {
@@ -159,5 +164,17 @@ public class ArticleService {
   private void setImages(Article article) {
     if (article == null) return;
     article.getImages().forEach(img -> img.setArticle(null));
+  }
+
+  public Page<Article> get(Pageable pageable) {
+    Page<Article> page = articleRepository.findAll(pageable);
+    page.getContent().forEach(this::setPreview);
+    return page;
+  }
+
+  public Page<Article> getByAuthorId(Pageable pageable, Long id) {
+    var page = articleRepository.findByAuthor(id, pageable);
+    page.getContent().forEach(this::setPreview);
+    return page;
   }
 }

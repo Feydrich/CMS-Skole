@@ -1,9 +1,12 @@
 package hr.tvz.cmsskola.data.article;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import java.io.IOException;
-import java.util.Collection;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +31,72 @@ public class ArticleController {
   }
 
   @GetMapping(path = "getByCategory/{id}")
-  public Collection<Article> getByCategoryId(@PathVariable Long id) {
-    return articleService.getByCategoryId(id);
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "page",
+        value = "0",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "size",
+        value = "20",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "sort",
+        value = "name,surname,DESC",
+        allowMultiple = true,
+        paramType = "query",
+        dataTypeClass = String.class)
+  })
+  public Page<Article> getByCategoryId(@ApiIgnore Pageable pageable, @PathVariable Long id) {
+    return articleService.getByCategoryId(pageable, id);
+  }
+
+  @GetMapping(path = "getByAuthorId/{id}")
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "page",
+        value = "0",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "size",
+        value = "20",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "sort",
+        value = "name,surname,DESC",
+        allowMultiple = true,
+        paramType = "query",
+        dataTypeClass = String.class)
+  })
+  public Page<Article> getByAuthorId(@ApiIgnore Pageable pageable, @PathVariable Long id) {
+    return articleService.getByAuthorId(pageable, id);
+  }
+
+  @GetMapping(path = "")
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "page",
+        value = "0",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "size",
+        value = "20",
+        paramType = "query",
+        dataTypeClass = Integer.class),
+    @ApiImplicitParam(
+        name = "sort",
+        value = "name,surname,DESC",
+        allowMultiple = true,
+        paramType = "query",
+        dataTypeClass = String.class)
+  })
+  public Page<Article> get(@ApiIgnore Pageable pageable) {
+    return articleService.get(pageable);
   }
 
   // todo preautorize admin, add image uppload

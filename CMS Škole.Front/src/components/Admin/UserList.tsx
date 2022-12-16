@@ -29,11 +29,6 @@ const CreateOrEditForm = (props: any) => {
   } = props;
   const { sharedStore } = useStore();
 
-  const [age, setAge] = useState("");
-
-  const handleChange2 = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
   return (
     <Dialog
       open={editFlag}

@@ -26,16 +26,16 @@ function CategoryCatalogue() {
       <h1 className="categoryTitle">
         {categoriesStore.selectedCategory!.name}
       </h1>
-      {categoriesStore.selectedCategory!.parentCategory && (
+      {categoriesStore.selectedCategory!.superCategory && (
         <Link
           to={"/Category"}
           onClick={() => {
             categoriesStore.setSelectedCategory(
-              categoriesStore.selectedCategory!.parentCategory
+              categoriesStore.selectedCategory!.superCategory
             );
           }}
         >
-          {categoriesStore.selectedCategory!.parentCategory.name}
+          {categoriesStore.selectedCategory!.superCategory.name}
         </Link>
       )}
 

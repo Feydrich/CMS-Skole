@@ -8,6 +8,10 @@ $background: var(--background);
   justify-content: center;
 }
 
+.MuiPopover-paper {
+  display: unset !important;
+}
+
 .MuiDialogContent-root {
   display: flex;
   align-items: center;

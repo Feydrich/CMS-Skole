@@ -97,24 +97,37 @@ function Login() {
             >
               Editor
             </Button>
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigate("/UserList");
-                sharedStore.setLoginIsOpen(false);
-              }}
-            >
-              Users
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigate("/SiteSettings");
-                sharedStore.setLoginIsOpen(false);
-              }}
-            >
-              Postavke Stranice
-            </Button>
+            {sharedStore.user.role?.name === "superAdmin" && (
+              <>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/CategoryList");
+                    sharedStore.setLoginIsOpen(false);
+                  }}
+                >
+                  Kategorije
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/UserList");
+                    sharedStore.setLoginIsOpen(false);
+                  }}
+                >
+                  Korisnici
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/SiteSettings");
+                    sharedStore.setLoginIsOpen(false);
+                  }}
+                >
+                  Postavke Stranice
+                </Button>
+              </>
+            )}
             <Button
               variant="contained"
               onClick={() => {

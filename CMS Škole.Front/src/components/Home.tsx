@@ -20,23 +20,10 @@ function Home() {
   useEffect(() => {
     if (homePreflight.current) {
       homePreflight.current = false;
+      categoriesStore.getCategories();
       categoriesStore.latestArticles();
     }
   }, []);
-
-  const [image, setImage] = useState<any>();
-
-  const test = async (id: number, file: any, id2: number) => {
-    let item = await requests.post(
-      "image/save?article=" + id + "&webPage=" + id2,
-      file
-    );
-    return item;
-  };
-  const test2 = async () => {
-    let item = await requests.get("http://localhost:8081/api/image/1");
-    return item;
-  };
 
   return (
     <main>

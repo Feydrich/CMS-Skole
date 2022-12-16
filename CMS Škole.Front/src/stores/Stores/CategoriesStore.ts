@@ -17,6 +17,16 @@ const apiActions = {
   createOrEditArticle: (article: Article) => {
     return requests.post(`article/save`, article);
   },
+  addCategory: (data: {
+    id?: number;
+    name: string;
+    superCategory?: { id: number };
+  }) => {
+    return requests.post("category/save", data);
+  },
+  deleteCategory: (id: number) => {
+    return requests.delete("category?id=" + id);
+  },
   getCategories: () => {
     return requests.get("category/getSuperCategories");
   },
@@ -35,7 +45,9 @@ const apiActions = {
   uploadImage: (id: number, file: any, id2: number) => {
     return requests.post("image/save?article=" + id + "&webPage=" + id2, file);
   },
-  deleteArticle: (id: number) => {},
+  deleteArticle: (id: number) => {
+    return requests.delete("article?id=" + id);
+  },
 };
 
 export default class CategoriesStore {
@@ -57,9 +69,11 @@ export default class CategoriesStore {
       latestArticles: action,
       //dataQueries
       getCategories: action,
+      addCategory: action,
       createOrEditArticle: action,
 
       deleteArticle: action,
+      deleteCategory: action,
       appendImages: action,
       uploadImage: action,
 
@@ -74,15 +88,29 @@ export default class CategoriesStore {
       toast("Došlo je do greške prilikom dohvata kategorija");
     }
   };
+  addCategory = async (data: {
+    id?: number;
+    name: string;
+    superCategory?: { id: number };
+  }) => {
+    try {
+      await apiActions.addCategory(data);
+      toast("Naslov dodan!");
+    } catch (error) {
+      toast("Došlo je do greške prilikom dodavanja kategorija");
+    }
+  };
 
   appendImages = async (items: Article[]) => {
     try {
       if (Array.isArray(items)) {
         for (let i = 0; i < items.length; i++) {
           if (Array.isArray(items[i].images) && items[i].images.length > 0) {
-            if (items[i].images[0].id) {
+            if (items[i].images[items[i].images.length - 1].id) {
               items[i].images = URL.createObjectURL(
-                await apiActions.getImageById(items[i].images[0].id)
+                await apiActions.getImageById(
+                  items[i].images[items[i].images.length - 1].id
+                )
               );
             }
           }
@@ -143,17 +171,25 @@ export default class CategoriesStore {
       if (response.id && response.category.id && image) {
         this.uploadImage(response.id, image, response.category.id);
       }
-    } catch (error) {}
+      toast("Članak pohranjen!");
+    } catch (error) {
+      toast("Došlo je do greške prilikom spremanja članka");
+    }
   };
-  deleteArticle = (data: number) => {
-    /* DELETE */
-    if (this.articleList) {
-      let local = this.articleList.filter((x) => {
-        return x.id !== data;
-      });
-
-      this.articleList = local;
-      toast("Objava uspješno obrisana!");
+  deleteArticle = async (data: number) => {
+    try {
+      await apiActions.deleteArticle(data);
+      toast("Članak izbrisam!");
+    } catch (error) {
+      toast("Došlo je do greške prilikom brisanja članka");
+    }
+  };
+  deleteCategory = async (data: number) => {
+    try {
+      await apiActions.deleteCategory(data);
+      toast("Naslov izbrisam!");
+    } catch (error) {
+      toast("Došlo je do greške prilikom brisanja naslova");
     }
   };
 }

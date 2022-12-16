@@ -81,7 +81,7 @@ function Editor() {
       delete item.images;
       setLocalArticle(item);
     }
-  }, [articleStore.articleForEdit]);
+  }, [localArticle.images]);
 
   return (
     <main>
@@ -100,7 +100,7 @@ function Editor() {
           <Button
             onClick={() => {
               setConfirmFlag(false);
-              navigate("/Home");
+              //navigate("/Home");
               categoriesStore.deleteArticle(localArticle.id);
             }}
           >

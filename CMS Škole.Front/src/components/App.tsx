@@ -18,6 +18,7 @@ import FooterComponent from "./global/FooterComponent";
 const ArticleList = React.lazy(() => import("./Admin/ArticleList"));
 const Editor = React.lazy(() => import("./Admin/Editor"));
 const UserList = React.lazy(() => import("./Admin/UserList"));
+const CategoryList = React.lazy(() => import("./Admin/CategoryList"));
 const SiteSettings = React.lazy(() => import("./Admin/SiteSettings"));
 
 function App() {
@@ -106,6 +107,14 @@ function App() {
                   element={
                     <React.Suspense fallback={<Loading />}>
                       <UserList />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/CategoryList"
+                  element={
+                    <React.Suspense fallback={<Loading />}>
+                      <CategoryList />
                     </React.Suspense>
                   }
                 />

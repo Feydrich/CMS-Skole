@@ -29,25 +29,28 @@ function ArticlePage() {
   return (
     <main>
       <div className="singleItemContent">
-        {/* {articleStore.selectedArticle?.author.name ===
-          sharedStore.user?.name && (
+        {(articleStore.selectedArticle?.author?.id == sharedStore.user?.id ||
+          sharedStore.user?.role?.name == "superAdmin") && (
           <span
             className="CRUDCardButton"
             onClick={() => {
               articleStore.selectedArticle &&
-                articleStore.setArticleForEdit(articleStore.selectedArticle.id);
+                articleStore.setArticleForEdit(
+                  articleStore.selectedArticle.id,
+                  articleStore.selectedArticle.images
+                );
               navigate("/Editor");
             }}
           >
             <FontAwesomeIcon icon={faEdit} />
           </span>
-        )} */}
+        )}
         <h1>{articleStore.selectedArticle?.title}</h1>
-        {/* <h3>Autor: {articleStore.selectedArticle?.author.name}</h3> */}
+        <h3>Autor: {articleStore.selectedArticle?.author?.name}</h3>
         <hr />
         <b>
           Objavljeno:
-          {/* {articleStore.selectedArticle?.created.toDateString()} */}
+          {JSON.stringify(articleStore.selectedArticle?.created)}
         </b>
         {!Array.isArray(articleStore.selectedArticle?.images) && (
           <img

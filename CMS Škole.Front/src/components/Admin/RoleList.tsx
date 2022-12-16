@@ -36,7 +36,7 @@ function RoleList() {
   return (
     <>
       <h1>Popis uloga</h1>
-      {sharedStore.roleList.map((x) => x.name + " ")}
+      {sharedStore.roleList.map((x) => x.name + "    ")}
     </>
   );
 }

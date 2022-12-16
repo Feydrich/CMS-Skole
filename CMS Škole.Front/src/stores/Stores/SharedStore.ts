@@ -115,7 +115,6 @@ export default class SharedStore {
     }
   };
 
-  /* FIX */
   createOrEditUser = async (data: User) => {
     try {
       let localUser = { ...data };

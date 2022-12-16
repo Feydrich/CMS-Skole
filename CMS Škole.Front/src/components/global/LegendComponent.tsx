@@ -17,25 +17,28 @@ function LegendComponent() {
 
   // TODO postaviti prijava / odjava
   return (
-    <div className="legend">
-      <Link to="/">
-        <h1>{sharedStore.siteSettings.name}</h1>
-      </Link>
-      <div className="items">
-        <Button
-          onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
-        >
-          {sharedStore.user ? (
-            sharedStore.user.name
-          ) : (
-            <>
-              <Icon icon="akar-icons:lock-off" />
-              Prijava
-            </>
-          )}
-        </Button>
+    <>
+      <img className="logo" src={require("../../styles/images/logo.jpeg")} />
+      <div className="legend">
+        <Link to="/">
+          <h1>{sharedStore.siteSettings.name}</h1>
+        </Link>
+        <div className="items">
+          <Button
+            onClick={() => sharedStore.setLoginIsOpen(!sharedStore.loginIsOpen)}
+          >
+            {sharedStore.user ? (
+              sharedStore.user.name
+            ) : (
+              <>
+                <Icon icon="akar-icons:lock-off" />
+                Prijava
+              </>
+            )}
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

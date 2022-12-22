@@ -22,7 +22,7 @@ public class BannerService {
   private final ImageService imageService;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
-  
+
   public Banner getById(Long id) {
     return bannerRepository.findById(id).orElse(null);
   }
@@ -72,7 +72,7 @@ public class BannerService {
   }
 
   private void deleteForeignKeys(Banner banner) throws IOException {
-      imageService.delete(banner.getImage().getId());
+    imageService.delete(banner.getImage().getId());
   }
 
   private Banner fillWithPrev(Banner entity) {

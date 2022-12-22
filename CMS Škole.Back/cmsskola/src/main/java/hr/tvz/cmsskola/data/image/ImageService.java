@@ -49,7 +49,7 @@ public class ImageService {
     }
   }
 
-  public ResponseEntity<Image> save(Long article, Long webPage, MultipartFile file) {
+  public ResponseEntity<Image> save(Long article, MultipartFile file) {
     Image image = new Image();
 
     if (article != null) {

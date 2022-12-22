@@ -1,7 +1,5 @@
 package hr.tvz.cmsskola.data.category;
 
-import hr.tvz.cmsskola.data.article.ArticleService;
-import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import java.io.IOException;
 import java.util.Collection;
@@ -22,8 +20,6 @@ public class CategoryService {
   private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
 
   private final CategoryRepository categoryRepository;
-  private final ClaimService claimService;
-  private final ArticleService articleService;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
 
@@ -98,7 +94,6 @@ public class CategoryService {
   }
 
   private void deleteForeignKeys(Category category) throws IOException {
-    category.getClaims().forEach(claim -> claimService.delete(claim.getId()));
     for (Category subCategory : getBySuperCategory(category.getId())) {
       delete(subCategory.getId());
     }

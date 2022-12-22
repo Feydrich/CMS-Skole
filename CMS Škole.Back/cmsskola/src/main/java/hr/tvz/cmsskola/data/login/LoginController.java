@@ -16,8 +16,7 @@ public class LoginController {
   private final LoginService loginService;
 
   @PostMapping(path = "/login")
-  public ResponseEntity<UserToken> login(
-      @Valid @RequestBody LoginService.LoginDTO login) {
+  public ResponseEntity<UserToken> login(@Valid @RequestBody LoginService.LoginDTO login) {
     return loginService.login(login);
   }
 

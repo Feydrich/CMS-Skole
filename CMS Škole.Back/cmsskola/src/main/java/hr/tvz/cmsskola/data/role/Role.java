@@ -1,7 +1,6 @@
 package hr.tvz.cmsskola.data.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.tvz.cmsskola.data.claim.Claim;
 import hr.tvz.cmsskola.data.user.User;
 import java.util.Collection;
 import javax.persistence.Column;
@@ -19,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
+import org.springframework.security.core.GrantedAuthority;
 
 @Getter
 @Setter
@@ -28,7 +28,7 @@ import lombok.ToString.Exclude;
 @Builder
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements GrantedAuthority {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
@@ -38,13 +38,12 @@ public class Role {
   @JoinColumn(name = "role")
   @JsonIgnore
   @Exclude
-  private Collection<Claim> claims;
-
-  @OneToMany
-  @JoinColumn(name = "role")
-  @JsonIgnore
-  @Exclude
   private Collection<User> users;
 
   private String name;
+
+  @Override
+  public String getAuthority() {
+    return name;
+  }
 }

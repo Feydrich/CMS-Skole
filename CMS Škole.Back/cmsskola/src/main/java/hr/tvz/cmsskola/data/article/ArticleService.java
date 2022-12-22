@@ -1,9 +1,11 @@
 package hr.tvz.cmsskola.data.article;
 
+import hr.tvz.cmsskola.config.security.SecurityUtils;
 import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.User;
+import hr.tvz.cmsskola.data.user.UserRepository;
 import hr.tvz.cmsskola.data.user.UserService;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class ArticleService {
   private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 
   private final ArticleRepository articleRepository;
+  private final UserRepository userREpository;
   private final ImageService imageService;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
@@ -65,9 +68,11 @@ public class ArticleService {
   }
 
   public ResponseEntity<Article> save(Article article) {
+    article.setAuthor(null);
     if (article.getId() != null) {
       article = fillWithPrev(article);
     } else {
+      article.setAuthor(getCurrentUserId());
       article.setCreated(LocalDateTime.now());
     }
 
@@ -92,7 +97,6 @@ public class ArticleService {
         File file = new File(oldUri);
         file.delete();
       }
-
     }
 
     article = articleRepository.save(article);
@@ -111,6 +115,12 @@ public class ArticleService {
     setData(article);
 
     return new ResponseEntity<>(article, httpStatus);
+  }
+
+  private User getCurrentUserId() {
+    String username = SecurityUtils.getCurrentUserUsername().orElse(null);
+    Long userId = userREpository.findByUsername(username).get().getId();
+    return User.builder().id(userId).build();
   }
 
   public void delete(Long id) throws IOException {

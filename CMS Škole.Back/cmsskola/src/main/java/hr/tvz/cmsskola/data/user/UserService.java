@@ -2,7 +2,6 @@ package hr.tvz.cmsskola.data.user;
 
 import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.article.ArticleService;
-import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ public class UserService {
   private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
   private final UserRepository userRepository;
-  private final ClaimService claimService;
   private final LoggingService loggingService;
   private final PasswordEncoder passwordEncoder;
   private final ModelMapper modelMapper;
@@ -97,7 +95,6 @@ public class UserService {
   }
 
   private void deleteForeignKeys(User user) throws IOException {
-    user.getClaims().forEach(claim -> claimService.delete(claim.getId()));
     for (Article article : articleService.getByAuthor(user.getId())) {
       articleService.delete(article.getId());
     }

@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +52,15 @@ public class ImageService {
     }
   }
 
-  public ResponseEntity<Image> save(Long article, Long webPage, MultipartFile file) {
+  public ResponseEntity<Image> save(Long article, Boolean gallery, MultipartFile file) {
     Image image = new Image();
 
     if (article != null) {
       image.setArticle(Article.builder().id(article).build());
     }
+
+    image.setGallery(gallery != null ? gallery : false);
+    image.setUploaded(LocalDateTime.now());
 
     logger.info("Trying to save image {}", file.getOriginalFilename());
 
@@ -149,5 +155,9 @@ public class ImageService {
       logger.info("making directory {}", PATH);
       rootDir.mkdirs();
     }
+  }
+
+  public Page<Image> getGalleyr(Pageable pageable) {
+    return imageRepository.findForGallery(pageable);
   }
 }

@@ -1,7 +1,9 @@
 package hr.tvz.cmsskola.data.image;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.article.Article;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,4 +42,9 @@ public class Image {
   @JoinColumn(name = "article")
   @Exclude
   private Article article;
+
+  private Boolean gallery;
+
+  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  private LocalDateTime uploaded;
 }

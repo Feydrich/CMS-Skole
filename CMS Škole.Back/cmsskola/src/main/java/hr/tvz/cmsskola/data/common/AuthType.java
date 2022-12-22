@@ -7,5 +7,6 @@ public enum AuthType {
   IMAGE,
   ROLE,
   USER,
-  SITE_SETTINGS
+  SITE_SETTINGS,
+  FILE
 }

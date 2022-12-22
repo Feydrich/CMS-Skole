@@ -27,7 +27,8 @@ public class AuthenticationService {
       AuthType.ARTICLE,
       AuthType.IMAGE,
       AuthType.BANNER,
-      AuthType.CATEGORY
+      AuthType.CATEGORY,
+      AuthType.FILE
   );
 
   private enum Role {

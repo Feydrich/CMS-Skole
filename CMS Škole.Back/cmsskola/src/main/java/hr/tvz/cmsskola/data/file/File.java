@@ -1,16 +1,13 @@
-package hr.tvz.cmsskola.data.image;
+package hr.tvz.cmsskola.data.file;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.tvz.cmsskola.data.article.Article;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -27,24 +23,17 @@ import lombok.ToString.Exclude;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "image")
-public class Image {
+@Table(name = "file")
+public class File {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "image_uri")
-  @JsonIgnore
-  private String imageUri;
+  private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "article")
-  @Exclude
-  private Article article;
+  @JsonIgnore private String uri;
 
-  private Boolean gallery;
-
-  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime uploaded;
 }

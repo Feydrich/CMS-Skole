@@ -1,8 +1,6 @@
-package hr.tvz.cmsskola.data.image;
+package hr.tvz.cmsskola.data.file;
 
-import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.logging.LoggingService;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
@@ -24,25 +22,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class ImageService {
-  private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+public class FileService {
+  private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
-  private final ImageRepository imageRepository;
+  private final FileRepository fileRepository;
   private final LoggingService loggingService;
 
-  private static final String PATH = "public/images";
-  private static final String JPG = ".jpg";
+  private static final String PATH = "public/files";
 
   public ResponseEntity<Resource> getById(Long id) {
-    var image = imageRepository.findById(id).orElse(null);
-    if (image == null) return ResponseEntity.notFound().build();
+    var file = fileRepository.findById(id).orElse(null);
+    if (file == null) return ResponseEntity.notFound().build();
 
     try {
-      Path file = Path.of(image.getImageUri());
-      Resource resource = new UrlResource(file.toUri());
+      Path filePath = Path.of(file.getUri());
+      Resource resource = new UrlResource(filePath.toUri());
 
       if (resource.exists() || resource.isReadable()) {
-        var mediaType = URLConnection.guessContentTypeFromName(image.getImageUri());
+        var mediaType = URLConnection.guessContentTypeFromName(file.getUri());
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(mediaType)).body(resource);
       } else {
         throw new RuntimeException("Could not read the file!");
@@ -52,17 +49,18 @@ public class ImageService {
     }
   }
 
-  public ResponseEntity<Image> save(Long article, Boolean gallery, MultipartFile file) {
-    Image image = new Image();
+  public Page<File> getAll(Pageable pageable) {
+    return fileRepository.findAll(pageable);
+  }
 
-    if (article != null) {
-      image.setArticle(Article.builder().id(article).build());
-    }
+  public ResponseEntity<File> save(String name, MultipartFile file) {
+    File entity = new File();
 
-    image.setGallery(gallery != null ? gallery : false);
-    image.setUploaded(LocalDateTime.now());
+    entity.setUploaded(LocalDateTime.now());
+    if (name == null) name = getRootName(file);
+    entity.setName(name);
 
-    logger.info("Trying to save image {}", file.getOriginalFilename());
+    logger.info("Trying to save file {}", name);
 
     String url;
     try {
@@ -71,52 +69,52 @@ public class ImageService {
       logger.error(e.getMessage());
       return ResponseEntity.internalServerError().build();
     }
-    image.setImageUri(url);
+    entity.setUri(url);
 
-    image = imageRepository.save(image);
+    entity = fileRepository.save(entity);
 
     String logText;
     HttpStatus httpStatus;
-    if (image.getId() == null) {
-      logText = "created image " + image.getImageUri() + " id = " + image.getId();
+    if (entity.getId() == null) {
+      logText = "created file " + entity.getUri() + " id = " + entity.getId();
       httpStatus = HttpStatus.CREATED;
     } else {
-      logText = "updated image " + image.getImageUri() + " id = " + image.getId();
+      logText = "updated file " + entity.getUri() + " id = " + entity.getId();
       httpStatus = HttpStatus.OK;
     }
     loggingService.log(logger, logText);
 
-    return new ResponseEntity<>(image, httpStatus);
+    return new ResponseEntity<>(entity, httpStatus);
   }
 
   public void delete(Long id) throws IOException {
-    logger.info("Trying to delete image id {}", id);
+    logger.info("Trying to delete file id {}", id);
 
-    var optionalImage = imageRepository.findById(id);
+    var optionalImage = fileRepository.findById(id);
     if (optionalImage.isPresent()) {
-      Image image = optionalImage.get();
-      File file = new File(image.getImageUri());
+      File entity = optionalImage.get();
+      java.io.File file = new java.io.File(entity.getUri());
       file.delete();
 
-      imageRepository.deleteById(image.getId());
-      String logText = "deleted image " + image.getImageUri() + " id= " + image.getId();
+      fileRepository.deleteById(entity.getId());
+      String logText = "deleted file " + entity.getUri() + " id= " + entity.getId();
       loggingService.log(logger, logText);
     }
   }
 
-  private String saveFile(MultipartFile image) throws IOException {
+  private String saveFile(MultipartFile file) throws IOException {
     makeDir();
-    String extention = getExtention(image);
-    String rootName = getRootName(image);
+    String extention = getExtention(file);
+    String rootName = getRootName(file);
 
     Path path = createNewFile(extention, rootName);
-    image.transferTo(path);
+    file.transferTo(path);
 
     return path.toString();
   }
 
   private Path createNewFile(String extention, String rootName) throws IOException {
-    File newFile;
+    java.io.File newFile;
     Path path;
     do {
       String name = rootName + RandomString.make(8) + "." + extention;
@@ -139,25 +137,19 @@ public class ImageService {
   }
 
   private String getExtention(MultipartFile image) {
-    String extention;
+    String extention = null;
     if (image.getOriginalFilename() != null) {
       String[] stringParts = image.getOriginalFilename().split("\\.");
       extention = stringParts[stringParts.length - 1];
-    } else {
-      extention = JPG;
     }
     return extention;
   }
 
   private void makeDir() {
-    File rootDir = new File(PATH);
+    java.io.File rootDir = new java.io.File(PATH);
     if (!rootDir.isDirectory()) {
       logger.info("making directory {}", PATH);
       rootDir.mkdirs();
     }
-  }
-
-  public Page<Image> getGallery(Pageable pageable) {
-    return imageRepository.findForGallery(pageable);
   }
 }

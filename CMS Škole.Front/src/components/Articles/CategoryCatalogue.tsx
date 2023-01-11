@@ -24,20 +24,8 @@ function CategoryCatalogue() {
   return (
     <main>
       <h1 className="categoryTitle">
-        {categoriesStore.selectedCategory!.name}
+        {categoriesStore.selectedCategory?.name}
       </h1>
-      {categoriesStore.selectedCategory!.superCategory && (
-        <Link
-          to={"/Category"}
-          onClick={() => {
-            categoriesStore.setSelectedCategory(
-              categoriesStore.selectedCategory!.superCategory
-            );
-          }}
-        >
-          {categoriesStore.selectedCategory!.superCategory.name}
-        </Link>
-      )}
 
       <div className="item-info">
         {categoriesStore.selectedCategory!.subCategories && (

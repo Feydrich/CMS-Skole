@@ -18,7 +18,7 @@ function LegendComponent() {
   // TODO postaviti prijava / odjava
   return (
     <>
-      <img className="logo" src={require("../../styles/images/logo.jpeg")} />
+      <img className="logo" src={require("../../styles/images/logo.png")} />
       <div className="legend">
         <Link to="/">
           <h1>{sharedStore.siteSettings.name}</h1>

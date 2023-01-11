@@ -60,14 +60,14 @@ public class Article {
   @JsonIgnore
   private String htmlUri;
 
-  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime created;
 
-  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime updated;
 
   @Column(name = "lasts_until")
-  @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime lastsUnitl;
 
   private boolean archived;

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +54,9 @@ public class ImageController {
     return imageService.getGallery(pageable);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).ARTICLE, #article)")
   @PostMapping(path = "save")
   public ResponseEntity<Image> save(
       @RequestParam(required = false) Long article,
@@ -62,7 +65,9 @@ public class ImageController {
     return imageService.save(article, gallery, file);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).IMAGE, #id)")
   @DeleteMapping(path = "")
   public ResponseEntity<Image> delete(@RequestParam Long id) {
     try {

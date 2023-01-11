@@ -59,7 +59,8 @@ public class SiteSettingsService {
       SiteSetting siteSetting = optionalSiteSetting.get();
 
       siteSettingsRepository.deleteById(siteSetting.getId());
-      String logText = "deleted siteSetting " + siteSetting.getProperty() + " id= " + siteSetting.getId();
+      String logText =
+          "deleted siteSetting " + siteSetting.getProperty() + " id= " + siteSetting.getId();
       loggingService.log(logger, logText);
     }
   }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,13 +59,17 @@ public class UserController {
     return userService.getAll(pageable);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).USER, #user.getId())")
   @PostMapping(path = "save")
   public ResponseEntity<User> save(@Valid @RequestBody User user) {
     return userService.save(user);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).USER, null)")
   @DeleteMapping(path = "")
   public ResponseEntity<String> delete(@RequestParam Long id) {
     try {

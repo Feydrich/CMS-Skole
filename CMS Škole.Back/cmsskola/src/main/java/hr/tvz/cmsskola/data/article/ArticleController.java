@@ -1,5 +1,6 @@
 package hr.tvz.cmsskola.data.article;
 
+import hr.tvz.cmsskola.data.common.AuthenticationService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping(path = "article")
 public class ArticleController {
   private final ArticleService articleService;
+  private final AuthenticationService authenticationService;
 
   @GetMapping(path = "{id}")
   public Article getById(@PathVariable Long id) {
@@ -99,13 +103,17 @@ public class ArticleController {
     return articleService.get(pageable);
   }
 
-  // todo preautorize admin, add image uppload
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).ARTICLE, #article.getId())")
   @PostMapping(path = "save")
   public ResponseEntity<Article> save(@Valid @RequestBody Article article) {
     return articleService.save(article);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).ARTICLE, #id)")
   @DeleteMapping(path = "")
   public ResponseEntity<Article> delete(@RequestParam Long id) {
     try {
@@ -114,5 +122,9 @@ public class ArticleController {
       return ResponseEntity.internalServerError().build();
     }
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  public boolean auth(Authentication authentication) {
+    return true;
   }
 }

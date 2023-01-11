@@ -1,9 +1,7 @@
 package hr.tvz.cmsskola.data.role;
 
-import hr.tvz.cmsskola.data.claim.ClaimService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import hr.tvz.cmsskola.data.user.UserRepository;
-import hr.tvz.cmsskola.data.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -20,7 +18,6 @@ public class RoleService {
   private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
 
   private final RoleRepository roleRepository;
-  private final ClaimService claimService;
   private final UserRepository userRepository;
   private final LoggingService loggingService;
   private final ModelMapper modelMapper;
@@ -71,7 +68,6 @@ public class RoleService {
   }
 
   private void deleteForeignKeys(Role role) {
-    role.getClaims().forEach(claim -> claimService.delete(claim.getId()));
     role.getUsers()
         .forEach(
             user -> {

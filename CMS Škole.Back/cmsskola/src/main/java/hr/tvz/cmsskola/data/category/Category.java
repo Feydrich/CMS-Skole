@@ -2,7 +2,6 @@ package hr.tvz.cmsskola.data.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.cmsskola.data.article.Article;
-import hr.tvz.cmsskola.data.claim.Claim;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,14 +42,7 @@ public class Category {
   @JoinColumn(name = "supercategory")
   private Category superCategory;
 
-  @Transient
-  private Collection<Category> subCategories;
-
-  @OneToMany
-  @JoinColumn(name = "category")
-  @JsonIgnore
-  @Exclude
-  private Collection<Claim> claims;
+  @Transient private Collection<Category> subCategories;
 
   @OneToMany
   @JoinColumn(name = "category")

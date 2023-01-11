@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +26,17 @@ public class BannerController {
     return bannerService.getById(id);
   }
 
-  // todo preautorize admin, add image uppload
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).BANNER, #banner.getId())")
   @PostMapping(path = "save")
   public ResponseEntity<Banner> save(@Valid @RequestBody Banner banner) {
     return bannerService.save(banner);
   }
 
-  // todo preautorize admin
+  @PreAuthorize(
+      "@authenticationService.checkAuthorize("
+          + "T(hr.tvz.cmsskola.data.common.AuthType).BANNER, #id)")
   @DeleteMapping(path = "")
   public ResponseEntity<Banner> delete(@RequestParam Long id) {
     try {

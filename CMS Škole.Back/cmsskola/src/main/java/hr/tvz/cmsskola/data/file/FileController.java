@@ -1,4 +1,4 @@
-package hr.tvz.cmsskola.data.image;
+package hr.tvz.cmsskola.data.file;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -21,16 +21,16 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "image")
-public class ImageController {
-  private final ImageService imageService;
+@RequestMapping(path = "file")
+public class FileController {
+  private final FileService fileService;
 
   @GetMapping(path = "{id}")
   public ResponseEntity<Resource> getById(@PathVariable Long id) {
-    return imageService.getById(id);
+    return fileService.getById(id);
   }
 
-  @GetMapping(path = "gallery")
+  @GetMapping(path = "all")
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "page",
@@ -49,24 +49,22 @@ public class ImageController {
         paramType = "query",
         dataTypeClass = String.class)
   })
-  public Page<Image> get(@ApiIgnore Pageable pageable) {
-    return imageService.getGallery(pageable);
+  public Page<File> get(@ApiIgnore Pageable pageable) {
+    return fileService.getAll(pageable);
   }
 
   // todo preautorize admin
   @PostMapping(path = "save")
-  public ResponseEntity<Image> save(
-      @RequestParam(required = false) Long article,
-      @RequestParam(required = false) Boolean gallery,
-      @RequestParam MultipartFile file) {
-    return imageService.save(article, gallery, file);
+  public ResponseEntity<File> save(
+      @RequestParam(required = false) String name, @RequestParam MultipartFile file) {
+    return fileService.save(name, file);
   }
 
   // todo preautorize admin
   @DeleteMapping(path = "")
-  public ResponseEntity<Image> delete(@RequestParam Long id) {
+  public ResponseEntity<File> delete(@RequestParam Long id) {
     try {
-      imageService.delete(id);
+      fileService.delete(id);
     } catch (IOException e) {
       return ResponseEntity.internalServerError().build();
     }

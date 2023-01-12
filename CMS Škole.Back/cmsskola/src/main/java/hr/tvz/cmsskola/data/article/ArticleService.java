@@ -53,8 +53,6 @@ public class ArticleService {
   }
 
   private void setPreview(Article article) {
-    article.setCategory(null);
-
     if (article.getAuthor() != null) {
       article.setAuthor(User.builder().id(article.getAuthor().getId()).build());
     }

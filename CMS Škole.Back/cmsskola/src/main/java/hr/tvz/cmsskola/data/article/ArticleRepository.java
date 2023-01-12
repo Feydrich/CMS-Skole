@@ -13,7 +13,12 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, L
   @Query("SELECT a FROM Article a WHERE a.author.id = :id")
   Collection<Article> findByAuthorForDelete(Long id);
 
-  @Query("SELECT a FROM Article a WHERE a.category.id = :id AND a.archived = FALSE")
+  @Query("SELECT a "
+      + "FROM Article a "
+      + "WHERE a.archived = FALSE "
+      + "AND (a.category.id = :id OR a.category.id IN "
+      + "   (SELECT c.id FROM Category c WHERE c.superCategory = :id)"
+      + ")")
   Page<Article> findByCategory(Long id, Pageable pageable);
 
   @Query("SELECT a FROM Article a WHERE a.author.id = :id")

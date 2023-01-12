@@ -622,10 +622,6 @@ Button.hamburgerMenu {
   height: 10vh;
 }
 
-.dividerContainerIcons {
-  background-color: $primary-color-dark;
-  padding: 20px;
-}
 .dividerContainerImages {
   background-color: $primary-color-dark;
   height: 500px;
@@ -638,26 +634,44 @@ Button.hamburgerMenu {
   text-align: center;
 }
 
-.dividerContent {
-  color: #ffffff;
-  cursor: pointer;
-  width: 25%;
+.dividerContainerAds {
+  padding: 20px;
+  max-height: 100px;
+  width: 100%;
   overflow: hidden;
-  display: inline-block;
-  text-align: center;
-  outline: 0px solid rgba(255, 255, 255, 0);
-  transition: outline 0.25s;
+  background-color: $primary-color-dark;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  transition: all 1s;
+  opacity: 0.8;
+  cursor: pointer;
 
-  a {
-    color: #ffffff;
-    font-size: 3vw;
-  }
-  p {
-    font-size: 18px;
-    padding: 20px;
-  }
   &:hover {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
+    max-height: 600px;
+    opacity: 1;
+  }
+}
+.dividerContainerAds * {
+  pointer-events: none;
+}
+
+.dividerContainerAds:hover * {
+  pointer-events: all;
+}
+
+.dividerContent {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  transition: all 1s;
+  display: block;
+
+  &:hover {
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -679,7 +693,6 @@ Button.hamburgerMenu {
   }
 }
 .homeContainer {
-  //margin: 0 5%;
   padding: 20px 0;
 }
 .categoryTitle {

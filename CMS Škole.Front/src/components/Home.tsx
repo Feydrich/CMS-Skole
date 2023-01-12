@@ -12,44 +12,77 @@ import Carousel from "./global/Carousel";
 function Home() {
   const homePreflight = useRef(true);
 
-  const { categoriesStore } = useStore();
+  const { sharedStore, categoriesStore } = useStore();
 
   useEffect(() => {
     if (homePreflight.current) {
       homePreflight.current = false;
       categoriesStore.getCategories();
       categoriesStore.latestArticles();
+      sharedStore.getAds();
     }
   }, []);
 
   return (
     <main>
       <Carousel />
-      <div className="dividerContainerIcons">
-        <div className="dividerContent">
-          <a href="#">
-            <FontAwesomeIcon icon={faSchool} />
-          </a>
-          <p>O školi</p>
-        </div>
-        <div className="dividerContent">
-          <a href="#">
-            <FontAwesomeIcon icon={faBook} />
-          </a>
-          <p>Nastava</p>
-        </div>
-        <div className="dividerContent">
-          <a href="#">
-            <FontAwesomeIcon icon={faPeopleRoof} />
-          </a>
-          <p>Za roditelje</p>
-        </div>
-        <div className="dividerContent">
-          <a href="#">
-            <FontAwesomeIcon icon={faBullhorn} />
-          </a>
-          <p>Novosti</p>
-        </div>
+      <div className="dividerContainerAds">
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
+        {sharedStore.ads.map((x) => (
+          <a
+            className="dividerContent"
+            href={x.link}
+            style={{ backgroundImage: "url(" + x.image + ")" }}
+          ></a>
+        ))}
       </div>
 
       <div className="homeContainer">

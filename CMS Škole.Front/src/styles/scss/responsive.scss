@@ -129,6 +129,15 @@
     padding: 0;
     width: 100%;
   }
+
+  .dividerContent {
+    width: 50%;
+    padding-bottom: 50%;
+  }
+
+  .homeContainer {
+    padding: 20px 50px;
+  }
 }
 
 @media screen and (max-width: 992px) {

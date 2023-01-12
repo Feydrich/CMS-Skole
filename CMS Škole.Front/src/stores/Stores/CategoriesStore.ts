@@ -1,16 +1,7 @@
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-  toJS,
-} from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { toast } from "react-toastify";
 import { Article } from "../../models/Article";
 import { Category } from "../../models/Category";
-import { SiteInfo } from "../../models/SiteInfo";
-import { User } from "../../models/User";
 import { requests } from "../agent";
 
 const apiActions = {
@@ -167,11 +158,16 @@ export default class CategoriesStore {
       if (!image || data.images) {
         delete data.images;
       }
-      const response = await apiActions.createOrEditArticle(data);
-      if (response.id && response.category.id && image) {
-        this.uploadImage(response.id, image, response.category.id);
+      if (data.author) {
+        const response = await apiActions.createOrEditArticle({
+          ...data,
+          author: { id: data.author.id },
+        });
+        if (response.id && response.category.id && image) {
+          this.uploadImage(response.id, image, response.category.id);
+        }
+        toast("Članak pohranjen!");
       }
-      toast("Članak pohranjen!");
     } catch (error) {
       toast("Došlo je do greške prilikom spremanja članka");
     }

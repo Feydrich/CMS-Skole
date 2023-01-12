@@ -5,6 +5,8 @@ import { SiteInfo } from "../../models/SiteInfo";
 import { User } from "../../models/User";
 import { requests } from "../agent";
 
+import content from "../../catImages.json";
+
 const apiActions = {
   login: (username: string, password: string) => {
     return requests.post(`login`, { password: password, username: username });
@@ -26,6 +28,7 @@ const apiActions = {
 export default class SharedStore {
   isLoading: boolean = false;
   token: string = "";
+  ads: { image: string; link: string }[] = [];
   siteSettings: SiteInfo = {
     name: "Osnovna škola Sesvetska Sela",
     description:
@@ -52,6 +55,7 @@ export default class SharedStore {
       //Variables: observable
       isLoading: observable,
       token: observable,
+      ads: observable,
       siteSettings: observable,
       user: observable,
       userList: observable,
@@ -65,6 +69,7 @@ export default class SharedStore {
       //dataQueries
       getImagesForCarousel: action,
       getUsers: action,
+      getAds: action,
       getRoles: action,
       setUser: action,
       setLoginIsOpen: action,
@@ -82,6 +87,9 @@ export default class SharedStore {
 
   setUser = (data: User | null) => {
     this.user = data;
+    if (!data) {
+      this.token = "";
+    }
   };
   setLoginIsOpen = (data: boolean) => {
     this.loginIsOpen = data;
@@ -103,6 +111,13 @@ export default class SharedStore {
     try {
       const users = await apiActions.getUsers();
       this.userList = users.content;
+    } catch (error) {
+      toast("Došlo je do greške pri dohvatu korisnika.");
+    }
+  };
+  getAds = async () => {
+    try {
+      this.ads = content.cats;
     } catch (error) {
       toast("Došlo je do greške pri dohvatu korisnika.");
     }

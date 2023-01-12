@@ -1,6 +1,21 @@
 import axios, { AxiosResponse } from "axios";
+import { store } from "./StoreManager";
 
 axios.defaults.baseURL = "http://localhost:8081/api";
+
+axios.interceptors.request.use(
+  async (config) => {
+    const token = await store.sharedStore.getToken();
+
+    if (token && config && config.headers)
+      config.headers.Authorization = `Bearer ${token}`;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const responseBody = (response: AxiosResponse) =>
   response ? response.data : "";

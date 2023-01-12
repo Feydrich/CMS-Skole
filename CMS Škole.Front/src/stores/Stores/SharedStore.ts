@@ -25,6 +25,7 @@ const apiActions = {
 
 export default class SharedStore {
   isLoading: boolean = false;
+  token: string = "";
   siteSettings: SiteInfo = {
     name: "Osnovna škola Sesvetska Sela",
     description:
@@ -50,6 +51,7 @@ export default class SharedStore {
     makeObservable(this, {
       //Variables: observable
       isLoading: observable,
+      token: observable,
       siteSettings: observable,
       user: observable,
       userList: observable,
@@ -146,18 +148,22 @@ export default class SharedStore {
         username,
         password
       );
+      //Potencijalno staviti u cookie, ali namjerno stavljeno u store da ne bi netko greškom ostao ulogiran - security
+      //document.cookie = `jwt=` + item.token + `;path=/`;
+      this.token = item.token;
       toast("Welcome: " + item.user.name);
       this.setUser(item.user);
     } catch (error) {
       toast("Greška prilikom unosa");
     }
+  };
 
-    // let found = null
-    // if (found && found.password === password) {
-    //   toast("Welcome: " + found.name);
-    // } else {
-    //   toast("Greška prilikom unosa");
-    // }
+  getToken = async () => {
+    try {
+      return this.token;
+    } catch (error) {
+      return Promise.reject();
+    }
   };
 
   changeStyles = (colors: {

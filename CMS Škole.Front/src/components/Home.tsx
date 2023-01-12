@@ -1,21 +1,18 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useStore } from "../stores/StoreManager";
 import ArticleCard from "./Articles/ArticleCard";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSchool } from "@fortawesome/free-solid-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleRoof } from "@fortawesome/free-solid-svg-icons";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import Carousel from "./global/Carousel";
-import { Button } from "react-bootstrap";
-import { requests } from "../stores/agent";
 
 function Home() {
   const homePreflight = useRef(true);
 
-  const { sharedStore, categoriesStore } = useStore();
+  const { categoriesStore } = useStore();
 
   useEffect(() => {
     if (homePreflight.current) {

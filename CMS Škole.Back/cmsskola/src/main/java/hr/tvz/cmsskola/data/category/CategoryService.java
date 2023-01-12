@@ -103,6 +103,9 @@ public class CategoryService {
     var optPrev = categoryRepository.findById(entity.getId());
     if (optPrev.isPresent()) {
       var prev = optPrev.get();
+      if (prev.getSuperCategory() != null) {
+        prev.setSuperCategory(Category.builder().id(prev.getId()).build());
+      }
       modelMapper.map(entity, prev);
       entity = prev;
     }

@@ -3,6 +3,7 @@ package hr.tvz.cmsskola.data.user;
 import hr.tvz.cmsskola.data.article.Article;
 import hr.tvz.cmsskola.data.article.ArticleService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
+import hr.tvz.cmsskola.data.role.Role;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -105,6 +106,9 @@ public class UserService {
     var optPrev = userRepository.findById(entity.getId());
     if (optPrev.isPresent()) {
       var prev = optPrev.get();
+      if (prev.getRole() != null) {
+        prev.setRole(Role.builder().id(prev.getRole().getId()).build());
+      }
       modelMapper.map(entity, prev);
       entity = prev;
     }

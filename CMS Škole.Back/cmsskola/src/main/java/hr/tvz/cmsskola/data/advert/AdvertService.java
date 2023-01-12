@@ -1,6 +1,7 @@
 package hr.tvz.cmsskola.data.advert;
 
 import hr.tvz.cmsskola.data.article.Article;
+import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
 import java.io.File;
@@ -83,6 +84,9 @@ public class AdvertService {
     var optPrev = advertRepository.findById(entity.getId());
     if (optPrev.isPresent()) {
       var prev = optPrev.get();
+      if (prev.getImage() != null) {
+        prev.setImage(Image.builder().id(prev.getImage().getId()).build());
+      }
       modelMapper.map(entity, prev);
       entity = prev;
     }

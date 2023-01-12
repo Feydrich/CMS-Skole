@@ -1,6 +1,7 @@
 package hr.tvz.cmsskola.data.article;
 
 import hr.tvz.cmsskola.config.security.SecurityUtils;
+import hr.tvz.cmsskola.data.category.Category;
 import hr.tvz.cmsskola.data.image.Image;
 import hr.tvz.cmsskola.data.image.ImageService;
 import hr.tvz.cmsskola.data.logging.LoggingService;
@@ -150,6 +151,13 @@ public class ArticleService {
     var optPrev = articleRepository.findById(entity.getId());
     if (optPrev.isPresent()) {
       var prev = optPrev.get();
+      if (prev.getAuthor() != null) {
+        prev.setAuthor(User.builder().id(prev.getAuthor().getId()).build());
+      }
+      if (prev.getCategory() != null) {
+        prev.setCategory(Category.builder().id(prev.getCategory().getId()).build());
+      }
+
       modelMapper.map(entity, prev);
       entity = prev;
     }
